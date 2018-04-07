@@ -4,6 +4,7 @@ import './App.css';
 import ColorPicker from './components/ColorPicker';
 
 const Wrapper = styled.p`
+margin: auto;
 text-align: center;
 color: whitesmoke;
 font-size: 7.5em;
@@ -32,26 +33,39 @@ const List = styled.ul`
   list-style-type: none;
   margin: 0;
   padding: 0;
+  top: 5%;
 `
 
 const ListItem = styled.li`
   width: 100%;
   display: block;
   margin: auto;
+  background: gray;
+  border-bottom: solid 10px black;
+  padding: 10px 0;
+`
+
+const LayerLabel = styled.p`
+  width: 100%;
+  display: block;
+  margin: auto;
+  font-family: Arial, Helvetica, sans-serif;
+  color: whitesmoke;
 `
 
 const Sidebar = styled.div.attrs({
-  background: props => props.background || 'green',
+  background: props => props.background || 'inherit',
   width: props => props.width || '20%',
 })`
-  background: gray;
+  background: ${props => props.background};
   height: 100%;
   width: ${props => props.width};
   right: 0
-  z-index: 100;
   position: absolute;
   overflow: scroll;
+  border-left: solid 2px gray;
 `
+
 
 class App extends Component {
   state = {
@@ -61,6 +75,8 @@ class App extends Component {
       {degree: 181, colors:[{h: '98', s: '93', l: '50', a: '0.5', amount: 25, name: "color11"}, 
       {h: '191', s: '92', l: '50', a: '0.5', amount: 50, name: "color12"}]}
     ],
+    sidebar: '20%',
+    background: '100%',
   };
 
   handleColorChange = (event) => {
@@ -112,6 +128,11 @@ class App extends Component {
     this.setState({ colors: ttt });
   }
 
+  toggleSidebar = (event) => {
+    this.setState({sidebar: this.state.sidebar === '20%' ? '0%' : '20%'})
+    //this.setState({background: this.state.background === '80%' ? '100%' : '80%'})
+  }
+
   render() {
     let str = '';
 
@@ -126,15 +147,16 @@ class App extends Component {
 
     return (
       <div>
-      <Background className="gradientr" background={str}>
+      <Background className="gradientr" background={str} width={this.state.background}>
+        <button onClick={this.toggleSidebar}>menu</button>
         <Wrapper>
           gradientr
         </Wrapper>
       </Background>
-      <Sidebar>
+      <Sidebar width={this.state.sidebar}>
       <List>
           {this.state.colors.map((layer, layerIndex) => {
-            return <ListItem key={layerIndex}>{<div><h3>{`Layer ${layerIndex}`}</h3></div>}{layer.colors.map(color => {
+            return <ListItem key={layerIndex}>{<div><LayerLabel>{`Layer ${layerIndex}`}</LayerLabel></div>}{layer.colors.map(color => {
               return <ColorPicker 
                       h={color.h}
                       s={color.s}
@@ -150,8 +172,9 @@ class App extends Component {
                 </AngleSlider>
                 <button name={layerIndex} onClick={this.addColor}>Add Color</button></ListItem>
           })}
-          
+          <ListItem>
           <button onClick={this.addLayer}>Add Layer</button>
+          </ListItem>
           <ListItem>
             <CodeSnippit>{`${str}`}</CodeSnippit>
           </ListItem>

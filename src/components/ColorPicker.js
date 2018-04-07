@@ -16,7 +16,7 @@ const ColorBlock = styled.div.attrs({
     top: props => props.top,
 })`
     width: 80%;
-    height: 100px;
+    height: 40px;
     margin: auto;
     background: ${props => props.background};
 `
