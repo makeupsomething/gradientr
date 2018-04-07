@@ -7,7 +7,7 @@ const PickerObj = styled.div.attrs({
     left: props => props.left,
 })`
     width: 170px;
-    height: 170px;
+    height: 200px;
     background: grey;
 `
 
@@ -29,14 +29,16 @@ const Slider = styled.input`
 
 class ColorPicker extends Component {
     render() {
-        const { h, s, l, handleChange, name, top, left } = this.props;
+        const { h, s, l, a, amount, handleChange, name, top, left } = this.props;
 
         return (
             <PickerObj top={top} left={left}>
-                <ColorBlock top="0px" background={`hsl(${h}, ${s}%, ${l}%)`}/>
+                <ColorBlock top="0px" background={`hsla(${h}, ${s}%, ${l}%, ${a})`}/>
                 <Slider type="range" min="0" max="359" name={`${name}h`} value={h} onChange={handleChange} />
                 <Slider type="range" min="0" max="100" name={`${name}s`} value={s} onChange={handleChange} />
-                <Slider type="range" min="0" max="100" name={`${name}l`} value={l} onChange={handleChange} /> 
+                <Slider type="range" min="0" max="100" name={`${name}l`} value={l} onChange={handleChange} />
+                <Slider type="range" min="0" max="1" step="0.1" name={`${name}a`} value={a} onChange={handleChange} /> 
+                <Slider type="range" min="0" max="100" name={`${name}amount`} value={amount} onChange={handleChange} />  
             </PickerObj>
         );
     }
