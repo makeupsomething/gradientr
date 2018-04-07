@@ -6,16 +6,16 @@ const PickerObj = styled.div.attrs({
     top: props => props.top,
     left: props => props.left,
 })`
-    width: 170px;
+    width: 100%;
     height: 200px;
-    background: grey;
+    margin: auto;
 `
 
 const ColorBlock = styled.div.attrs({
     background: props => props.background || 'green',
     top: props => props.top,
 })`
-    width: 100px;
+    width: 80%;
     height: 100px;
     margin: auto;
     background: ${props => props.background};
@@ -23,7 +23,7 @@ const ColorBlock = styled.div.attrs({
 
 const Slider = styled.input`
     margin: auto;
-    width: 150px;
+    width: 100%;
     left: 5px;
 `
 

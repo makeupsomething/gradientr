@@ -13,10 +13,11 @@ background: transparent;
 
 const Background = styled.div.attrs({
   background: props => props.background || 'green',
+  width: props => props.width || '80%',
 })`
 position: absolute;
 height: 100%;
-width: 100%;
+width: ${props => props.width};
 background: ${props => props.background};
 `;
 
@@ -24,12 +25,32 @@ const AngleSlider = styled.div`
 `
 
 const CodeSnippit = styled.code`
-  max-width: 200px;
+  width: 80%;
+`
+
+const List = styled.ul`
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 `
 
 const ListItem = styled.li`
+  width: 100%;
   display: block;
-  float: left;
+  margin: auto;
+`
+
+const Sidebar = styled.div.attrs({
+  background: props => props.background || 'green',
+  width: props => props.width || '20%',
+})`
+  background: gray;
+  height: 100%;
+  width: ${props => props.width};
+  right: 0
+  z-index: 100;
+  position: absolute;
+  overflow: scroll;
 `
 
 class App extends Component {
@@ -68,7 +89,6 @@ class App extends Component {
     const name = target.name;
     const id = target.id;
 
-    console.log(id)
 
     let ttt = this.state.colors
     ttt[id].degree = value
@@ -104,17 +124,17 @@ class App extends Component {
       str+= index === this.state.colors.length-1 ? '' : ',';
     });
 
-    console.log(str)
-
     return (
+      <div>
       <Background className="gradientr" background={str}>
         <Wrapper>
           gradientr
         </Wrapper>
-
-        <ul>
+      </Background>
+      <Sidebar>
+      <List>
           {this.state.colors.map((layer, layerIndex) => {
-            return <ListItem key={layerIndex}> {layer.colors.map(color => {
+            return <ListItem key={layerIndex}>{<div><h3>{`Layer ${layerIndex}`}</h3></div>}{layer.colors.map(color => {
               return <ColorPicker 
                       h={color.h}
                       s={color.s}
@@ -135,8 +155,9 @@ class App extends Component {
           <ListItem>
             <CodeSnippit>{`${str}`}</CodeSnippit>
           </ListItem>
-        </ul>
-      </Background>
+        </List>
+      </Sidebar>
+      </div>
     );
   }
 }
