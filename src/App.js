@@ -47,8 +47,6 @@ class App extends Component {
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
 
-    console.log(event)
-    console.log(name)
     let tmp = this.state.colors;
 
     tmp.forEach(layer => {
@@ -69,7 +67,9 @@ class App extends Component {
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
     const id = target.id;
+
     console.log(id)
+
     let ttt = this.state.colors
     ttt[id].degree = value
 
@@ -98,25 +98,16 @@ class App extends Component {
       str+= index === this.state.colors.length-1 ? '' : ',';
     });
 
-    console.log(str)
     return (
       <Background className="gradientr" background={`${str}`}>
         <Wrapper>
           gradientr
         </Wrapper>
+
         <ul>
-          {this.state.colors.map((layer, index) => {
-            return <ListItem>
-              <AngleSlider>
-                <label>Angle</label>
-                <input type="range" min="0" max="359" name="degree" id={index} value={layer.degree} onChange={this.handleChange} />
-              </AngleSlider>
-            </ListItem>
-          })}
-          {this.state.colors.map(layer => {
-            return layer.colors.map(color => {
-            return <ListItem key={color.name}>
-                    <ColorPicker 
+          {this.state.colors.map((layer, layerIndex) => {
+            return <ListItem key={layerIndex}> {layer.colors.map(color => {
+              return <ColorPicker 
                       h={color.h}
                       s={color.s}
                       l={color.l}
@@ -125,7 +116,10 @@ class App extends Component {
                       name={color.name}
                       handleChange={this.handleColorChange}>
                     </ColorPicker>
-                  </ListItem>})
+                  })} <AngleSlider>
+                  <label>Angle</label>
+                  <input type="range" min="0" max="359" name="degree" id={layerIndex} value={layer.degree} onChange={this.handleChange} />
+                </AngleSlider></ListItem>
           })}
           <button onClick={this.addColor}>Add Color</button>
           <button onClick={this.addLayer}>Add Layer</button>
