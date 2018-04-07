@@ -35,10 +35,10 @@ const ListItem = styled.li`
 class App extends Component {
   state = {
     colors: [
-      {degree: 93, colors:[{h: '359', s: '88', l: '68', a: '0.7', amount: 26, name: "color1"}, 
-      {h: '199', s: '100', l: '60', a: '0.6', amount: 75, name: "color2"}]},
-      {degree: 181, colors:[{h: '98', s: '93', l: '50', a: '0.5', amount: 25, name: "color3"}, 
-      {h: '191', s: '92', l: '50', a: '0.5', amount: 50, name: "color4"}]}
+      {degree: 93, colors:[{h: '359', s: '88', l: '68', a: '0.7', amount: 26, name: "color01"}, 
+      {h: '199', s: '100', l: '60', a: '0.6', amount: 75, name: "color02"}]},
+      {degree: 181, colors:[{h: '98', s: '93', l: '50', a: '0.5', amount: 25, name: "color11"}, 
+      {h: '191', s: '92', l: '50', a: '0.5', amount: 50, name: "color12"}]}
     ],
   };
 
@@ -79,7 +79,11 @@ class App extends Component {
   }
 
   addColor = (event) => {
-    this.setState({ colors: [...this.state.colors, {h: '0', s: '50', l: '50', name: `color${this.state.colors.length+1}`}] });
+    const target = event.target;
+    const name = target.name;
+    let ttt = this.state.colors
+    ttt[name].colors.push({h: '0', s: '50', l: '50', a: '0.5', amount: 50, name: `color${name}${ttt[name].colors.length+1}`})
+    this.setState({ colors: ttt });
   }
 
   addLayer = (event) => {
@@ -119,9 +123,10 @@ class App extends Component {
                   })} <AngleSlider>
                   <label>Angle</label>
                   <input type="range" min="0" max="359" name="degree" id={layerIndex} value={layer.degree} onChange={this.handleChange} />
-                </AngleSlider></ListItem>
+                </AngleSlider>
+                <button name={layerIndex} onClick={this.addColor}>Add Color</button></ListItem>
           })}
-          <button onClick={this.addColor}>Add Color</button>
+          
           <button onClick={this.addLayer}>Add Layer</button>
           <ListItem>
             <CodeSnippit>{`${str}`}</CodeSnippit>
