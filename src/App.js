@@ -87,7 +87,9 @@ class App extends Component {
   }
 
   addLayer = (event) => {
-    this.setState({ colors2: [{h: '359', s: '50', l: '50', name: "color1"}, {h: '280', s: '50', l: '50', name: "color2"}]});
+    let ttt = this.state.colors
+    ttt.push({degree: 181, colors: [{h: '0', s: '50', l: '50', a: '0.5', amount: 50, name: `color${this.state.colors.length+1}1`}, {h: '191', s: '92', l: '50', a: '0.5', amount: 50, name: `color${this.state.colors.length+1}2`}]})
+    this.setState({ colors: ttt });
   }
 
   render() {
@@ -102,8 +104,10 @@ class App extends Component {
       str+= index === this.state.colors.length-1 ? '' : ',';
     });
 
+    console.log(str)
+
     return (
-      <Background className="gradientr" background={`${str}`}>
+      <Background className="gradientr" background={str}>
         <Wrapper>
           gradientr
         </Wrapper>
