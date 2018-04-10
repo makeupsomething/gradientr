@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-
+import { ChromePicker } from 'react-color';
 
 const PickerObj = styled.div.attrs({
     top: props => props.top,
@@ -28,17 +28,32 @@ const Slider = styled.input`
 `
 
 class ColorPicker extends Component {
-    render() {
-        const { h, s, l, a, amount, handleChange, name, top, left } = this.props;
+    state = {
+        picker: false,
+        background: '#fff',
+    };
 
+    componentDidMount = () => {
+        const { h, s, l, a, amount, handleChange, name, top, left } = this.props;
+        this.setState({background: {h, s, l, a}})
+    }
+
+    togglePicker = (event) => {
+        this.setState({picker: !this.state.picker})
+    }
+
+    handleChangeComplete = (color) => {
+        const {amount, handleChange, name, top, left } = this.props;
+        this.setState({ background: color.hsl });
+        handleChange(color.hsl, name)
+    };
+
+    render() {
+        const {amount, handleChange, name, top, left } = this.props;
         return (
             <PickerObj top={top} left={left}>
-                <ColorBlock top="0px" background={`hsla(${h}, ${s}%, ${l}%, ${a})`}/>
-                <Slider type="range" min="0" max="359" name={`${name}h`} value={h} onChange={handleChange} />
-                <Slider type="range" min="0" max="100" name={`${name}s`} value={s} onChange={handleChange} />
-                <Slider type="range" min="0" max="100" name={`${name}l`} value={l} onChange={handleChange} />
-                <Slider type="range" min="0" max="1" step="0.1" name={`${name}a`} value={a} onChange={handleChange} /> 
-                <Slider type="range" min="0" max="100" name={`${name}amount`} value={amount} onChange={handleChange} />  
+                <ColorBlock onClick={this.togglePicker} top="0px" background={`hsla(${this.state.background.h}, ${this.state.background.s * 100}%, ${this.state.background.l * 100}%, ${this.state.background.a})`}/>
+                {this.state.picker ? <ChromePicker onChange={ this.handleChangeComplete } color={ this.state.background } /> : null}
             </PickerObj>
         );
     }

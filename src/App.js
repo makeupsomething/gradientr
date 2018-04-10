@@ -79,7 +79,7 @@ class App extends Component {
     background: '100%',
   };
 
-  handleColorChange = (event) => {
+  /*handleColorChange = (event) => {
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
@@ -93,6 +93,28 @@ class App extends Component {
         }
       });
     });
+
+    this.setState({
+      colors: tmp
+    });
+  }*/
+
+  handleColorChange = (color, target) => {
+    console.log(color, target);
+    let tmp = this.state.colors;
+
+    tmp.forEach(layer => {
+      layer.colors.forEach(c => {
+        if(target === c.name) {
+          c.h = color.h;
+          c.s = color.s * 100;
+          c.l = color.l * 100;
+          c.a = color.a;
+        }
+      });
+    });
+
+    console.log(tmp)
 
     this.setState({
       colors: tmp
@@ -130,7 +152,6 @@ class App extends Component {
 
   toggleSidebar = (event) => {
     this.setState({sidebar: this.state.sidebar === '20%' ? '0%' : '20%'})
-    //this.setState({background: this.state.background === '80%' ? '100%' : '80%'})
   }
 
   render() {
