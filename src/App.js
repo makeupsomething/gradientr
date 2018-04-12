@@ -75,7 +75,7 @@ class App extends Component {
       {degree: 181, colors:[{h: '98', s: '93', l: '50', a: '0.5', amount: 25, name: "color11"}, 
       {h: '191', s: '92', l: '50', a: '0.5', amount: 50, name: "color12"}]}
     ],
-    sidebar: '20%',
+    sidebar: '30%',
     background: '100%',
   };
 
@@ -151,7 +151,7 @@ class App extends Component {
   }
 
   toggleSidebar = (event) => {
-    this.setState({sidebar: this.state.sidebar === '20%' ? '0%' : '20%'})
+    this.setState({sidebar: this.state.sidebar === '30%' ? '0%' : '30%'})
   }
 
   render() {

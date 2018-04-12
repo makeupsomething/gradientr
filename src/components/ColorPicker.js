@@ -7,7 +7,6 @@ const PickerObj = styled.div.attrs({
     left: props => props.left,
 })`
     width: 100%;
-    height: 200px;
     margin: auto;
 `
 
@@ -54,7 +53,7 @@ class ColorPicker extends Component {
         const {amount, handleChange, name, top, left } = this.props;
         return (
             <PickerObj top={top} left={left}>
-                <ColorBlock onClick={this.togglePicker} top="0px" background={`hsla(${this.state.background.h}, ${this.state.background.s * 100}%, ${this.state.background.l * 100}%, ${this.state.background.a})`}/>
+                <ColorBlock style={{margin: "auto"}} onClick={this.togglePicker} top="0px" background={`hsla(${this.state.background.h}, ${this.state.background.s * 100}%, ${this.state.background.l * 100}%, ${this.state.background.a})`}/>
                 {this.state.picker ? <ChromePicker onChange={ this.handleChangeComplete } color={ this.state.background } /> : null}
             </PickerObj>
         );
