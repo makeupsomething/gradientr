@@ -8,7 +8,6 @@ margin: auto;
 text-align: center;
 color: whitesmoke;
 font-size: 7.5em;
-font-family: Arial, Helvetica, sans-serif;
 background: transparent;
 `;
 
@@ -23,10 +22,12 @@ background: ${props => props.background};
 `;
 
 const AngleSlider = styled.div`
+  margin: 10px 0;
 `
 
 const CodeSnippit = styled.code`
   width: 80%;
+  background: white;
 `
 
 const List = styled.ul`
@@ -40,21 +41,31 @@ const ListItem = styled.li`
   width: 100%;
   display: block;
   margin: auto;
-  background: gray;
-  border-bottom: solid 10px black;
   padding: 10px 0;
 `
 
 const LayerLabel = styled.p`
   width: 100%;
-  display: block;
   margin: auto;
-  font-family: Arial, Helvetica, sans-serif;
-  color: whitesmoke;
+  color: black;
+`
+
+const MenuButton = styled.button`
+  position: absolute;
+  right: 0;
+  z-index: 2;
+  background-color: #ffffff42;
+  border: 2px solid gray;
+`
+
+const AddButton = styled.button`
+  z-index: 2;
+  background-color: #ffffff42;
+  border: 2px solid gray;
 `
 
 const Sidebar = styled.div.attrs({
-  background: props => props.background || 'inherit',
+  background: props => props.background || '#ffffff42',
   width: props => props.width || '20%',
 })`
   background: ${props => props.background};
@@ -63,7 +74,6 @@ const Sidebar = styled.div.attrs({
   right: 0
   position: absolute;
   overflow: scroll;
-  border-left: solid 2px gray;
 `
 
 
@@ -75,29 +85,9 @@ class App extends Component {
       {degree: 181, colors:[{h: '98', s: '93', l: '50', a: '0.5', amount: 25, name: "color11"}, 
       {h: '191', s: '92', l: '50', a: '0.5', amount: 50, name: "color12"}]}
     ],
-    sidebar: '30%',
+    sidebar: '25%',
     background: '100%',
   };
-
-  /*handleColorChange = (event) => {
-    const target = event.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    const name = target.name;
-
-    let tmp = this.state.colors;
-
-    tmp.forEach(layer => {
-      layer.colors.forEach(color => {
-        if(name.includes(color.name)) {
-          color[name.replace(color.name, '')] = value;
-        }
-      });
-    });
-
-    this.setState({
-      colors: tmp
-    });
-  }*/
 
   handleColorChange = (color, target) => {
     console.log(color, target);
@@ -113,8 +103,6 @@ class App extends Component {
         }
       });
     });
-
-    console.log(tmp)
 
     this.setState({
       colors: tmp
@@ -151,7 +139,7 @@ class App extends Component {
   }
 
   toggleSidebar = (event) => {
-    this.setState({sidebar: this.state.sidebar === '30%' ? '0%' : '30%'})
+    this.setState({sidebar: this.state.sidebar === '25%' ? '0%' : '25%'})
   }
 
   render() {
@@ -169,7 +157,7 @@ class App extends Component {
     return (
       <div>
       <Background className="gradientr" background={str} width={this.state.background}>
-        <button onClick={this.toggleSidebar}>menu</button>
+        <MenuButton onClick={this.toggleSidebar}>toggle menu</MenuButton>
         <Wrapper>
           gradientr
         </Wrapper>
@@ -183,8 +171,9 @@ class App extends Component {
               <AngleSlider>
                 <label>Angle</label>
                 <input type="range" min="0" max="359" name="degree" id={layerIndex} value={layer.degree} onChange={this.handleChange} />
+                <span>{this.state.colors[layerIndex].degree}</span>
               </AngleSlider>
-              <button name={layerIndex} onClick={this.addColor}>Add Color</button>
+              <AddButton name={layerIndex} onClick={this.addColor}>Add Color</AddButton>
             </div>}
             {layer.colors.map(color => {
               return <ColorPicker 
@@ -200,7 +189,7 @@ class App extends Component {
                 </ListItem>
           })}
           <ListItem>
-          <button onClick={this.addLayer}>Add Layer</button>
+          <AddButton onClick={this.addLayer}>Add Layer</AddButton>
           </ListItem>
           <ListItem>
             <CodeSnippit>{`${str}`}</CodeSnippit>

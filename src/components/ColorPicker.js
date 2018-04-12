@@ -8,6 +8,7 @@ const PickerObj = styled.div.attrs({
 })`
     width: 100%;
     margin: auto;
+    margin: 10px 0;
 `
 
 const ColorBlock = styled.div.attrs({
@@ -20,11 +21,12 @@ const ColorBlock = styled.div.attrs({
     background: ${props => props.background};
 `
 
-const Slider = styled.input`
-    margin: auto;
-    width: 100%;
-    left: 5px;
-`
+var inputStyles = {
+    input: {
+      border: "none",
+      margin: "auto"
+    },
+  };
 
 class ColorPicker extends Component {
     state = {
@@ -53,7 +55,12 @@ class ColorPicker extends Component {
         const {amount, handleChange, name, top, left } = this.props;
         return (
             <PickerObj top={top} left={left}>
-                <ColorBlock style={{margin: "auto"}} onClick={this.togglePicker} top="0px" background={`hsla(${this.state.background.h}, ${this.state.background.s * 100}%, ${this.state.background.l * 100}%, ${this.state.background.a})`}/>
+                <ColorBlock 
+                    style={inputStyles} 
+                    onClick={this.togglePicker} 
+                    top="0px" 
+                    background={`hsla(${this.state.background.h}, ${this.state.background.s * 100}%, ${this.state.background.l * 100}%, ${this.state.background.a})`}
+                />
                 {this.state.picker ? <ChromePicker onChange={ this.handleChangeComplete } color={ this.state.background } /> : null}
             </PickerObj>
         );
