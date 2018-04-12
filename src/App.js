@@ -177,7 +177,16 @@ class App extends Component {
       <Sidebar width={this.state.sidebar}>
       <List>
           {this.state.colors.map((layer, layerIndex) => {
-            return <ListItem key={layerIndex}>{<div><LayerLabel>{`Layer ${layerIndex}`}</LayerLabel></div>}{layer.colors.map(color => {
+            return <ListItem key={layerIndex}>
+            {<div>
+              <LayerLabel>{`Layer ${layerIndex}`}</LayerLabel>
+              <AngleSlider>
+                <label>Angle</label>
+                <input type="range" min="0" max="359" name="degree" id={layerIndex} value={layer.degree} onChange={this.handleChange} />
+              </AngleSlider>
+              <button name={layerIndex} onClick={this.addColor}>Add Color</button>
+            </div>}
+            {layer.colors.map(color => {
               return <ColorPicker 
                       h={color.h}
                       s={color.s}
@@ -187,11 +196,8 @@ class App extends Component {
                       name={color.name}
                       handleChange={this.handleColorChange}>
                     </ColorPicker>
-                  })} <AngleSlider>
-                  <label>Angle</label>
-                  <input type="range" min="0" max="359" name="degree" id={layerIndex} value={layer.degree} onChange={this.handleChange} />
-                </AngleSlider>
-                <button name={layerIndex} onClick={this.addColor}>Add Color</button></ListItem>
+                  })}
+                </ListItem>
           })}
           <ListItem>
           <button onClick={this.addLayer}>Add Layer</button>

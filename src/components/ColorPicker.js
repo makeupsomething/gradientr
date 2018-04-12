@@ -30,12 +30,14 @@ const Slider = styled.input`
 class ColorPicker extends Component {
     state = {
         picker: false,
-        background: '#fff',
+        background: {h: 1, s: 50, l: 50, a: 1},
     };
 
     componentDidMount = () => {
-        const { h, s, l, a, amount, handleChange, name, top, left } = this.props;
-        this.setState({background: {h, s, l, a}})
+        const { h, s, l, a } = this.props;
+        let tmp = this.state.background;
+        tmp = {h: parseInt(h), s: parseInt(s) / 100, l: parseInt(l) / 100, a: parseFloat(a)};
+        this.setState({background: tmp});
     }
 
     togglePicker = (event) => {
