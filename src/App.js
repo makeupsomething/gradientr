@@ -62,6 +62,7 @@ const AddButton = styled.button`
   z-index: 2;
   background-color: #ffffff42;
   border: 2px solid gray;
+  border-radius: 3px;
 `
 
 const Sidebar = styled.div.attrs({
