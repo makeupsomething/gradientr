@@ -2,22 +2,19 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { ChromePicker } from 'react-color';
 
-const PickerObj = styled.div.attrs({
-    top: props => props.top,
-    left: props => props.left,
-})`
-    width: 100%;
-    margin: auto;
-    margin: 10px 0;
+const PickerObj = styled.span`
+    display: inline;
+    width: 100px;
+    height: 100px;
 `
 
 const ColorBlock = styled.div.attrs({
     background: props => props.background || 'green',
-    top: props => props.top,
 })`
-    width: 80%;
+    display: inline-block;
+    width: 40px;
     height: 40px;
-    margin: auto;
+    margin-right: 10px;
     background: ${props => props.background};
 `
 
@@ -54,15 +51,13 @@ class ColorPicker extends Component {
     render() {
         const {amount, handleChange, name, top, left } = this.props;
         return (
-            <PickerObj top={top} left={left}>
+            <span>
                 <ColorBlock 
-                    style={inputStyles} 
                     onClick={this.togglePicker} 
-                    top="0px" 
                     background={`hsla(${this.state.background.h}, ${this.state.background.s * 100}%, ${this.state.background.l * 100}%, ${this.state.background.a})`}
                 />
-                {this.state.picker ? <ChromePicker onChange={ this.handleChangeComplete } color={ this.state.background } /> : null}
-            </PickerObj>
+                {this.state.picker ? <ChromePicker style={inputStyles} onChange={ this.handleChangeComplete } color={ this.state.background } /> : null}
+            </span>
         );
     }
 }

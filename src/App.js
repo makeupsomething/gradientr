@@ -30,20 +30,6 @@ const CodeSnippit = styled.code`
   background: white;
 `
 
-const List = styled.ul`
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  top: 5%;
-`
-
-const ListItem = styled.li`
-  width: 100%;
-  display: block;
-  margin: auto;
-  padding: 10px 0;
-`
-
 const LayerLabel = styled.p`
   width: 100%;
   margin: auto;
@@ -110,6 +96,29 @@ class App extends Component {
     });
   }
 
+
+  handleColorAmountChange = (event) => {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+    const id = target.id;
+
+    let tmp = this.state.colors;
+
+    tmp.forEach(layer => {
+      layer.colors.forEach(c => {
+        if(name === c.name) {
+          c.amount = value;
+        }
+      });
+    });
+
+    this.setState({
+      colors: tmp
+    });
+  }
+
+
   handleChange = (event) => {
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -164,20 +173,16 @@ class App extends Component {
         </Wrapper>
       </Background>
       <Sidebar width={this.state.sidebar}>
-      <List>
           {this.state.colors.map((layer, layerIndex) => {
-            return <ListItem key={layerIndex}>
-            {<div>
+            return <div>
               <LayerLabel>{`Layer ${layerIndex}`}</LayerLabel>
               <AngleSlider>
                 <label>Angle</label>
-                <input type="range" min="0" max="359" name="degree" id={layerIndex} value={layer.degree} onChange={this.handleChange} />
-                <span>{this.state.colors[layerIndex].degree}</span>
+                <input type="number" min="0" max="359" name="degree" id={layerIndex} value={layer.degree} onChange={this.handleChange} />
               </AngleSlider>
               <AddButton name={layerIndex} onClick={this.addColor}>Add Color</AddButton>
-            </div>}
-            {layer.colors.map(color => {
-              return <ColorPicker 
+              <ul style={{"list-style-type": "none", margin: "0", padding: "0"}}>{layer.colors.map(color => {
+              return <li style={{display: "inline"}}><ColorPicker 
                       h={color.h}
                       s={color.s}
                       l={color.l}
@@ -185,17 +190,26 @@ class App extends Component {
                       amount={color.amount}
                       name={color.name}
                       handleChange={this.handleColorChange}>
-                    </ColorPicker>
-                  })}
-                </ListItem>
+                    </ColorPicker></li>
+            })}</ul>
+              <ul style={{"list-style-type": "none", margin: "0", padding: "0"}}>{layer.colors.map(color => {
+              return <li style={{display: "inline"}}><input
+                      style={{width: "35px", "margin-right": "10px"}}
+                      type="number"
+                      min="0"
+                      max="100"
+                      value={color.amount}
+                      name={color.name}
+                      onChange={this.handleColorAmountChange}>
+                    </input></li>
+            })}</ul>
+            
+            </div>
           })}
-          <ListItem>
+          
           <AddButton onClick={this.addLayer}>Add Layer</AddButton>
-          </ListItem>
-          <ListItem>
+
             <CodeSnippit>{`${str}`}</CodeSnippit>
-          </ListItem>
-        </List>
       </Sidebar>
       </div>
     );
