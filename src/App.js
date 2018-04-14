@@ -168,7 +168,7 @@ render() {
     return (
 		<div>
       		<Background className="gradientr" background={str} width={this.state.background}>
-        		<MenuButton onClick={this.toggleSidebar}>toggle menu</MenuButton>
+        		<MenuButton onClick={this.toggleSidebar}><i class="fas fa-bars"></i></MenuButton>
         		<Wrapper>
           			gradientr
         		</Wrapper>
@@ -192,7 +192,7 @@ render() {
 									name={color.name}
 									handleChange={this.handleColorChange}>
 									</ColorPicker></li>
-            			})}<li style={{display: "inline"}}><AddButton name={layerIndex} onClick={this.addColor}>Add Color</AddButton></li></ul>
+            			})}<li style={{display: "inline"}}><AddButton name={layerIndex} onClick={this.addColor}><i class="fas fa-plus" />Color</AddButton></li></ul>
 						  	<ul style={{"list-style-type": "none", margin: "0", padding: "0"}}>
 						  	{layer.colors.map(color => {
 							return <li style={{display: "inline"}}><input
@@ -206,7 +206,7 @@ render() {
             				})}</ul>
             				</div>
           		})}
-				<AddButton onClick={this.addLayer}>Add Layer</AddButton>
+				<AddButton onClick={this.addLayer}><i class="fas fa-plus" />Layer</AddButton>
 				<br />
 				<CodeSnippit>{`${str}`}</CodeSnippit>
       		</Sidebar>
