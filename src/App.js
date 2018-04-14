@@ -49,6 +49,8 @@ const AddButton = styled.button`
   background-color: #ffffff42;
   border: 2px solid gray;
   border-radius: 3px;
+  width: 40px;
+  height: 40px;
 `
 
 const Sidebar = styled.div.attrs({
@@ -178,9 +180,8 @@ class App extends Component {
               <LayerLabel>{`Layer ${layerIndex}`}</LayerLabel>
               <AngleSlider>
                 <label>Angle</label>
-                <input type="number" min="0" max="359" name="degree" id={layerIndex} value={layer.degree} onChange={this.handleChange} />
+                <input type="range" min="0" max="359" name="degree" id={layerIndex} value={layer.degree} onChange={this.handleChange} />
               </AngleSlider>
-              <AddButton name={layerIndex} onClick={this.addColor}>Add Color</AddButton>
               <ul style={{"list-style-type": "none", margin: "0", padding: "0"}}>{layer.colors.map(color => {
               return <li style={{display: "inline"}}><ColorPicker 
                       h={color.h}
@@ -191,24 +192,23 @@ class App extends Component {
                       name={color.name}
                       handleChange={this.handleColorChange}>
                     </ColorPicker></li>
-            })}</ul>
+            })}<li style={{display: "inline"}}><AddButton name={layerIndex} onClick={this.addColor}>Add Color</AddButton></li></ul>
               <ul style={{"list-style-type": "none", margin: "0", padding: "0"}}>{layer.colors.map(color => {
               return <li style={{display: "inline"}}><input
                       style={{width: "35px", "margin-right": "10px"}}
-                      type="number"
+                      type="range"
                       min="0"
                       max="100"
                       value={color.amount}
                       name={color.name}
-                      onChange={this.handleColorAmountChange}>
-                    </input></li>
+                      onChange={this.handleColorAmountChange} /></li>
             })}</ul>
             
             </div>
           })}
           
           <AddButton onClick={this.addLayer}>Add Layer</AddButton>
-
+          <br />
             <CodeSnippit>{`${str}`}</CodeSnippit>
       </Sidebar>
       </div>
