@@ -38,6 +38,13 @@ class ColorPicker extends Component {
         this.setState({background: tmp});
     }
 
+    componentDidUpdate = (prevProps) => {
+        if (prevProps !== this.props) {
+            //console.log(this.props)
+            //fetchFromDb(this.props.channelName);            
+        }
+    }
+
     togglePicker = (event) => {
         this.setState({picker: !this.state.picker})
     }
@@ -49,7 +56,7 @@ class ColorPicker extends Component {
     };
 
     render() {
-        const {amount, handleChange, name, top, left } = this.props;
+        const {amount, handleChange, top, left } = this.props;
         return (
             <span>
                 <ColorBlock 

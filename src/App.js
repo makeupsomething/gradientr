@@ -27,13 +27,13 @@ const AngleSlider = styled.div`
 
 const CodeSnippit = styled.code`
   	width: 80%;
-  	background: white;
+	  background: white;
+	  color: gray;
 `
 
 const LayerLabel = styled.p`
   	width: 100%;
   	margin: auto;
-  	color: black;
 `
 
 const MenuButton = styled.button`
@@ -49,8 +49,13 @@ const AddButton = styled.button`
   	background-color: #ffffff42;
   	border: 2px solid gray;
   	border-radius: 3px;
-  	width: 40px;
-  	height: 40px;
+	text-align: center;
+	color: gray;
+`
+
+const Line = styled.hr`
+	color: #ffffff63;
+	border-width: 1px;
 `
 
 const Sidebar = styled.div.attrs({
@@ -63,16 +68,17 @@ const Sidebar = styled.div.attrs({
   	right: 0
   	position: absolute;
   	overflow: scroll;
+	padding-top: 3%;
 `
 
 
 class App extends Component {
   state = {
     colors: [
-		{degree: 93, colors:[{h: '359', s: '88', l: '68', a: '0.7', amount: 26, name: "color01"}, 
-      	{h: '199', s: '100', l: '60', a: '0.6', amount: 75, name: "color02"}]},
-      	{degree: 181, colors:[{h: '98', s: '93', l: '50', a: '0.5', amount: 25, name: "color11"}, 
-      	{h: '191', s: '92', l: '50', a: '0.5', amount: 50, name: "color12"}]}
+		{degree: 93, colors:[{h: '359', s: '88', l: '68', a: '0.7', amount: 26, name: "color01", id: "color01"}, 
+      	{h: '199', s: '100', l: '60', a: '0.6', amount: 75, name: "color02", id: "color02"}]},
+      	{degree: 181, colors:[{h: '98', s: '93', l: '50', a: '0.5', amount: 25, name: "color11", id: "color11"}, 
+      	{h: '191', s: '92', l: '50', a: '0.5', amount: 50, name: "color12", id: "color12"}]}
     ],
     sidebar: '25%',
     background: '100%',
@@ -83,7 +89,7 @@ handleColorChange = (color, target) => {
 
     tmp.forEach(layer => {
       	layer.colors.forEach(c => {
-        	if(target === c.name) {
+        	if(target === c.id) {
           	c.h = color.h;
           	c.s = color.s * 100;
           	c.l = color.l * 100;
@@ -107,7 +113,7 @@ handleColorAmountChange = (event) => {
 
     tmp.forEach(layer => {
       	layer.colors.forEach(c => {
-        	if(name === c.name) {
+        	if(name === c.id) {
           	c.amount = value;
         	}
       	});
@@ -133,11 +139,24 @@ handleChange = (event) => {
     });
 }
 
+uuidv4 = () => {
+	return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+	  (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+	)
+}
+
 addColor = (event) => {
 	const target = event.target;
     const name = target.name;
-    let ttt = this.state.colors
-    ttt[name].colors.push({h: '0', s: '50', l: '50', a: '0.5', amount: 50, name: `color${name}${ttt[name].colors.length+1}`})
+	let ttt = this.state.colors
+	let uuid = this.uuidv4()
+	console.log("###############add start#####################")
+	console.log(uuid)
+	console.log(name)
+	console.log(ttt)
+	ttt[name].colors.push({h: '0', s: '50', l: '50', a: '0.5', amount: 50, name: `color${name}${ttt[name].colors.length+1}`, id: uuid})
+	console.log(ttt)
+	console.log("###############add end#####################")
     this.setState({ colors: ttt });
 }
 
@@ -149,6 +168,24 @@ addColor = (event) => {
 
 toggleSidebar = (event) => {
 	this.setState({sidebar: this.state.sidebar === '25%' ? '0%' : '25%'})
+}
+
+removeColor = (event) => {
+	const target = event.target;
+	const name = target.name;
+	const id = target.id;
+	let fff = this.state.colors;
+	let ttt = this.state.colors[id].colors
+	console.log("###############remove start#####################")
+	console.log(name)
+	let m = this.state.colors[id].colors.filter(color => color.id !== name)
+	ttt = this.state.colors[id].colors.filter(color => color.id !== name)
+	fff[id].colors = ttt
+	console.log(fff)
+	//return
+	console.log("###############remove end#####################")
+	this.setState({ colors: fff });
+	
 }
 
 render() {
@@ -168,15 +205,18 @@ render() {
     return (
 		<div>
       		<Background className="gradientr" background={str} width={this.state.background}>
-        		<MenuButton onClick={this.toggleSidebar}><i class="fas fa-bars"></i></MenuButton>
+        		
         		<Wrapper>
           			gradientr
         		</Wrapper>
       		</Background>
+			<MenuButton onClick={this.toggleSidebar}><i class="fas fa-bars"></i></MenuButton>
       		<Sidebar width={this.state.sidebar}>
           		{this.state.colors.map((layer, layerIndex) => {
             		return <div>
+						<Line />
               			<LayerLabel>{`Layer ${layerIndex}`}</LayerLabel>
+						<Line />
 						<AngleSlider>
 							<label>Angle</label>
 							<input type="range" min="0" max="359" name="degree" id={layerIndex} value={layer.degree} onChange={this.handleChange} />
@@ -189,24 +229,35 @@ render() {
 									l={color.l}
 									a={color.a}
 									amount={color.amount}
-									name={color.name}
+									name={color.id}
 									handleChange={this.handleColorChange}>
 									</ColorPicker></li>
-            			})}<li style={{display: "inline"}}><AddButton name={layerIndex} onClick={this.addColor}><i class="fas fa-plus" />Color</AddButton></li></ul>
+            			})}<li style={{display: "inline"}}>{layer.colors.length < 3 ? (<AddButton name={layerIndex} onClick={this.addColor}><i class="fas fa-plus" />Color</AddButton>) : null}</li></ul>
 						  	<ul style={{"list-style-type": "none", margin: "0", padding: "0"}}>
 						  	{layer.colors.map(color => {
-							return <li style={{display: "inline"}}><input
+							return <li style={{display: "inline"}}>
+								<input
 									style={{width: "35px", "margin-right": "10px"}}
 									type="range"
 									min="0"
 									max="100"
 									value={color.amount}
-									name={color.name}
-									onChange={this.handleColorAmountChange} /></li>
+									name={color.id}
+									onChange={this.handleColorAmountChange} />
+								</li>
+            				})}</ul>
+							<ul style={{"list-style-type": "none", margin: "0", padding: "0"}}>
+						  	{layer.colors.map((color, colorIndex) => {
+							return <li style={{display: "inline"}}>
+								<button onClick={this.removeColor} name={color.id} id={layerIndex}> 
+									remove color
+								</button></li>
             				})}</ul>
             				</div>
-          		})}
-				<AddButton onClick={this.addLayer}><i class="fas fa-plus" />Layer</AddButton>
+				  })}
+				<Line />
+				{this.state.colors.length < 3 ? (<AddButton onClick={this.addLayer}><i class="fas fa-plus" />Layer</AddButton>) : null}
+				<Line />
 				<br />
 				<CodeSnippit>{`${str}`}</CodeSnippit>
       		</Sidebar>
