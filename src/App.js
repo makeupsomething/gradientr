@@ -150,6 +150,13 @@ addColor = (event) => {
     const name = target.name;
 	let ttt = this.state.colors
 	let uuid = this.uuidv4()
+	if(!name) {
+		console.log("^^^^^^^^^^^^^^^^^^^break******&&&&&&&&")
+		console.log(uuid)
+		console.log(name)
+		console.log(ttt)
+		return
+	}
 	console.log("###############add start#####################")
 	console.log(uuid)
 	console.log(name)
@@ -216,6 +223,7 @@ render() {
             		return <div>
 						<Line />
               			<LayerLabel>{`Layer ${layerIndex}`}</LayerLabel>
+						<p>{layerIndex}</p>
 						<Line />
 						<AngleSlider>
 							<label>Angle</label>
@@ -232,7 +240,7 @@ render() {
 									name={color.id}
 									handleChange={this.handleColorChange}>
 									</ColorPicker></li>
-            			})}<li style={{display: "inline"}}>{layer.colors.length < 3 ? (<AddButton name={layerIndex} onClick={this.addColor}><i class="fas fa-plus" />Color</AddButton>) : null}</li></ul>
+            			})}<li style={{display: "inline"}}>{layer.colors.length < 3 && layerIndex != undefined ? (<AddButton name={layerIndex} onClick={this.addColor}><i class="fas fa-plus" />Color</AddButton>) : null}</li></ul>
 						  	<ul style={{"list-style-type": "none", margin: "0", padding: "0"}}>
 						  	{layer.colors.map(color => {
 							return <li style={{display: "inline"}}>
