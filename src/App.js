@@ -253,9 +253,9 @@ render() {
 							<ul style={{"list-style-type": "none", margin: "0", padding: "0"}}>
 						  	{layer.colors.map((color, colorIndex) => {
 							return <li style={{display: "inline"}}>
-								<button onClick={this.removeColor} name={color.id} id={layerIndex}> 
+								<AddButton onClick={this.removeColor} name={color.id} id={layerIndex}> 
 									remove color
-								</button></li>
+								</AddButton></li>
             				})}</ul>
             				</div>
 				  })}
