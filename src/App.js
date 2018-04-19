@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import './App.css';
 import ColorPicker from './components/ColorPicker';
+import Slider, { Range } from 'rc-slider';
+import 'rc-slider/assets/index.css';
 
 const Wrapper = styled.p`
 margin: auto;
@@ -153,19 +155,14 @@ addColor = (event) => {
 	if(!name) {
 		return
 	}
-	//console.log("###############add start#####################")
-	//console.log(uuid)
-	//console.log(name)
-	//console.log(ttt)
+
 	ttt[name].colors.push({h: '0', s: '50', l: '50', a: '0.5', amount: 50, name: `color${name}${ttt[name].colors.length+1}`, id: uuid})
-	//console.log(ttt)
-	//console.log("###############add end#####################")
     this.setState({ colors: ttt });
 }
 
   addLayer = (event) => {
     let ttt = this.state.colors
-    ttt.push({degree: 181, colors: [{h: '0', s: '50', l: '50', a: '0.5', amount: 50, name: `color${this.state.colors.length+1}1`}, {h: '191', s: '92', l: '50', a: '0.5', amount: 50, name: `color${this.state.colors.length+1}2`}]})
+    ttt.push({degree: 181, colors: [{h: '0', s: '50', l: '50', a: '0.5', amount: 50, name: `color${this.state.colors.length+1}1`, id: `color${this.state.colors.length+1}1`}, {h: '191', s: '92', l: '50', a: '0.5', amount: 50, name: `color${this.state.colors.length+1}2`, id: `color${this.state.colors.length+1}2`}]})
     this.setState({ colors: ttt });
 }
 
@@ -179,14 +176,9 @@ removeColor = (event) => {
 	const id = target.id;
 	let fff = this.state.colors;
 	let ttt = this.state.colors[id].colors
-	console.log("###############remove start#####################")
-	console.log(name)
 	let m = this.state.colors[id].colors.filter(color => color.id !== name)
 	ttt = this.state.colors[id].colors.filter(color => color.id !== name)
 	fff[id].colors = ttt
-	console.log(fff)
-	//return
-	console.log("###############remove end#####################")
 	this.setState({ colors: fff });
 	
 }
@@ -208,7 +200,6 @@ render() {
     return (
 		<div>
       		<Background className="gradientr" background={str} width={this.state.background}>
-        		
         		<Wrapper>
           			gradientr
         		</Wrapper>
@@ -219,7 +210,6 @@ render() {
             		return <div>
 						<Line />
               			<LayerLabel>{`Layer ${layerIndex}`}</LayerLabel>
-						<p>{layerIndex}</p>
 						<Line />
 						<AngleSlider>
 							<label>Angle</label>
