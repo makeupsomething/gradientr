@@ -151,19 +151,15 @@ addColor = (event) => {
 	let ttt = this.state.colors
 	let uuid = this.uuidv4()
 	if(!name) {
-		console.log("^^^^^^^^^^^^^^^^^^^break******&&&&&&&&")
-		console.log(uuid)
-		console.log(name)
-		console.log(ttt)
 		return
 	}
-	console.log("###############add start#####################")
-	console.log(uuid)
-	console.log(name)
-	console.log(ttt)
+	//console.log("###############add start#####################")
+	//console.log(uuid)
+	//console.log(name)
+	//console.log(ttt)
 	ttt[name].colors.push({h: '0', s: '50', l: '50', a: '0.5', amount: 50, name: `color${name}${ttt[name].colors.length+1}`, id: uuid})
-	console.log(ttt)
-	console.log("###############add end#####################")
+	//console.log(ttt)
+	//console.log("###############add end#####################")
     this.setState({ colors: ttt });
 }
 
