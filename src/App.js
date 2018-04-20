@@ -159,12 +159,6 @@ addColor = (event) => {
     this.setState({ colors: ttt });
 }
 
-  addLayer = (event) => {
-    let ttt = this.state.colors
-    ttt.push({degree: 181, colors: [{h: '0', s: '50', l: '50', a: '0.5', amount: 50, name: `color${this.state.colors.length+1}1`, id: `color${this.state.colors.length+1}1`}, {h: '191', s: '92', l: '50', a: '0.5', amount: 50, name: `color${this.state.colors.length+1}2`, id: `color${this.state.colors.length+1}2`}]})
-    this.setState({ colors: ttt });
-}
-
 toggleSidebar = (event) => {
 	this.setState({sidebar: this.state.sidebar === '25%' ? '0%' : '25%'})
 }
@@ -248,8 +242,6 @@ render() {
             				})}</ul>
             				</div>
 				  })}
-				<Line />
-				{this.state.colors.length < 3 ? (<AddButton onClick={this.addLayer}><i class="fas fa-plus" />Layer</AddButton>) : null}
 				<Line />
 				<br />
 				<CodeSnippit>{`${str}`}</CodeSnippit>
