@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import './App.css';
 import ColorPicker from './components/ColorPicker';
-import Slider, { Range } from 'rc-slider';
-import 'rc-slider/assets/index.css';
 
 const Wrapper = styled.p`
 margin: auto;
