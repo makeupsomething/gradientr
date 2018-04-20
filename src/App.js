@@ -63,6 +63,7 @@ const Sidebar = styled.div.attrs({
   	width: props => props.width || '20%',
 })`
   	background: ${props => props.background};
+	padding-left: 10px;
   	height: 100%;
   	width: ${props => props.width};
   	right: 0
@@ -177,8 +178,7 @@ removeColor = (event) => {
 	let m = this.state.colors[id].colors.filter(color => color.id !== name)
 	ttt = this.state.colors[id].colors.filter(color => color.id !== name)
 	fff[id].colors = ttt
-	this.setState({ colors: fff });
-	
+	this.setState({ colors: fff });	
 }
 
 render() {
@@ -215,7 +215,8 @@ render() {
 						</AngleSlider>
 						<ul style={{"list-style-type": "none", margin: "0", padding: "0"}}>
 						{layer.colors.map(color => {
-							return <li style={{display: "inline"}}><ColorPicker 
+							return <li style={{display: "inline"}}>
+								<ColorPicker 
 									h={color.h}
 									s={color.s}
 									l={color.l}
