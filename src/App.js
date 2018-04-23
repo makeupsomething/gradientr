@@ -23,17 +23,20 @@ const Background = styled.div.attrs({
 
 const AngleSlider = styled.div`
 	margin: 10px 0;
+	padding-left: 10px;
 `
 
 const CodeSnippit = styled.code`
   	width: 80%;
-	  background: white;
-	  color: gray;
+	background: white;
+	color: gray;
+	padding-left: 10px;
 `
 
 const LayerLabel = styled.p`
   	width: 100%;
   	margin: auto;
+	padding-left: 10px;
 `
 
 const MenuButton = styled.button`
@@ -63,7 +66,6 @@ const Sidebar = styled.div.attrs({
   	width: props => props.width || '20%',
 })`
   	background: ${props => props.background};
-	padding-left: 10px;
   	height: 100%;
   	width: ${props => props.width};
   	right: 0
@@ -207,7 +209,7 @@ render() {
 							<label>Angle</label>
 							<input type="range" min="0" max="359" name="degree" id={layerIndex} value={layer.degree} onChange={this.handleChange} />
 						</AngleSlider>
-						<ul style={{"list-style-type": "none", margin: "0", padding: "0"}}>
+						<ul style={{"list-style-type": "none", margin: "0", padding: "0", paddingLeft: "10px"}}>
 						{layer.colors.map(color => {
 							return <li style={{display: "inline"}}>
 								<ColorPicker 
@@ -220,7 +222,7 @@ render() {
 									handleChange={this.handleColorChange}>
 									</ColorPicker></li>
             			})}<li style={{display: "inline"}}>{layer.colors.length < 3 && layerIndex != undefined ? (<AddButton name={layerIndex} onClick={this.addColor}><i class="fas fa-plus" />Color</AddButton>) : null}</li></ul>
-						  	<ul style={{"list-style-type": "none", margin: "0", padding: "0"}}>
+						  	<ul style={{"list-style-type": "none", margin: "0", padding: "0", paddingLeft: "10px"}}>
 						  	{layer.colors.map(color => {
 							return <li style={{display: "inline"}}>
 								<input
@@ -233,7 +235,7 @@ render() {
 									onChange={this.handleColorAmountChange} />
 								</li>
             				})}</ul>
-							<ul style={{"list-style-type": "none", margin: "0", padding: "0"}}>
+							<ul style={{"list-style-type": "none", margin: "0", padding: "0", paddingLeft: "10px"}}>
 						  	{layer.colors.map((color, colorIndex) => {
 							return <li style={{display: "inline"}}>
 								<AddButton onClick={this.removeColor} name={color.id} id={layerIndex}> 
