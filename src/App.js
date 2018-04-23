@@ -54,6 +54,8 @@ const AddButton = styled.button`
   	border-radius: 3px;
 	text-align: center;
 	color: gray;
+	width: 40px;
+	margin-right: 5px;
 `
 
 const Line = styled.hr`
@@ -78,13 +80,13 @@ const Sidebar = styled.div.attrs({
 class App extends Component {
   state = {
     colors: [
-		{degree: 93, colors:[{h: '359', s: '88', l: '68', a: '0.7', amount: 26, name: "color01", id: "color01"}, 
+		{degree: 93, hidden: false, colors:[{h: '359', s: '88', l: '68', a: '0.7', amount: 26, name: "color01", id: "color01"}, 
       	{h: '199', s: '100', l: '60', a: '0.6', amount: 75, name: "color02", id: "color02"}]},
-      	{degree: 181, colors:[{h: '98', s: '93', l: '50', a: '0.5', amount: 25, name: "color11", id: "color11"}, 
+      	{degree: 181, hidden: false, colors:[{h: '98', s: '93', l: '50', a: '0.5', amount: 25, name: "color11", id: "color11"}, 
       	{h: '191', s: '92', l: '50', a: '0.5', amount: 50, name: "color12", id: "color12"}]}
     ],
-    sidebar: '25%',
-    background: '100%',
+    sidebar: '20%',
+	background: '100%',
   };
 
 handleColorChange = (color, target) => {
@@ -125,6 +127,16 @@ handleColorAmountChange = (event) => {
     this.setState({
       	colors: tmp
     });
+}
+
+hideLayer = (event) => {
+	const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+	const name = target.name;
+	
+	let ttt = this.state.colors
+    ttt[name].hidden = value
+	this.setState({colors: ttt})
 }
 
 
@@ -180,14 +192,16 @@ removeColor = (event) => {
 render() {
     let str = '';
 
-    let gradString = this.state.colors.forEach((layer, index) => {
+	let tgtef = this.state.colors.filter(({hidden}) => !hidden)
+
+    let gradString = tgtef.forEach((layer, index) => {
 		str+= `linear-gradient(${layer.degree}deg, `;
         layer.colors.forEach((color, index) => {
         	str+= `hsla(${color.h}, ${color.s}%, ${color.l}%,  ${color.a}) ${color.amount}%`
         	str+= index === layer.colors.length-1 ? `)` : ',';
 		});
 	
-	str+= index === this.state.colors.length-1 ? '' : ',';
+	str+= index === tgtef.length-1 ? '' : ',';
 	
 	});
 
@@ -204,6 +218,11 @@ render() {
             		return <div>
 						<Line />
               			<LayerLabel>{`Layer ${layerIndex}`}</LayerLabel>
+						  {<label>Hide Layer<input
+							name={layerIndex}
+							type="checkbox"
+							checked={this.state.colors[layerIndex].hidden}
+							onChange={this.hideLayer} /></label>}
 						<Line />
 						<AngleSlider>
 							<label>Angle</label>
