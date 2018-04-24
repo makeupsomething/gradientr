@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import './App.css';
 import ColorPicker from './components/ColorPicker';
+import Layer from './components/Layer';
 
 const Wrapper = styled.p`
 margin: auto;
@@ -21,21 +22,10 @@ const Background = styled.div.attrs({
 	background: ${props => props.background};
 `;
 
-const AngleSlider = styled.div`
-	margin: 10px 0;
-	padding-left: 10px;
-`
-
 const CodeSnippit = styled.code`
   	width: 80%;
 	background: white;
 	color: gray;
-	padding-left: 10px;
-`
-
-const LayerLabel = styled.p`
-  	width: 100%;
-  	margin: auto;
 	padding-left: 10px;
 `
 
@@ -45,17 +35,6 @@ const MenuButton = styled.button`
   	z-index: 2;
   	background-color: #ffffff42;
   	border: 2px solid gray;
-`
-
-const AddButton = styled.button`
-  	z-index: 2;
-  	background-color: #ffffff42;
-  	border: 2px solid gray;
-  	border-radius: 3px;
-	text-align: center;
-	color: gray;
-	width: 40px;
-	margin-right: 5px;
 `
 
 const Line = styled.hr`
@@ -85,7 +64,7 @@ class App extends Component {
       	{degree: 181, hidden: false, colors:[{h: '98', s: '93', l: '50', a: '0.5', amount: 25, name: "color11", id: "color11"}, 
       	{h: '191', s: '92', l: '50', a: '0.5', amount: 50, name: "color12", id: "color12"}]}
     ],
-    sidebar: '20%',
+    sidebar: '25%',
 	background: '100%',
   };
 
@@ -129,25 +108,15 @@ handleColorAmountChange = (event) => {
     });
 }
 
-hideLayer = (event) => {
-	const target = event.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-	const name = target.name;
-	
-	let ttt = this.state.colors
-    ttt[name].hidden = value
-	this.setState({colors: ttt})
-}
-
-
 handleChange = (event) => {
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
-    const id = target.id;
+	const id = target.id;
+	const name = target.name;
 
 
     let ttt = this.state.colors
-    ttt[id].degree = value
+    ttt[id][name] = value
 
     this.setState({
 		colors: ttt
@@ -214,57 +183,16 @@ render() {
       		</Background>
 			<MenuButton onClick={this.toggleSidebar}><i class="fas fa-bars"></i></MenuButton>
       		<Sidebar width={this.state.sidebar}>
-          		{this.state.colors.map((layer, layerIndex) => {
-            		return <div>
+			  <Line />
+			  <ul style={{"list-style-type": "none", margin: "0", padding: "0", paddingLeft: "10px"}}>
+			  {this.state.colors.map((layer, layerIndex) => {
+            		return <li style={{display: "inline"}}>
+						<Layer style={{display: "inline"}} layer={layer} index={layerIndex} handleChange={this.handleChange} handleColorChange={this.handleColorChange} addColor={this.addColor} handleColorAmountChange={this.handleColorAmountChange} removeColor={this.removeColor} checked={this.state.colors[layerIndex].hidden} />
 						<Line />
-              			<LayerLabel>{`Layer ${layerIndex}`}</LayerLabel>
-						  {<label>Hide Layer<input
-							name={layerIndex}
-							type="checkbox"
-							checked={this.state.colors[layerIndex].hidden}
-							onChange={this.hideLayer} /></label>}
-						<Line />
-						<AngleSlider>
-							<label>Angle</label>
-							<input type="range" min="0" max="359" name="degree" id={layerIndex} value={layer.degree} onChange={this.handleChange} />
-						</AngleSlider>
-						<ul style={{"list-style-type": "none", margin: "0", padding: "0", paddingLeft: "10px"}}>
-						{layer.colors.map(color => {
-							return <li style={{display: "inline"}}>
-								<ColorPicker 
-									h={color.h}
-									s={color.s}
-									l={color.l}
-									a={color.a}
-									amount={color.amount}
-									name={color.id}
-									handleChange={this.handleColorChange}>
-									</ColorPicker></li>
-            			})}<li style={{display: "inline"}}>{layer.colors.length < 3 && layerIndex != undefined ? (<AddButton name={layerIndex} onClick={this.addColor}><i class="fas fa-plus" />Color</AddButton>) : null}</li></ul>
-						  	<ul style={{"list-style-type": "none", margin: "0", padding: "0", paddingLeft: "10px"}}>
-						  	{layer.colors.map(color => {
-							return <li style={{display: "inline"}}>
-								<input
-									style={{width: "35px", "margin-right": "10px"}}
-									type="range"
-									min="0"
-									max="100"
-									value={color.amount}
-									name={color.id}
-									onChange={this.handleColorAmountChange} />
-								</li>
-            				})}</ul>
-							<ul style={{"list-style-type": "none", margin: "0", padding: "0", paddingLeft: "10px"}}>
-						  	{layer.colors.map((color, colorIndex) => {
-							return <li style={{display: "inline"}}>
-								<AddButton onClick={this.removeColor} name={color.id} id={layerIndex}> 
-									remove color
-								</AddButton></li>
-            				})}</ul>
-            				</div>
-				  })}
+						</li>
+				  })}<Line />
+				</ul>
 				<Line />
-				<br />
 				<CodeSnippit>{`${str}`}</CodeSnippit>
       		</Sidebar>
       	</div>
