@@ -187,10 +187,20 @@ render() {
 			  <ul style={{"list-style-type": "none", margin: "0", padding: "0", paddingLeft: "10px"}}>
 			  {this.state.colors.map((layer, layerIndex) => {
             		return <li style={{display: "inline"}}>
-						<Layer style={{display: "inline"}} layer={layer} index={layerIndex} handleChange={this.handleChange} handleColorChange={this.handleColorChange} addColor={this.addColor} handleColorAmountChange={this.handleColorAmountChange} removeColor={this.removeColor} checked={this.state.colors[layerIndex].hidden} />
+						<Line />
+						<Layer 
+							layer={layer} 
+							index={layerIndex} 
+							handleChange={this.handleChange} 
+							handleColorChange={this.handleColorChange} 
+							addColor={this.addColor} 
+							handleColorAmountChange={this.handleColorAmountChange} 
+							removeColor={this.removeColor} 
+							checked={this.state.colors[layerIndex].hidden} 
+						/>
 						<Line />
 						</li>
-				  })}<Line />
+				  })}
 				</ul>
 				<Line />
 				<CodeSnippit>{`${str}`}</CodeSnippit>

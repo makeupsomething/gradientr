@@ -20,7 +20,8 @@ const AddButton = styled.button`
   	border-radius: 3px;
 	text-align: center;
 	color: gray;
-	width: 40px;
+	width:  20%;
+    height:  20%;
 	margin-right: 5px;
 `
 
@@ -30,7 +31,7 @@ class Layer extends Component {
     render() {
         const {layer, index, handleChange, handleColorChange, addColor, handleColorAmountChange, removeColor, checked} = this.props;
         return (
-            <span style={{display: "inline", width: "20%"}}>
+            <span>
             <LayerLabel>{`Layer ${index}`}</LayerLabel>
             <label style={{display: "inline"}}>Hide Layer<input
 							name="hidden"
@@ -45,8 +46,8 @@ class Layer extends Component {
             <ul style={{"list-style-type": "none", margin: "0", padding: "0", paddingLeft: "10px"}}>
             {layer.colors.map(color => {
                 return <div>
-                        <li>
-                            <ColorPicker 
+                        <li style={{display: "inline"}}>
+                            <ColorPicker
                                 h={color.h}
                                 s={color.s}
                                 l={color.l}
@@ -56,9 +57,8 @@ class Layer extends Component {
                                 handleChange={handleColorChange}>
                             </ColorPicker>
                         </li>
-                        <li>
+                        <li style={{display: "inline"}}>
                         <input
-							style={{width: "35px", "margin-right": "10px"}}
 							type="range"
 							min="0"
 							max="100"
@@ -66,9 +66,9 @@ class Layer extends Component {
 							name={color.id}
 							onChange={handleColorAmountChange} />
 						</li>
-                        <li>
+                        <li style={{display: "inline"}}>
 							<AddButton onClick={removeColor} name={color.id} id={index}> 
-							    remove color
+							    <i class="fas fa-trash" />
 							</AddButton>
                         </li>
                         </div>
