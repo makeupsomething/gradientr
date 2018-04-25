@@ -34,7 +34,7 @@ class Layer extends Component {
 
     render() {
         const {layer, index, handleChange, handleColorChange, addColor, handleColorAmountChange, removeColor, checked} = this.props;
-        
+
         return (
             <span>
                 <LayerLabel>{`Layer ${index}`}</LayerLabel>
@@ -75,13 +75,13 @@ class Layer extends Component {
                                             onChange={handleColorAmountChange} />
                                     </LayerItem>
                                     <LayerItem>
-                                        <AddButton onClick={() => removeColor(color.id, index)} name={color.id} id={index}> 
+                                        <AddButton onClick={() => removeColor(color.id, index)}> 
                                             <i class="fas fa-trash" />{index}
                                         </AddButton>
                                     </LayerItem>
                                 </div>
                                 })}
-                    <li>{layer.colors.length < 3 && index !== undefined ? (<AddButton name={index} onClick={addColor}><i class="fas fa-plus" />Color</AddButton>) : null}</li>
+                    <li>{layer.colors.length < 3 && index !== undefined ? (<AddButton onClick={() => addColor(index)}><i class="fas fa-plus" />Color</AddButton>) : null}</li>
                 </ul>
             </span>
         );

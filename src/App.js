@@ -129,26 +129,23 @@ uuidv4 = () => {
 	)
 }
 
-addColor = (event) => {
-	const target = event.target;
-    const name = target.name;
-	let ttt = this.state.colors
-	let uuid = this.uuidv4()
-	if(!name) {
+addColor = (layer) => {
+	if(layer === undefined) {
 		return
 	}
-
-	ttt[name].colors.push({h: '0', s: '50', l: '50', a: '0.5', amount: 50, name: `color${name}${ttt[name].colors.length+1}`, id: uuid})
-    this.setState({ colors: ttt });
+	let tmpColors = this.state.colors
+	let uuid = this.uuidv4()
+	tmpColors[layer].colors.push({h: '0', s: '50', l: '50', a: '0.5', amount: 50, id: uuid})
+    this.setState({ colors: tmpColors });
 }
 
 toggleSidebar = (event) => {
 	this.setState({sidebar: this.state.sidebar === '25%' ? '0%' : '25%'})
 }
 
-removeColor = (name, id) => {
+removeColor = (id, layer) => {
 	let tmpColors = this.state.colors;
-	tmpColors[id].colors = this.state.colors[id].colors.filter(color => color.id !== name)
+	tmpColors[layer].colors = this.state.colors[layer].colors.filter(color => color.id !== id)
 	this.setState({ colors: tmpColors });	
 }
 
