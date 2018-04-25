@@ -129,20 +129,25 @@ removeColor = (id, layer) => {
 	this.setState({ colors: tmpColors });	
 }
 
-render() {
-    let str = '';
+getString = () => {
+	let str = '';
+	let strColors = this.state.colors.filter(({hidden}) => !hidden)
 
-	let tgtef = this.state.colors.filter(({hidden}) => !hidden)
-
-    let gradString = tgtef.forEach((layer, index) => {
+	strColors.forEach((layer, index) => {
 		str+= `linear-gradient(${layer.degree}deg, `;
         layer.colors.forEach((color, index) => {
         	str+= `hsla(${color.h}, ${color.s}%, ${color.l}%,  ${color.a}) ${color.amount}%`
         	str+= index === layer.colors.length-1 ? `)` : ',';
 		});
 	
-	str+= index === tgtef.length-1 ? '' : ',';
+	str+= index === strColors.length-1 ? '' : ',';
 	});
+
+	return str;
+}
+
+render() {
+    let str = this.getString();
 
     return (
 		<div>
