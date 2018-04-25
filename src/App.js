@@ -108,18 +108,12 @@ handleColorAmountChange = (event) => {
     });
 }
 
-handleChange = (event) => {
-    const target = event.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-	const id = target.id;
-	const name = target.name;
-
-
-    let ttt = this.state.colors
-    ttt[id][name] = value
+handleChange = (layer, parameter, value) => {
+    let tmpColors = this.state.colors
+    tmpColors[layer][parameter] = value
 
     this.setState({
-		colors: ttt
+		colors: tmpColors
     });
 }
 

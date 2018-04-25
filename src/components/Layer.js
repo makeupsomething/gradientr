@@ -41,15 +41,13 @@ class Layer extends Component {
                 <label>
                     Hide Layer
                     <input
-                        name="hidden"
-                        id={index}
                         type="checkbox"
                         checked={checked}
-                        onChange={handleChange} />
+                        onChange={() => handleChange(index, "hidden", !checked)} />
                 </label>
                 <AngleSlider>
                     <label>Angle</label>
-                    <input type="range" min="0" max="359" name="degree" id={index} value={layer.degree} onChange={handleChange} />
+                    <input type="range" min="0" max="359" value={layer.degree} onChange={(event) => handleChange(index, "degree", event.target.value)} />
                 </AngleSlider>
                 <ul style={{"list-style-type": "none", margin: "0", padding: "0", paddingLeft: "10px"}}>
                     {layer.colors.map(color => {
