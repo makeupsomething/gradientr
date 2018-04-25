@@ -68,18 +68,16 @@ class App extends Component {
 	background: '100%',
   };
 
-handleColorChange = (color, target) => {
-    let tmp = this.state.colors;
-
-    tmp.forEach(layer => {
-      	layer.colors.forEach(c => {
-        	if(target === c.id) {
+handleColorChange = (color, target, layer) => {
+	let tmp = this.state.colors;
+	
+    tmp[layer].colors.forEach(c => {
+        if(target === c.id) {
           	c.h = color.h;
           	c.s = color.s * 100;
           	c.l = color.l * 100;
           	c.a = color.a;
-        	}
-      	});
+        }
     });
 
     this.setState({

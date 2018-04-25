@@ -60,6 +60,7 @@ class Layer extends Component {
                                             a={color.a}
                                             amount={color.amount}
                                             name={color.id}
+                                            layer={index}
                                             handleChange={handleColorChange}>
                                         </ColorPicker>
                                     </LayerItem>

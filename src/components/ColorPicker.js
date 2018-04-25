@@ -41,8 +41,6 @@ class ColorPicker extends Component {
     componentDidUpdate = (prevProps, prevState, snapshot) => {
         const { h, s, l, a, name } = this.props;
         if(name != prevProps.name) {
-            console.log(prevProps)
-            console.log(this.props)
             let tmp = this.state.background;
             tmp = {h: parseInt(h), s: parseInt(s) / 100, l: parseInt(l) / 100, a: parseFloat(a)};
             this.setState({background: tmp});
@@ -54,9 +52,9 @@ class ColorPicker extends Component {
     }
 
     handleChangeComplete = (color) => {
-        const {amount, handleChange, name, top, left } = this.props;
+        const {amount, handleChange, name, top, left, layer } = this.props;
         this.setState({ background: color.hsl });
-        handleChange(color.hsl, name)
+        handleChange(color.hsl, name, layer)
     };
 
     render() {
