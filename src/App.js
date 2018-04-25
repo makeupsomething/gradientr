@@ -146,16 +146,10 @@ toggleSidebar = (event) => {
 	this.setState({sidebar: this.state.sidebar === '25%' ? '0%' : '25%'})
 }
 
-removeColor = (event) => {
-	const target = event.target;
-	const name = target.name;
-	const id = target.id;
-	let fff = this.state.colors;
-	let ttt = this.state.colors[id].colors
-	let m = this.state.colors[id].colors.filter(color => color.id !== name)
-	ttt = this.state.colors[id].colors.filter(color => color.id !== name)
-	fff[id].colors = ttt
-	this.setState({ colors: fff });	
+removeColor = (name, id) => {
+	let tmpColors = this.state.colors;
+	tmpColors[id].colors = this.state.colors[id].colors.filter(color => color.id !== name)
+	this.setState({ colors: tmpColors });	
 }
 
 render() {
@@ -171,7 +165,6 @@ render() {
 		});
 	
 	str+= index === tgtef.length-1 ? '' : ',';
-	
 	});
 
     return (
@@ -184,7 +177,7 @@ render() {
 			<MenuButton onClick={this.toggleSidebar}><i class="fas fa-bars"></i></MenuButton>
       		<Sidebar width={this.state.sidebar}>
 			  <Line />
-			  <ul style={{"list-style-type": "none", margin: "0", padding: "0", paddingLeft: "10px"}}>
+			  <ul style={{"list-style-type": "none", margin: "0", padding: "0"}}>
 			  {this.state.colors.map((layer, layerIndex) => {
             		return <li style={{display: "inline"}}>
 						<Line />
