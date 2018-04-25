@@ -88,21 +88,9 @@ handleColorChange = (color, target) => {
 }
 
 
-handleColorAmountChange = (event) => {
-	const target = event.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    const name = target.name;
-
+handleColorAmountChange = (layer, color, value) => {
     let tmp = this.state.colors;
-
-    tmp.forEach(layer => {
-      	layer.colors.forEach(c => {
-        	if(name === c.id) {
-          	c.amount = value;
-        	}
-      	});
-    });
-
+    tmp[layer].colors.forEach(c => {color === c.id ? c.amount = value : null});
     this.setState({
       	colors: tmp
     });

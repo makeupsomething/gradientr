@@ -70,7 +70,7 @@ class Layer extends Component {
                                             max="100"
                                             value={color.amount}
                                             name={color.id}
-                                            onChange={handleColorAmountChange} />
+                                            onChange={(event) => handleColorAmountChange(index, color.id, event.target.value)} />
                                     </LayerItem>
                                     <LayerItem>
                                         <AddButton onClick={() => removeColor(color.id, index)}> 
