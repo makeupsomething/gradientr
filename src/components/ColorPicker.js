@@ -61,7 +61,10 @@ class ColorPicker extends Component {
                 <ColorBlock 
                     onClick={this.toggleColor} 
                     background={`hsla(${this.state.background.h}, ${this.state.background.s * 100}%, ${this.state.background.l * 100}%, ${this.state.background.a})`}
-                />
+                >
+                <p>edit</p>
+                </ColorBlock>
+
             </span>
         );
     }

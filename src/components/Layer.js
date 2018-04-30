@@ -25,8 +25,17 @@ const AddButton = styled.button`
 	margin-right: 5px;
 `
 
-const LayerItem = styled.li`
+const LayerItem = styled.li.attrs({
+    border: props => props.selected || '',
+})`
     display: inline;
+    border: ${props => props.selected};
+`
+
+const ColorEditor = styled.div.attrs({
+    border: props => props.selected || '',
+})`
+    border: ${props => props.selected};
 `
 
 class Layer extends Component {
@@ -51,7 +60,7 @@ class Layer extends Component {
                 </AngleSlider>
                 <ul style={{"list-style-type": "none", margin: "0", padding: "0", paddingLeft: "10px"}}>
                     {layer.colors.map(color => {
-                        return <div>
+                        return <ColorEditor selected={color.id === selectedColor ? "solid 2px black" : null}>
                                     <LayerItem>
                                         <ColorPicker
                                             h={color.h}
@@ -71,14 +80,15 @@ class Layer extends Component {
                                             max="100"
                                             value={color.amount}
                                             name={color.id}
-                                            onChange={(event) => handleColorAmountChange(index, color.id, event.target.value)} />
+                                            onChange={(event) => handleColorAmountChange(index, color.id, event.target.value)} 
+                                            />
                                     </LayerItem>
                                     <LayerItem>
                                         {color.id !== selectedColor ? <AddButton onClick={() => removeColor(color.id, index)}> 
                                             <i class="fas fa-trash" />{index}
                                         </AddButton> : null}
                                     </LayerItem>
-                                </div>
+                                </ColorEditor>
                                 })}
                     <li>{layer.colors.length < 3 && index !== undefined ? (<AddButton onClick={() => addColor(index)}><i class="fas fa-plus" />Color</AddButton>) : null}</li>
                 </ul>
