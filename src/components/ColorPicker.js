@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { ChromePicker } from 'react-color';
 
 const PickerObj = styled.span`
     display: inline;
@@ -17,13 +16,6 @@ const ColorBlock = styled.div.attrs({
     margin-right: 10px;
     background: ${props => props.background};
 `
-
-var inputStyles = {
-    input: {
-      border: "none",
-      margin: "auto"
-    },
-  };
 
 class ColorPicker extends Component {
     state = {
@@ -47,25 +39,23 @@ class ColorPicker extends Component {
         }
     }
 
-    togglePicker = (event) => {
-        this.setState({picker: !this.state.picker})
+    toggleColor = (event) => {
+        const { setColor, name } = this.props;
+        setColor(name)
     }
 
-    handleChangeComplete = (color) => {
-        const {amount, handleChange, name, top, left, layer } = this.props;
-        this.setState({ background: color.hsl });
-        handleChange(color.hsl, name, layer)
-    };
-
+    // Move picker up tp App.js, it will be the top element in the sidebar and always showing
+    // Clicking on a color block will focus the picker for that color
+    // The color + options will also be highlighted
+    // Probably move the block up to layer component and get rid of this file later
     render() {
         const {amount, handleChange, top, left } = this.props;
         return (
             <span>
                 <ColorBlock 
-                    onClick={this.togglePicker} 
+                    onClick={this.toggleColor} 
                     background={`hsla(${this.state.background.h}, ${this.state.background.s * 100}%, ${this.state.background.l * 100}%, ${this.state.background.a})`}
                 />
-                {this.state.picker ? <ChromePicker style={inputStyles} onChange={ this.handleChangeComplete } color={ this.state.background } /> : null}
             </span>
         );
     }

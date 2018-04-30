@@ -3,13 +3,14 @@ import styled from 'styled-components';
 import './App.css';
 import ColorPicker from './components/ColorPicker';
 import Layer from './components/Layer';
+import { ChromePicker } from 'react-color';
 
 const Wrapper = styled.p`
-margin: auto;
-text-align: center;
-color: whitesmoke;
-font-size: 7.5em;
-background: transparent;
+	margin: auto;
+	text-align: center;
+	color: whitesmoke;
+	font-size: 7.5em;
+	background: transparent;
 `;
 
 const Background = styled.div.attrs({
@@ -66,6 +67,7 @@ class App extends Component {
     ],
     sidebar: '25%',
 	background: '100%',
+	selectedColorId: 'color01',
   };
 
 handleColorChange = (color, target, layer) => {
@@ -146,8 +148,25 @@ getString = () => {
 	return str;
 }
 
+getSelectedColor = () => {
+	let selectedColor = null;
+	this.state.colors.forEach(layer => {
+		layer.colors.forEach(color => {
+			color.id === this.state.selectedColorId ? selectedColor = color : null;
+		});
+	});
+
+	return selectedColor
+}
+
+setSelectedColor = (colorId) => {
+	console.log(colorId)
+	this.setState({selectedColorId: colorId})
+}
+
 render() {
-    let str = this.getString();
+	let str = this.getString();
+	let {h, s, l, a} = this.getSelectedColor();
 
     return (
 		<div>
@@ -158,6 +177,7 @@ render() {
       		</Background>
 			<MenuButton onClick={this.toggleSidebar}><i class="fas fa-bars"></i></MenuButton>
       		<Sidebar width={this.state.sidebar}>
+			  <ChromePicker onChange={ this.handleColorChange } color={ {h, s, l, a} } />
 			  <Line />
 			  <ul style={{"list-style-type": "none", margin: "0", padding: "0"}}>
 			  {this.state.colors.map((layer, layerIndex) => {
@@ -171,7 +191,8 @@ render() {
 							addColor={this.addColor} 
 							handleColorAmountChange={this.handleColorAmountChange} 
 							removeColor={this.removeColor} 
-							checked={this.state.colors[layerIndex].hidden} 
+							checked={this.state.colors[layerIndex].hidden}
+							setColor={this.setSelectedColor}
 						/>
 						<Line />
 						</li>

@@ -33,7 +33,7 @@ class Layer extends Component {
 
 
     render() {
-        const {layer, index, handleChange, handleColorChange, addColor, handleColorAmountChange, removeColor, checked} = this.props;
+        const {layer, index, handleChange, handleColorChange, addColor, handleColorAmountChange, removeColor, checked, setColor} = this.props;
 
         return (
             <span>
@@ -61,7 +61,8 @@ class Layer extends Component {
                                             amount={color.amount}
                                             name={color.id}
                                             layer={index}
-                                            handleChange={handleColorChange}>
+                                            handleChange={handleColorChange}
+                                            setColor={setColor}>
                                         </ColorPicker>
                                     </LayerItem>
                                     <LayerItem>
