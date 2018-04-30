@@ -84,9 +84,9 @@ class Layer extends Component {
                                             />
                                     </LayerItem>
                                     <LayerItem>
-                                        {color.id !== selectedColor ? <AddButton onClick={() => removeColor(color.id, index)}> 
-                                            <i class="fas fa-trash" />{index}
-                                        </AddButton> : null}
+                                        <AddButton disabled={color.id === selectedColor} onClick={() => removeColor(color.id, index)}> 
+                                            <i class="fas fa-trash" />
+                                        </AddButton>
                                     </LayerItem>
                                 </ColorEditor>
                                 })}
