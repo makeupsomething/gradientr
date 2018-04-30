@@ -70,16 +70,18 @@ class App extends Component {
 	selectedColorId: 'color01',
   };
 
-handleColorChange = (color, target, layer) => {
+handleColorChange = (color) => {
 	let tmp = this.state.colors;
 	
-    tmp[layer].colors.forEach(c => {
-        if(target === c.id) {
-          	c.h = color.h;
-          	c.s = color.s * 100;
-          	c.l = color.l * 100;
-          	c.a = color.a;
-        }
+    tmp.forEach(layer => {
+		layer.colors.forEach(c => {
+			if(this.state.selectedColorId === c.id) {
+				c.h = color.hsl.h;
+				c.s = color.hsl.s * 100;
+				c.l = color.hsl.l * 100;
+				c.a = color.hsl.a;
+			}
+		});
     });
 
     this.setState({
@@ -187,12 +189,12 @@ render() {
 							layer={layer} 
 							index={layerIndex} 
 							handleChange={this.handleChange} 
-							handleColorChange={this.handleColorChange} 
 							addColor={this.addColor} 
 							handleColorAmountChange={this.handleColorAmountChange} 
 							removeColor={this.removeColor} 
 							checked={this.state.colors[layerIndex].hidden}
 							setColor={this.setSelectedColor}
+							selectedColor={this.state.selectedColorId}
 						/>
 						<Line />
 						</li>

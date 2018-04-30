@@ -33,7 +33,7 @@ class Layer extends Component {
 
 
     render() {
-        const {layer, index, handleChange, handleColorChange, addColor, handleColorAmountChange, removeColor, checked, setColor} = this.props;
+        const {layer, index, handleChange, addColor, handleColorAmountChange, removeColor, checked, setColor, selectedColor} = this.props;
 
         return (
             <span>
@@ -61,7 +61,6 @@ class Layer extends Component {
                                             amount={color.amount}
                                             name={color.id}
                                             layer={index}
-                                            handleChange={handleColorChange}
                                             setColor={setColor}>
                                         </ColorPicker>
                                     </LayerItem>
@@ -75,9 +74,9 @@ class Layer extends Component {
                                             onChange={(event) => handleColorAmountChange(index, color.id, event.target.value)} />
                                     </LayerItem>
                                     <LayerItem>
-                                        <AddButton onClick={() => removeColor(color.id, index)}> 
+                                        {color.id !== selectedColor ? <AddButton onClick={() => removeColor(color.id, index)}> 
                                             <i class="fas fa-trash" />{index}
-                                        </AddButton>
+                                        </AddButton> : null}
                                     </LayerItem>
                                 </div>
                                 })}

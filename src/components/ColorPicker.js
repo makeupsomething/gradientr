@@ -32,10 +32,17 @@ class ColorPicker extends Component {
 
     componentDidUpdate = (prevProps, prevState, snapshot) => {
         const { h, s, l, a, name } = this.props;
-        if(name != prevProps.name) {
+        
+        if(name !== prevProps.name) {
             let tmp = this.state.background;
             tmp = {h: parseInt(h), s: parseInt(s) / 100, l: parseInt(l) / 100, a: parseFloat(a)};
             this.setState({background: tmp});
+        } else {
+            if (parseInt(h) !== this.state.background.h || parseInt(s) / 100 !== this.state.background.s || parseInt(l) / 100 !== this.state.background.l || parseFloat(a) !== this.state.background.a ) {
+                let tmp = this.state.background;
+                tmp = {h: parseInt(h), s: parseInt(s) / 100, l: parseInt(l) / 100, a: parseFloat(a)};
+                this.setState({background: tmp});
+            }
         }
     }
 
@@ -49,7 +56,6 @@ class ColorPicker extends Component {
     // The color + options will also be highlighted
     // Probably move the block up to layer component and get rid of this file later
     render() {
-        const {amount, handleChange, top, left } = this.props;
         return (
             <span>
                 <ColorBlock 
