@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import './App.css';
 import ColorPicker from './components/ColorPicker';
 import Layer from './components/Layer';
+import ColorDistSlider from './components/ColorDistSlider';
 import { ChromePicker } from 'react-color';
 
 const Wrapper = styled.p`
@@ -179,6 +180,7 @@ render() {
       		</Background>
 			<MenuButton onClick={this.toggleSidebar}><i class="fas fa-bars"></i></MenuButton>
       		<Sidebar width={this.state.sidebar}>
+			  <ColorDistSlider colors={this.state.colors[0].colors} />
 			  <ChromePicker onChange={ this.handleColorChange } color={ {h, s, l, a} } />
 			  <Line />
 			  <ul style={{"list-style-type": "none", margin: "0", padding: "0"}}>

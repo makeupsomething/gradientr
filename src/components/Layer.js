@@ -39,8 +39,6 @@ const ColorEditor = styled.div.attrs({
 `
 
 class Layer extends Component {
-
-
     render() {
         const {layer, index, handleChange, addColor, handleColorAmountChange, removeColor, checked, setColor, selectedColor} = this.props;
 
