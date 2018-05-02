@@ -2,11 +2,6 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import ColorPicker from './ColorPicker';
 
-const AngleSlider = styled.div`
-	margin: 10px 0;
-	padding-left: 10px;
-`
-
 const AddButton = styled.button`
   	z-index: 2;
   	background-color: #ffffff42;
@@ -37,7 +32,7 @@ class Layer extends Component {
         const {layer, index, handleChange, addColor, removeColor, checked, setColor, selectedColor} = this.props;
 
         return (
-            <span>
+            <div>
                 <label>
                     Hide Layer
                     <input
@@ -45,10 +40,6 @@ class Layer extends Component {
                         checked={checked}
                         onChange={() => handleChange(index, "hidden", !checked)} />
                 </label>
-                <AngleSlider>
-                    <label>Angle</label>
-                    <input type="range" min="0" max="359" value={layer.degree} onChange={(event) => handleChange(index, "degree", event.target.value)} />
-                </AngleSlider>
                 <ul style={{"list-style-type": "none", margin: "0", padding: "0", paddingLeft: "10px"}}>
                     {layer.colors.map(color => {
                         return <ColorEditor selected={color.id === selectedColor ? "solid 2px black" : null}>
@@ -73,7 +64,7 @@ class Layer extends Component {
                                 })}
                     <li>{layer.colors.length < 3 && index !== undefined ? (<AddButton onClick={() => addColor(index)}><i class="fas fa-plus" />Color</AddButton>) : null}</li>
                 </ul>
-            </span>
+            </div>
         );
     }
 }

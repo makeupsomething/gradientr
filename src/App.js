@@ -38,14 +38,8 @@ const MenuButton = styled.button`
   	border: 2px solid gray;
 `
 
-const Line = styled.hr`
-	color: #ffffff63;
-	border-width: 1px;
-`
-
 const Tablink = styled.button.attrs({
-	background: props => props.background || '#777',
-	width: props => props.width || '80%',
+	background: props => props.background || '#777'
 })`
     background: ${props => props.background};
     color: white;
@@ -80,6 +74,10 @@ const Sidebar = styled.div.attrs({
 	padding-top: 3%;
 `
 
+const AngleSlider = styled.div`
+	margin: 10px 0;
+	padding-left: 10px;
+`
 
 class App extends Component {
   state = {
@@ -204,19 +202,28 @@ render() {
       		</Background>
 			<MenuButton onClick={this.toggleSidebar}><i class="fas fa-bars"></i></MenuButton>
       		<Sidebar width={this.state.sidebar}>
-			  <ChromePicker onChange={ this.handleColorChange } color={ {h, s, l, a} } />
 			  <ul style={{"list-style-type": "none", margin: "0", padding: "0"}}>
+			  <li>
+			  <ChromePicker onChange={ this.handleColorChange } color={ {h, s, l, a} } />
+			  </li>
 			  <li>
 			  <ColorDistSlider layer={this.state.currentLayer} colors={this.state.colors[this.state.currentLayer].colors} handleColorAmountChange={this.handleColorAmountChange}  />
 			  </li>
-			  {this.state.colors.map((layer, layerIndex) => {
-				  return <li style={{display: "inline"}}>
-					  <Tablink background={this.state.currentLayer === layerIndex ? '#555' : '#777'} onClick={() => this.setState({currentLayer: layerIndex})} >{layerIndex}</Tablink>
-				  </li>
-			  })}
 			  <li>
-			  <TabContent>
-			  <Layer 
+			  <AngleSlider>
+                    <label>Angle</label>
+                    <input type="range" min="0" max="359" value={this.state.colors[this.state.currentLayer].degree} onChange={(event) => this.handleChange(this.state.currentLayer, "degree", event.target.value)} />
+				</AngleSlider>
+			  </li>
+			  <li>{this.state.colors.map((layer, layerIndex) => {
+				  return <Tablink background={this.state.currentLayer === layerIndex ? '#555' : '#777'} onClick={() => this.setState({currentLayer: layerIndex})} >{layerIndex}</Tablink>
+				  
+			  })}</li>
+				</ul>
+				<br />
+				<br />
+				<TabContent>
+				<Layer 
 					layer={this.state.colors[this.state.currentLayer]} 
 					index={this.state.currentLayer} 
 					handleChange={this.handleChange} 
@@ -225,11 +232,8 @@ render() {
 					checked={this.state.colors[this.state.currentLayer].hidden}
 					setColor={this.setSelectedColor}
 					selectedColor={this.state.selectedColorId}
-				/>
-			</TabContent>
-			  </li>
-				</ul>
-				<Line />
+					/>
+				</TabContent>
 				<CodeSnippit>{`${str}`}</CodeSnippit>
       		</Sidebar>
       	</div>
