@@ -1,12 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
-const PickerObj = styled.span`
-    display: inline;
-    width: 100px;
-    height: 100px;
-`
-
 const ColorBlock = styled.div.attrs({
     background: props => props.background || 'green',
 })`
@@ -26,7 +20,7 @@ class ColorPicker extends Component {
     componentDidMount = () => {
         const { h, s, l, a } = this.props;
         let tmp = this.state.background;
-        tmp = {h: parseInt(h), s: parseInt(s) / 100, l: parseInt(l) / 100, a: parseFloat(a)};
+        tmp = {h: parseInt(h, 10), s: parseInt(s, 10) / 100, l: parseInt(l, 10) / 100, a: parseFloat(a, 10)};
         this.setState({background: tmp});
     }
 
@@ -35,12 +29,12 @@ class ColorPicker extends Component {
         
         if(name !== prevProps.name) {
             let tmp = this.state.background;
-            tmp = {h: parseInt(h), s: parseInt(s) / 100, l: parseInt(l) / 100, a: parseFloat(a)};
+            tmp = {h: parseInt(h, 10), s: parseInt(s, 10) / 100, l: parseInt(l, 10) / 100, a: parseFloat(a, 10)};
             this.setState({background: tmp});
         } else {
-            if (parseInt(h) !== this.state.background.h || parseInt(s) / 100 !== this.state.background.s || parseInt(l) / 100 !== this.state.background.l || parseFloat(a) !== this.state.background.a ) {
+            if (parseInt(h, 10) !== this.state.background.h || parseInt(s, 10) / 100 !== this.state.background.s || parseInt(l, 10) / 100 !== this.state.background.l || parseFloat(a, 10) !== this.state.background.a ) {
                 let tmp = this.state.background;
-                tmp = {h: parseInt(h), s: parseInt(s) / 100, l: parseInt(l) / 100, a: parseFloat(a)};
+                tmp = {h: parseInt(h, 10), s: parseInt(s, 10) / 100, l: parseInt(l, 10) / 100, a: parseFloat(a, 10)};
                 this.setState({background: tmp});
             }
         }
@@ -64,7 +58,6 @@ class ColorPicker extends Component {
                 >
                 <p>edit</p>
                 </ColorBlock>
-
             </span>
         );
     }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Slider, { Range } from 'rc-slider';
+import { Range } from 'rc-slider';
 import 'rc-slider/assets/index.css';
 
 class ColorDistSlider extends Component {
@@ -10,14 +10,11 @@ class ColorDistSlider extends Component {
 
     componentDidMount = () => {
         const { colors } = this.props;
-        let a = colors.map(color => (color.amount));
         this.setState({colors: colors});
     }
 
     componentDidUpdate = (prevProps, prevState, snapshot) => {
         const { colors } = this.props;
-        let a = colors.map(color => color.amount);
-
         if(colors.length !== this.state.colors.length) {
             this.setState({colors: colors});
         } else {

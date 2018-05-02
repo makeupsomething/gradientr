@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import './App.css';
-import ColorPicker from './components/ColorPicker';
 import Layer from './components/Layer';
 import ColorDistSlider from './components/ColorDistSlider';
 import { ChromePicker } from 'react-color';
@@ -69,7 +68,7 @@ class App extends Component {
     sidebar: '25%',
 	background: '100%',
 	selectedColorId: 'color01',
-	currentLayer: 1,
+	currentLayer: 0,
   };
 
 handleColorChange = (color) => {
@@ -91,16 +90,7 @@ handleColorChange = (color) => {
 	});
 }
 
-
-handleColorAmountChange = (layer, color, value) => {
-    let tmp = this.state.colors;
-    tmp[layer].colors.forEach(c => {color === c.id ? c.amount = value : null});
-    this.setState({
-      	colors: tmp
-    });
-}
-
-handleColorAmountChange_test = (layer, colors) => {
+handleColorAmountChange = (layer, colors) => {
     let tmp = this.state.colors;
     tmp[layer].colors = colors
     this.setState({
@@ -164,7 +154,9 @@ getSelectedColor = () => {
 	let selectedColor = null;
 	this.state.colors.forEach(layer => {
 		layer.colors.forEach(color => {
-			color.id === this.state.selectedColorId ? selectedColor = color : null;
+			if(color.id === this.state.selectedColorId) {
+				selectedColor = color;
+			}
 		});
 	});
 
@@ -196,13 +188,12 @@ render() {
 				  </li>
 			  })}
 			  <li>
-			  <ColorDistSlider layer={this.state.currentLayer} colors={this.state.colors[this.state.currentLayer].colors} handleColorAmountChange={this.handleColorAmountChange_test}  />
+			  <ColorDistSlider layer={this.state.currentLayer} colors={this.state.colors[this.state.currentLayer].colors} handleColorAmountChange={this.handleColorAmountChange}  />
 			  <Layer 
 					layer={this.state.colors[this.state.currentLayer]} 
 					index={this.state.currentLayer} 
 					handleChange={this.handleChange} 
 					addColor={this.addColor} 
-					handleColorAmountChange={this.handleColorAmountChange} 
 					removeColor={this.removeColor} 
 					checked={this.state.colors[this.state.currentLayer].hidden}
 					setColor={this.setSelectedColor}
