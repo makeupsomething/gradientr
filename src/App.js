@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import './App.css';
-import ColorPicker from './components/ColorPicker';
 import Layer from './components/Layer';
 import ColorDistSlider from './components/ColorDistSlider';
 import { ChromePicker } from 'react-color';
@@ -39,14 +38,32 @@ const MenuButton = styled.button`
   	border: 2px solid gray;
 `
 
-const Line = styled.hr`
-	color: #ffffff63;
-	border-width: 1px;
+const Tablink = styled.button.attrs({
+	background: props => props.background || '#777'
+})`
+    background: ${props => props.background};
+    color: white;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    font-size: 17px;
+	width: 25%;
+	
+	${Tablink}:hover {
+    	background-color: #222;
+	}
+`
+
+const TabContent = styled.div`
+    color: white;
+    display: block;
+	background-color: #555;
 `
 
 const Sidebar = styled.div.attrs({
 	background: props => props.background || '#ffffff42',
-  	width: props => props.width || '20%',
 })`
   	background: ${props => props.background};
   	height: 100%;
@@ -57,6 +74,10 @@ const Sidebar = styled.div.attrs({
 	padding-top: 3%;
 `
 
+const AngleSlider = styled.div`
+	margin: 10px 0;
+	padding-left: 10px;
+`
 
 class App extends Component {
   state = {
@@ -69,6 +90,7 @@ class App extends Component {
     sidebar: '25%',
 	background: '100%',
 	selectedColorId: 'color01',
+	currentLayer: 0,
   };
 
 handleColorChange = (color) => {
@@ -90,16 +112,7 @@ handleColorChange = (color) => {
 	});
 }
 
-
-handleColorAmountChange = (layer, color, value) => {
-    let tmp = this.state.colors;
-    tmp[layer].colors.forEach(c => {color === c.id ? c.amount = value : null});
-    this.setState({
-      	colors: tmp
-    });
-}
-
-handleColorAmountChange_test = (layer, colors) => {
+handleColorAmountChange = (layer, colors) => {
     let tmp = this.state.colors;
     tmp[layer].colors = colors
     this.setState({
@@ -163,7 +176,9 @@ getSelectedColor = () => {
 	let selectedColor = null;
 	this.state.colors.forEach(layer => {
 		layer.colors.forEach(color => {
-			color.id === this.state.selectedColorId ? selectedColor = color : null;
+			if(color.id === this.state.selectedColorId) {
+				selectedColor = color;
+			}
 		});
 	});
 
@@ -171,7 +186,6 @@ getSelectedColor = () => {
 }
 
 setSelectedColor = (colorId) => {
-	console.log(colorId)
 	this.setState({selectedColorId: colorId})
 }
 
@@ -188,29 +202,38 @@ render() {
       		</Background>
 			<MenuButton onClick={this.toggleSidebar}><i class="fas fa-bars"></i></MenuButton>
       		<Sidebar width={this.state.sidebar}>
-			  <ColorDistSlider layer={0} colors={this.state.colors[0].colors} handleColorAmountChange={this.handleColorAmountChange_test}  />
-			  <ChromePicker onChange={ this.handleColorChange } color={ {h, s, l, a} } />
-			  <Line />
 			  <ul style={{"list-style-type": "none", margin: "0", padding: "0"}}>
-			  {this.state.colors.map((layer, layerIndex) => {
-            		return <li style={{display: "inline"}}>
-						<Line />
-						<Layer 
-							layer={layer} 
-							index={layerIndex} 
-							handleChange={this.handleChange} 
-							addColor={this.addColor} 
-							handleColorAmountChange={this.handleColorAmountChange} 
-							removeColor={this.removeColor} 
-							checked={this.state.colors[layerIndex].hidden}
-							setColor={this.setSelectedColor}
-							selectedColor={this.state.selectedColorId}
-						/>
-						<Line />
-						</li>
-				  })}
+			  <li>
+			  <ChromePicker onChange={ this.handleColorChange } color={ {h, s, l, a} } />
+			  </li>
+			  <li>
+			  <ColorDistSlider layer={this.state.currentLayer} colors={this.state.colors[this.state.currentLayer].colors} handleColorAmountChange={this.handleColorAmountChange}  />
+			  </li>
+			  <li>
+			  <AngleSlider>
+                    <label>Angle</label>
+                    <input type="range" min="0" max="359" value={this.state.colors[this.state.currentLayer].degree} onChange={(event) => this.handleChange(this.state.currentLayer, "degree", event.target.value)} />
+				</AngleSlider>
+			  </li>
+			  <li>{this.state.colors.map((layer, layerIndex) => {
+				  return <Tablink background={this.state.currentLayer === layerIndex ? '#555' : '#777'} onClick={() => this.setState({currentLayer: layerIndex})} >{layerIndex}</Tablink>
+				  
+			  })}</li>
 				</ul>
-				<Line />
+				<br />
+				<br />
+				<TabContent>
+				<Layer 
+					layer={this.state.colors[this.state.currentLayer]} 
+					index={this.state.currentLayer} 
+					handleChange={this.handleChange} 
+					addColor={this.addColor} 
+					removeColor={this.removeColor} 
+					checked={this.state.colors[this.state.currentLayer].hidden}
+					setColor={this.setSelectedColor}
+					selectedColor={this.state.selectedColorId}
+					/>
+				</TabContent>
 				<CodeSnippit>{`${str}`}</CodeSnippit>
       		</Sidebar>
       	</div>
