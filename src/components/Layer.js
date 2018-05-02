@@ -40,7 +40,7 @@ class Layer extends Component {
                         checked={checked}
                         onChange={() => handleChange(index, "hidden", !checked)} />
                 </label>
-                <ul style={{"list-style-type": "none", margin: "0", padding: "0", paddingLeft: "10px"}}>
+                <ul style={{"list-style-type": "none", margin: "0", padding: "0"}}>
                     {layer.colors.map(color => {
                         return <ColorEditor selected={color.id === selectedColor ? "solid 2px black" : null}>
                                     <LayerItem>

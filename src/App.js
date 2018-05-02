@@ -59,9 +59,11 @@ const Tablink = styled.button.attrs({
 
 const TabContent = styled.div`
     color: white;
-    display: block;
 	background-color: #555;
 	width: 50%;
+	margin: 0px;
+	border: 0px;
+
 `
 
 const Sidebar = styled.div.attrs({
@@ -211,29 +213,25 @@ render() {
       		
 			<Container>
 				<ul style={{"list-style-type": "none", margin: "0", padding: "0"}}>
-					<li><ChromePicker onChange={ this.handleColorChange } color={ {h, s, l, a} } /></li>
-					<li>
-						<ul>
-							<li style={{height: "48px"}}>
-							{this.state.colors.map((layer, layerIndex) => {
-								return <Tablink background={this.state.currentLayer === layerIndex ? '#555' : '#777'} onClick={() => this.setState({currentLayer: layerIndex})} >{layerIndex}</Tablink>
-							})}
-							</li>
-							<li>
-							<TabContent>
-							<Layer 
-							layer={this.state.colors[this.state.currentLayer]} 
-							index={this.state.currentLayer} 
-							handleChange={this.handleChange} 
-							addColor={this.addColor} 
-							removeColor={this.removeColor} 
-							checked={this.state.colors[this.state.currentLayer].hidden}
-							setColor={this.setSelectedColor}
-							selectedColor={this.state.selectedColorId}
-							/>
-							</TabContent>
-							</li>
-						</ul>
+					<li style={{display: "inline", margin: "0px", padding: "0px", border: "0px"}}>
+						{this.state.colors.map((layer, layerIndex) => {
+							return <Tablink background={this.state.currentLayer === layerIndex ? '#555' : '#777'} onClick={() => this.setState({currentLayer: layerIndex})} >{layerIndex}</Tablink>
+						})}
+						<TabContent>
+						<Layer 
+						layer={this.state.colors[this.state.currentLayer]} 
+						index={this.state.currentLayer} 
+						handleChange={this.handleChange} 
+						addColor={this.addColor} 
+						removeColor={this.removeColor} 
+						checked={this.state.colors[this.state.currentLayer].hidden}
+						setColor={this.setSelectedColor}
+						selectedColor={this.state.selectedColorId}
+						/>
+						</TabContent>
+					</li>
+					<li style={{display: "inline"}}>
+						<ChromePicker onChange={ this.handleColorChange } color={ {h, s, l, a} } />
 					</li>
 				</ul>
 			</Container>
