@@ -69,6 +69,7 @@ class App extends Component {
     sidebar: '25%',
 	background: '100%',
 	selectedColorId: 'color01',
+	currentLayer: 1,
   };
 
 handleColorChange = (color) => {
@@ -188,24 +189,27 @@ render() {
       		</Background>
 			<MenuButton onClick={this.toggleSidebar}><i class="fas fa-bars"></i></MenuButton>
       		<Sidebar width={this.state.sidebar}>
-			  <ColorDistSlider layer={0} colors={this.state.colors[0].colors} handleColorAmountChange={this.handleColorAmountChange_test}  />
 			  <ChromePicker onChange={ this.handleColorChange } color={ {h, s, l, a} } />
 			  <ul style={{"list-style-type": "none", margin: "0", padding: "0"}}>
 			  {this.state.colors.map((layer, layerIndex) => {
-            		return <li style={{display: "inline"}}>
-						<Layer 
-							layer={layer} 
-							index={layerIndex} 
-							handleChange={this.handleChange} 
-							addColor={this.addColor} 
-							handleColorAmountChange={this.handleColorAmountChange} 
-							removeColor={this.removeColor} 
-							checked={this.state.colors[layerIndex].hidden}
-							setColor={this.setSelectedColor}
-							selectedColor={this.state.selectedColorId}
-						/>
-						</li>
-				  })}
+				  return <li>
+					  <button onClick={() => this.setState({currentLayer: layerIndex})} >{layerIndex}</button>
+				  </li>
+			  })}
+			  <li>
+			  <ColorDistSlider layer={this.state.currentLayer} colors={this.state.colors[this.state.currentLayer].colors} handleColorAmountChange={this.handleColorAmountChange_test}  />
+			  <Layer 
+					layer={this.state.colors[this.state.currentLayer]} 
+					index={this.state.currentLayer} 
+					handleChange={this.handleChange} 
+					addColor={this.addColor} 
+					handleColorAmountChange={this.handleColorAmountChange} 
+					removeColor={this.removeColor} 
+					checked={this.state.colors[this.state.currentLayer].hidden}
+					setColor={this.setSelectedColor}
+					selectedColor={this.state.selectedColorId}
+				/>
+			  </li>
 				</ul>
 				<Line />
 				<CodeSnippit>{`${str}`}</CodeSnippit>

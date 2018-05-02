@@ -20,6 +20,10 @@ class ColorDistSlider extends Component {
 
         if(colors.length !== this.state.colors.length) {
             this.setState({colors: colors});
+        } else {
+            if(!colors.every((v,i)=> v === this.state.colors[i])) {
+                this.setState({colors: colors});
+            }
         }
     }
 
