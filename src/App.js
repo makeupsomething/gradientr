@@ -43,9 +43,33 @@ const Line = styled.hr`
 	border-width: 1px;
 `
 
+const Tablink = styled.button.attrs({
+	background: props => props.background || '#777',
+	width: props => props.width || '80%',
+})`
+    background: ${props => props.background};
+    color: white;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    font-size: 17px;
+	width: 25%;
+	
+	${Tablink}:hover {
+    	background-color: #222;
+	}
+`
+
+const TabContent = styled.div`
+    color: white;
+    display: block;
+	background-color: #555;
+`
+
 const Sidebar = styled.div.attrs({
 	background: props => props.background || '#ffffff42',
-  	width: props => props.width || '20%',
 })`
   	background: ${props => props.background};
   	height: 100%;
@@ -182,13 +206,16 @@ render() {
       		<Sidebar width={this.state.sidebar}>
 			  <ChromePicker onChange={ this.handleColorChange } color={ {h, s, l, a} } />
 			  <ul style={{"list-style-type": "none", margin: "0", padding: "0"}}>
+			  <li>
+			  <ColorDistSlider layer={this.state.currentLayer} colors={this.state.colors[this.state.currentLayer].colors} handleColorAmountChange={this.handleColorAmountChange}  />
+			  </li>
 			  {this.state.colors.map((layer, layerIndex) => {
 				  return <li style={{display: "inline"}}>
-					  <button onClick={() => this.setState({currentLayer: layerIndex})} >{layerIndex}</button>
+					  <Tablink background={this.state.currentLayer === layerIndex ? '#555' : '#777'} onClick={() => this.setState({currentLayer: layerIndex})} >{layerIndex}</Tablink>
 				  </li>
 			  })}
 			  <li>
-			  <ColorDistSlider layer={this.state.currentLayer} colors={this.state.colors[this.state.currentLayer].colors} handleColorAmountChange={this.handleColorAmountChange}  />
+			  <TabContent>
 			  <Layer 
 					layer={this.state.colors[this.state.currentLayer]} 
 					index={this.state.currentLayer} 
@@ -199,6 +226,7 @@ render() {
 					setColor={this.setSelectedColor}
 					selectedColor={this.state.selectedColorId}
 				/>
+			</TabContent>
 			  </li>
 				</ul>
 				<Line />

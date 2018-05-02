@@ -45,10 +45,6 @@ class ColorPicker extends Component {
         setColor(name)
     }
 
-    // Move picker up tp App.js, it will be the top element in the sidebar and always showing
-    // Clicking on a color block will focus the picker for that color
-    // The color + options will also be highlighted
-    // Probably move the block up to layer component and get rid of this file later
     render() {
         return (
             <span>
