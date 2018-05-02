@@ -172,7 +172,6 @@ getSelectedColor = () => {
 }
 
 setSelectedColor = (colorId) => {
-	console.log(colorId)
 	this.setState({selectedColorId: colorId})
 }
 
@@ -192,7 +191,7 @@ render() {
 			  <ChromePicker onChange={ this.handleColorChange } color={ {h, s, l, a} } />
 			  <ul style={{"list-style-type": "none", margin: "0", padding: "0"}}>
 			  {this.state.colors.map((layer, layerIndex) => {
-				  return <li>
+				  return <li style={{display: "inline"}}>
 					  <button onClick={() => this.setState({currentLayer: layerIndex})} >{layerIndex}</button>
 				  </li>
 			  })}
