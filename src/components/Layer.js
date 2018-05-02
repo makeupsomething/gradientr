@@ -2,12 +2,6 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import ColorPicker from './ColorPicker';
 
-const LayerLabel = styled.p`
-  	width: 100%;
-  	margin: auto;
-	padding-left: 10px;
-`
-
 const AngleSlider = styled.div`
 	margin: 10px 0;
 	padding-left: 10px;
@@ -44,7 +38,6 @@ class Layer extends Component {
 
         return (
             <span>
-                <LayerLabel>{`Layer ${index}`}</LayerLabel>
                 <label>
                     Hide Layer
                     <input
