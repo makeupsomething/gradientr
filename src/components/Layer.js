@@ -72,16 +72,6 @@ class Layer extends Component {
                                         </ColorPicker>
                                     </LayerItem>
                                     <LayerItem>
-                                        <input
-                                            type="range"
-                                            min="0"
-                                            max="100"
-                                            value={color.amount}
-                                            name={color.id}
-                                            onChange={(event) => handleColorAmountChange(index, color.id, event.target.value)} 
-                                            />
-                                    </LayerItem>
-                                    <LayerItem>
                                         <AddButton disabled={color.id === selectedColor} onClick={() => removeColor(color.id, index)}> 
                                             <i class="fas fa-trash" />
                                         </AddButton>

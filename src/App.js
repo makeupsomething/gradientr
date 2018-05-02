@@ -190,11 +190,9 @@ render() {
       		<Sidebar width={this.state.sidebar}>
 			  <ColorDistSlider layer={0} colors={this.state.colors[0].colors} handleColorAmountChange={this.handleColorAmountChange_test}  />
 			  <ChromePicker onChange={ this.handleColorChange } color={ {h, s, l, a} } />
-			  <Line />
 			  <ul style={{"list-style-type": "none", margin: "0", padding: "0"}}>
 			  {this.state.colors.map((layer, layerIndex) => {
             		return <li style={{display: "inline"}}>
-						<Line />
 						<Layer 
 							layer={layer} 
 							index={layerIndex} 
@@ -206,7 +204,6 @@ render() {
 							setColor={this.setSelectedColor}
 							selectedColor={this.state.selectedColorId}
 						/>
-						<Line />
 						</li>
 				  })}
 				</ul>
