@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import './App.css';
 import Layer from './components/Layer';
+import ControlPanel from './components/ControlPanel';
 import ColorDistSlider from './components/ColorDistSlider';
 import { ChromePicker } from 'react-color';
 
@@ -60,6 +61,7 @@ const TabContent = styled.div`
     color: white;
     display: block;
 	background-color: #555;
+	width: 50%;
 `
 
 const Sidebar = styled.div.attrs({
@@ -77,6 +79,13 @@ const Sidebar = styled.div.attrs({
 const AngleSlider = styled.div`
 	margin: 10px 0;
 	padding-left: 10px;
+`
+
+const Container = styled.div`
+  	width: 75%;
+    margin: auto;
+	border: solid 2px black;
+	top: 300px;
 `
 
 class App extends Component {
@@ -199,13 +208,38 @@ render() {
         		<Wrapper>
           			gradientr
         		</Wrapper>
-      		</Background>
-			<MenuButton onClick={this.toggleSidebar}><i class="fas fa-bars"></i></MenuButton>
-      		<Sidebar width={this.state.sidebar}>
+      		
+			<Container>
+				<ul style={{"list-style-type": "none", margin: "0", padding: "0"}}>
+					<li><ChromePicker onChange={ this.handleColorChange } color={ {h, s, l, a} } /></li>
+					<li>
+						<ul>
+							<li style={{height: "48px"}}>
+							{this.state.colors.map((layer, layerIndex) => {
+								return <Tablink background={this.state.currentLayer === layerIndex ? '#555' : '#777'} onClick={() => this.setState({currentLayer: layerIndex})} >{layerIndex}</Tablink>
+							})}
+							</li>
+							<li>
+							<TabContent>
+							<Layer 
+							layer={this.state.colors[this.state.currentLayer]} 
+							index={this.state.currentLayer} 
+							handleChange={this.handleChange} 
+							addColor={this.addColor} 
+							removeColor={this.removeColor} 
+							checked={this.state.colors[this.state.currentLayer].hidden}
+							setColor={this.setSelectedColor}
+							selectedColor={this.state.selectedColorId}
+							/>
+							</TabContent>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</Container>
+			</Background>
+			<Sidebar width={this.state.sidebar}>
 			  <ul style={{"list-style-type": "none", margin: "0", padding: "0"}}>
-			  <li>
-			  <ChromePicker onChange={ this.handleColorChange } color={ {h, s, l, a} } />
-			  </li>
 			  <li>
 			  <ColorDistSlider layer={this.state.currentLayer} colors={this.state.colors[this.state.currentLayer].colors} handleColorAmountChange={this.handleColorAmountChange}  />
 			  </li>
@@ -220,8 +254,6 @@ render() {
 				  
 			  })}</li>
 				</ul>
-				<br />
-				<br />
 				<TabContent>
 				<Layer 
 					layer={this.state.colors[this.state.currentLayer]} 

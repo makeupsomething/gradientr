@@ -32,7 +32,7 @@ class Layer extends Component {
         const {layer, index, handleChange, addColor, removeColor, checked, setColor, selectedColor} = this.props;
 
         return (
-            <div>
+            <span>
                 <label>
                     Hide Layer
                     <input
@@ -64,7 +64,7 @@ class Layer extends Component {
                                 })}
                     <li>{layer.colors.length < 3 && index !== undefined ? (<AddButton onClick={() => addColor(index)}><i class="fas fa-plus" />Color</AddButton>) : null}</li>
                 </ul>
-            </div>
+            </span>
         );
     }
 }
