@@ -42,7 +42,7 @@ const MenuButton = styled.button`
 `
 
 const Tablink = styled.button.attrs({
-	background: props => props.background || '#777'
+	background: props => props.background || '#ffffff42'
 })`
     background: ${props => props.background};
     color: white;
@@ -54,13 +54,13 @@ const Tablink = styled.button.attrs({
 	width: 25%;
 	
 	${Tablink}:hover {
-    	background-color: #222;
+    	border: solid 1px gray;
 	}
 `
 
 const TabContent = styled.ul`
     color: white;
-	background-color: #555;
+	background-color: #ffffff42;
 	width: 100%;
 	list-style-type: none;
     margin: 0;
@@ -71,6 +71,7 @@ const TabContent = styled.ul`
 const LayerItem = styled.li`
 	display: inline-block;
 	width: 50%;
+	margin: auto;
 `
 
 const Sidebar = styled.div.attrs({
@@ -218,7 +219,7 @@ render() {
 				<Container>
 					<ColorDistSlider layer={this.state.currentLayer} colors={this.state.colors[this.state.currentLayer].colors} handleColorAmountChange={this.handleColorAmountChange}  />
 					{this.state.colors.map((layer, layerIndex) => {
-						return <Tablink background={this.state.currentLayer === layerIndex ? '#555' : '#777'} onClick={() => this.setState({currentLayer: layerIndex})} >{layerIndex}</Tablink>
+						return <Tablink background={this.state.currentLayer === layerIndex ? '#ffffff42' : '#ffffffb0'} onClick={() => this.setState({currentLayer: layerIndex})} >{layerIndex}</Tablink>
 					})}
 					<TabContent>
 						<LayerItem>
