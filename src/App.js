@@ -71,7 +71,6 @@ const TabContent = styled.ul`
 const LayerItem = styled.li`
 	display: inline-block;
 	width: 50%;
-	margin: auto;
 `
 
 const Sidebar = styled.div.attrs({
@@ -90,7 +89,7 @@ const Container = styled.div`
   	width: 75%;
     margin: auto;
 	border: solid 2px black;
-	margin-top: 20%;
+	margin-top: 15%;
 `
 
 class App extends Component {
@@ -202,6 +201,11 @@ getSelectedColor = () => {
 	return selectedColor
 }
 
+toggleTab = (layer) => {
+	this.setState({currentLayer: layer});
+	this.setState({selectedColorId: this.state.colors[layer].colors[0].id});
+}
+
 setSelectedColor = (colorId) => {
 	this.setState({selectedColorId: colorId})
 }
@@ -218,7 +222,7 @@ render() {
         		</Wrapper>     		
 				<Container>
 					{this.state.colors.map((layer, layerIndex) => {
-						return <Tablink background={this.state.currentLayer === layerIndex ? '#ffffff42' : '#ffffffb0'} onClick={() => this.setState({currentLayer: layerIndex})} >{layerIndex}</Tablink>
+						return <Tablink background={this.state.currentLayer === layerIndex ? '#ffffff42' : '#ffffffb0'} onClick={() => this.toggleTab(layerIndex)} >{layerIndex}</Tablink>
 					})}
 					<TabContent>
 						<ColorDistSlider layer={this.state.currentLayer} colors={this.state.colors[this.state.currentLayer].colors} handleColorAmountChange={this.handleColorAmountChange}  />
