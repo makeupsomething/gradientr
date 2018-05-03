@@ -51,7 +51,7 @@ const Tablink = styled.button.attrs({
     cursor: pointer;
     padding: 14px 16px;
     font-size: 17px;
-	width: 25%;
+	width: 50%;
 	
 	${Tablink}:hover {
     	border: solid 1px gray;
@@ -90,7 +90,7 @@ const Container = styled.div`
   	width: 75%;
     margin: auto;
 	border: solid 2px black;
-	top: 300px;
+	margin-top: 20%;
 `
 
 class App extends Component {
@@ -217,11 +217,21 @@ render() {
           			gradientr
         		</Wrapper>     		
 				<Container>
-					<ColorDistSlider layer={this.state.currentLayer} colors={this.state.colors[this.state.currentLayer].colors} handleColorAmountChange={this.handleColorAmountChange}  />
 					{this.state.colors.map((layer, layerIndex) => {
 						return <Tablink background={this.state.currentLayer === layerIndex ? '#ffffff42' : '#ffffffb0'} onClick={() => this.setState({currentLayer: layerIndex})} >{layerIndex}</Tablink>
 					})}
 					<TabContent>
+						<ColorDistSlider layer={this.state.currentLayer} colors={this.state.colors[this.state.currentLayer].colors} handleColorAmountChange={this.handleColorAmountChange}  />
+						<Slider 
+							min={0} 
+							max={360}  
+							style={{height: "20px", width: "90%", margin: "20px auto"}}
+							railStyle={{height: "20px"}} 
+							handleStyle={{height: "30px", borderRadius: "20%"}} 
+							trackStyle={{backgroundColor: `#abe2fb00`}}
+							onChange={value => this.handleChange(this.state.currentLayer, "degree", {value})}
+							value={this.state.colors[this.state.currentLayer].degree}
+						/>
 						<LayerItem>
 						<Layer 
 						layer={this.state.colors[this.state.currentLayer]} 
@@ -233,23 +243,11 @@ render() {
 						setColor={this.setSelectedColor}
 						selectedColor={this.state.selectedColorId}
 						/>
-						<label>Angle</label>
-						<Slider 
-							min={0} 
-							max={360}  
-							style={{height: "20px", margin: "10px 0px"}}
-							railStyle={{height: "20px"}} 
-							handleStyle={{height: "30px", borderRadius: "20%"}} 
-							trackStyle={{backgroundColor: `#abe2fb00`}}
-							onChange={value => this.handleChange(this.state.currentLayer, "degree", {value})}
-							value={this.state.colors[this.state.currentLayer].degree}
-						/>
 						</LayerItem>
 						<LayerItem>
 							<ChromePicker onChange={ this.handleColorChange } color={ {h, s, l, a} } />
 						</LayerItem>
 					</TabContent>
-					<CodeSnippit>{`${str}`}</CodeSnippit>
 				</Container>
 			</Background>
       	</div>
