@@ -67,7 +67,7 @@ class ColorDistSlider extends Component {
                 min={0} 
                 max={100}  
                 pushable={5} 
-                style={{height: "20px", width: "50%", margin: "10px 0px"}}
+                style={{height: "20px", width: "90%", margin: "20px auto"}}
                 value={this.state.colors.map(color => color.amount)} 
                 handleStyle={this.getHandleColors()} 
                 trackStyle={this.getTrackStyle()}

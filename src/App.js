@@ -58,12 +58,18 @@ const Tablink = styled.button.attrs({
 	}
 `
 
-const TabContent = styled.div`
+const TabContent = styled.ul`
     color: white;
 	background-color: #555;
-	margin: 0px;
-	border: 0px;
 	width: 50%;
+	list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+`
+
+const LayerItem = styled.li`
+	display: inline;
 `
 
 const Sidebar = styled.div.attrs({
@@ -78,7 +84,7 @@ const Sidebar = styled.div.attrs({
 	padding-top: 3%;
 `
 
-const Container = styled.div`
+const Container = styled.span`
   	width: 75%;
     margin: auto;
 	border: solid 2px black;
@@ -209,43 +215,39 @@ render() {
           			gradientr
         		</Wrapper>     		
 				<Container>
-						<span>
-							<div>{this.state.colors.map((layer, layerIndex) => {
-								return <Tablink background={this.state.currentLayer === layerIndex ? '#555' : '#777'} onClick={() => this.setState({currentLayer: layerIndex})} >{layerIndex}</Tablink>
-							})}</div>
-							<TabContent>
-								<Layer 
-								layer={this.state.colors[this.state.currentLayer]} 
-								index={this.state.currentLayer} 
-								handleChange={this.handleChange} 
-								addColor={this.addColor} 
-								removeColor={this.removeColor} 
-								checked={this.state.colors[this.state.currentLayer].hidden}
-								setColor={this.setSelectedColor}
-								selectedColor={this.state.selectedColorId}
-								/>
-							</TabContent>
-						</span>
-						<span>
-							<ChromePicker onChange={ this.handleColorChange } color={ {h, s, l, a} } />
-						</span>
-						<span>
+					<ColorDistSlider layer={this.state.currentLayer} colors={this.state.colors[this.state.currentLayer].colors} handleColorAmountChange={this.handleColorAmountChange}  />
+					{this.state.colors.map((layer, layerIndex) => {
+						return <Tablink background={this.state.currentLayer === layerIndex ? '#555' : '#777'} onClick={() => this.setState({currentLayer: layerIndex})} >{layerIndex}</Tablink>
+					})}
+					<TabContent>
+						<LayerItem>
+						<Layer 
+						layer={this.state.colors[this.state.currentLayer]} 
+						index={this.state.currentLayer} 
+						handleChange={this.handleChange} 
+						addColor={this.addColor} 
+						removeColor={this.removeColor} 
+						checked={this.state.colors[this.state.currentLayer].hidden}
+						setColor={this.setSelectedColor}
+						selectedColor={this.state.selectedColorId}
+						/>
 						<label>Angle</label>
 						<Slider 
 							min={0} 
 							max={360}  
-							style={{height: "20px", width: "50%", margin: "10px 0px"}}
+							style={{height: "20px", margin: "10px 0px"}}
 							railStyle={{height: "20px"}} 
 							handleStyle={{height: "30px", borderRadius: "20%"}} 
 							trackStyle={{backgroundColor: `#abe2fb00`}}
 							onChange={value => this.handleChange(this.state.currentLayer, "degree", {value})}
 							value={this.state.colors[this.state.currentLayer].degree}
 						/>
-						<ColorDistSlider layer={this.state.currentLayer} colors={this.state.colors[this.state.currentLayer].colors} handleColorAmountChange={this.handleColorAmountChange}  />
-						</span>
-						<span>
-							<CodeSnippit>{`${str}`}</CodeSnippit>
-						</span>
+						</LayerItem>
+						<LayerItem>
+							<ChromePicker onChange={ this.handleColorChange } color={ {h, s, l, a} } />
+						</LayerItem>
+					</TabContent>
+					<CodeSnippit>{`${str}`}</CodeSnippit>
 				</Container>
 			</Background>
       	</div>
