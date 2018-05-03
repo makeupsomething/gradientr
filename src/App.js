@@ -61,7 +61,7 @@ const Tablink = styled.button.attrs({
 const TabContent = styled.ul`
     color: white;
 	background-color: #555;
-	width: 50%;
+	width: 100%;
 	list-style-type: none;
     margin: 0;
     padding: 0;
@@ -69,7 +69,8 @@ const TabContent = styled.ul`
 `
 
 const LayerItem = styled.li`
-	display: inline;
+	display: inline-block;
+	width: 50%;
 `
 
 const Sidebar = styled.div.attrs({
