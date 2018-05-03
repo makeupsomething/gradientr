@@ -37,7 +37,7 @@ class ColorDistSlider extends Component {
         this.state.colors.forEach((color, index) => {
             handleVals.push({backgroundColor: 
                 `hsla(${this.state.colors[index].h}, ${this.state.colors[index].s}%, ${this.state.colors[index].l}%, ${this.state.colors[index].a})`
-            });
+            , height: "30px", borderRadius: "20%"});
         });
         return handleVals;
     }
@@ -67,10 +67,11 @@ class ColorDistSlider extends Component {
                 min={0} 
                 max={100}  
                 pushable={5} 
+                style={{height: "20px", width: "50%", margin: "10px 0px"}}
                 value={this.state.colors.map(color => color.amount)} 
                 handleStyle={this.getHandleColors()} 
                 trackStyle={this.getTrackStyle()}
-                railStyle={{background: this.getRailStyle(), height: `20px`}} 
+                railStyle={{background: this.getRailStyle(), height: "20px"}} 
                 onChange={this.handleChange} 
                 allowCross={false}/> : null}
             </div>

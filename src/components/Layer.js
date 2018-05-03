@@ -17,7 +17,7 @@ const AddButton = styled.button`
 const LayerItem = styled.li.attrs({
     border: props => props.selected || '',
 })`
-    display: inline;
+    display: block;
     border: ${props => props.selected};
 `
 
@@ -32,15 +32,16 @@ class Layer extends Component {
         const {layer, index, handleChange, addColor, removeColor, checked, setColor, selectedColor} = this.props;
 
         return (
-            <span>
-                <label>
+            <div>
+                <div>
+                    <label>
                     Hide Layer
                     <input
                         type="checkbox"
                         checked={checked}
                         onChange={() => handleChange(index, "hidden", !checked)} />
-                </label>
-                <ul style={{"list-style-type": "none", margin: "0", padding: "0"}}>
+                    </label>
+                </div>
                     {layer.colors.map(color => {
                         return <ColorEditor selected={color.id === selectedColor ? "solid 2px black" : null}>
                                     <LayerItem>
@@ -54,8 +55,6 @@ class Layer extends Component {
                                             layer={index}
                                             setColor={setColor}>
                                         </ColorPicker>
-                                    </LayerItem>
-                                    <LayerItem>
                                         <AddButton disabled={color.id === selectedColor} onClick={() => removeColor(color.id, index)}> 
                                             <i class="fas fa-trash" />
                                         </AddButton>
@@ -63,8 +62,7 @@ class Layer extends Component {
                                 </ColorEditor>
                                 })}
                     <li>{layer.colors.length < 3 && index !== undefined ? (<AddButton onClick={() => addColor(index)}><i class="fas fa-plus" />Color</AddButton>) : null}</li>
-                </ul>
-            </span>
+            </div>
         );
     }
 }
