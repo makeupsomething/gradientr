@@ -84,7 +84,7 @@ const Sidebar = styled.div.attrs({
 	padding-top: 3%;
 `
 
-const Container = styled.span`
+const Container = styled.div`
   	width: 75%;
     margin: auto;
 	border: solid 2px black;
