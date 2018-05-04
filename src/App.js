@@ -89,7 +89,7 @@ const Container = styled.div`
   	width: 75%;
     margin: auto;
 	border: solid 2px black;
-	margin-top: 15%;
+	margin-top: 10%;
 `
 
 class App extends Component {

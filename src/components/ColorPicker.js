@@ -4,9 +4,8 @@ import styled from 'styled-components';
 const ColorBlock = styled.div.attrs({
     background: props => props.background || 'green',
 })`
-    width: 40px;
-    height: 40px;
-    margin-right: 10px;
+    width: 80%;
+    height: 80%;
     background: ${props => props.background};
 `
 
