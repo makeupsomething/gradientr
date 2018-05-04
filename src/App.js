@@ -51,7 +51,7 @@ const Tablink = styled.button.attrs({
     cursor: pointer;
     padding: 14px 16px;
     font-size: 17px;
-	width: 50%;
+	width: 33.3%;
 	
 	${Tablink}:hover {
     	border: solid 1px gray;
@@ -203,7 +203,7 @@ getSelectedColor = () => {
 
 toggleTab = (layer) => {
 	this.setState({currentLayer: layer});
-	this.setState({selectedColorId: this.state.colors[layer].colors[0].id});
+	layer !== 3 ? this.setState({selectedColorId: this.state.colors[layer].colors[0].id}) : null;
 }
 
 setSelectedColor = (colorId) => {
@@ -224,7 +224,8 @@ render() {
 					{this.state.colors.map((layer, layerIndex) => {
 						return <Tablink background={this.state.currentLayer === layerIndex ? '#ffffff42' : '#ffffffb0'} onClick={() => this.toggleTab(layerIndex)} >{layerIndex}</Tablink>
 					})}
-					<TabContent>
+					<Tablink background={this.state.currentLayer === 3 ? '#ffffff42' : '#ffffffb0'} onClick={() => this.toggleTab(3)} >Code</Tablink>
+					{this.state.currentLayer !== 3 ? ( <TabContent>
 						<ColorDistSlider layer={this.state.currentLayer} colors={this.state.colors[this.state.currentLayer].colors} handleColorAmountChange={this.handleColorAmountChange}  />
 						<Slider 
 							min={0} 
@@ -251,7 +252,7 @@ render() {
 						<LayerItem>
 							<ChromePicker onChange={ this.handleColorChange } color={ {h, s, l, a} } />
 						</LayerItem>
-					</TabContent>
+					</TabContent>) : (<TabContent><CodeSnippit>{`${str}`}</CodeSnippit></TabContent>)}
 				</Container>
 			</Background>
       	</div>
