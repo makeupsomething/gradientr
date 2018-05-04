@@ -222,9 +222,9 @@ render() {
         		</Wrapper>     		
 				<Container>
 					{this.state.colors.map((layer, layerIndex) => {
-						return <Tablink background={this.state.currentLayer === layerIndex ? '#ffffff42' : '#ffffffb0'} onClick={() => this.toggleTab(layerIndex)} >{layerIndex}</Tablink>
+						return <Tablink background={this.state.currentLayer === layerIndex ? '#ffffff42' : '#ffffffb0'} onClick={() => this.toggleTab(layerIndex)} >Layer {layerIndex+1}</Tablink>
 					})}
-					<Tablink background={this.state.currentLayer === 3 ? '#ffffff42' : '#ffffffb0'} onClick={() => this.toggleTab(3)} >Code</Tablink>
+					<Tablink background={this.state.currentLayer === 3 ? '#ffffff42' : '#ffffffb0'} onClick={() => this.toggleTab(3)} ><i class="fas fa-code" /></Tablink>
 					{this.state.currentLayer !== 3 ? ( <TabContent>
 						<ColorDistSlider layer={this.state.currentLayer} colors={this.state.colors[this.state.currentLayer].colors} handleColorAmountChange={this.handleColorAmountChange}  />
 						<Slider 
