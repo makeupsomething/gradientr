@@ -53,11 +53,10 @@ class Layer extends Component {
                                             amount={color.amount}
                                             name={color.id}
                                             layer={index}
-                                            setColor={setColor}>
+                                            setColor={setColor}
+                                            removeColor={removeColor}
+                                            disabled={color.id === selectedColor} >
                                         </ColorPicker>
-                                        <AddButton disabled={color.id === selectedColor} onClick={() => removeColor(color.id, index)}> 
-                                            <i class="fas fa-trash" />
-                                        </AddButton>
                                     </LayerItem>
                                 </ColorEditor>
                                 })}

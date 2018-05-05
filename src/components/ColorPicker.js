@@ -4,9 +4,24 @@ import styled from 'styled-components';
 const ColorBlock = styled.div.attrs({
     background: props => props.background || 'green',
 })`
-    width: 80%;
-    height: 80%;
+    width: 100%;
+    height: 50px;
     background: ${props => props.background};
+    display: inline-block;
+
+    ${ColorBlock}:hover {
+    	border: solid 1px gray;
+	}
+`
+
+const RemoveButton = styled.button`
+    height: 80%;
+    width: 14%;
+    margin: 5px 10% 5px 85%;
+    background: #ffffff00;
+    font-size: 2em;
+    color: white;
+    border: none;
 `
 
 class ColorPicker extends Component {
@@ -43,14 +58,21 @@ class ColorPicker extends Component {
         setColor(name)
     }
 
+    removeColor = (event) => {
+        event.stopPropagation();
+        const { removeColor, name, layer } = this.props;
+        removeColor(name, layer)
+    }
+
     render() {
+        const { disabled } = this.props;
         return (
             <span>
                 <ColorBlock 
                     onClick={this.toggleColor} 
                     background={`hsla(${this.state.background.h}, ${this.state.background.s * 100}%, ${this.state.background.l * 100}%, ${this.state.background.a})`}
                 >
-                <p>edit</p>
+                {disabled ? null : <RemoveButton onClick={this.removeColor}><i class="fas fa-times" /></RemoveButton>}
                 </ColorBlock>
             </span>
         );
