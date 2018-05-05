@@ -49,7 +49,6 @@ class ColorDistSlider extends Component {
                 `hsla(${this.state.colors[index].h}, ${this.state.colors[index].s}%, ${this.state.colors[index].l}%, ${this.state.colors[index].a})`
             , height: "30px", borderRadius: "20%"});
         });
-        console.log(handleVals)
         return handleVals;
     }
 

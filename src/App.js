@@ -157,7 +157,10 @@ handleColorAmountChange = (layer, colors) => {
     });
 }
 
-handleChange = (layer, parameter, value) => {
+handleChange = (layer, parameter, value, event) => {
+	if(event) {
+		event.stopPropagation();
+	}
 	value = parameter === "degree" ? value.value : value
     let tmpColors = this.state.colors
     tmpColors[layer][parameter] = value
@@ -244,9 +247,16 @@ render() {
         		</Wrapper>     		
 				<Container>
 					{this.state.colors.map((layer, layerIndex) => {
-						return <Tablink background={this.state.currentLayer === layerIndex ? '#ffffff42' : '#ffffffb0'} onClick={() => this.toggleTab(layerIndex)} >Layer {layerIndex+1}</Tablink>
+						return <Tablink background={this.state.currentLayer === layerIndex ? '#ffffff42' : '#ffffffb0'} onClick={() => this.toggleTab(layerIndex)} >
+							Layer {layerIndex+1}
+							{ this.state.colors[layerIndex].hidden ? (<button onClick={(e) => this.handleChange(layerIndex, "hidden", !this.state.colors[layerIndex].hidden, e)}>
+							hidden
+							</button>) : (<button onClick={(e) => this.handleChange(layerIndex, "hidden", !this.state.colors[layerIndex].hidden, e)}>
+							hide
+							</button>)}
+						</Tablink>
 					})}
-					<Tablink background={this.state.currentLayer === 3 ? '#ffffff42' : '#ffffffb0'} onClick={() => this.toggleTab(3)} ><i class="fas fa-code" /></Tablink>
+					<Tablink background={this.state.currentLayer === 3 ? '#ffffff42' : '#ffffffb0'} onClick={() => this.toggleTab(3)} ><i class="fa fa-code" /></Tablink>
 					{this.state.currentLayer !== 3 ? ( <TabContent>
 						<ColorDistSlider layer={this.state.currentLayer} colors={this.state.colors[this.state.currentLayer].colors} handleColorAmountChange={this.handleColorAmountChange}  />
 						<Slider 
