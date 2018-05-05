@@ -6,6 +6,7 @@ import ControlPanel from './components/ControlPanel';
 import ColorDistSlider from './components/ColorDistSlider';
 import { ChromePicker } from 'react-color';
 import Slider from 'rc-slider';
+import Tooltip from 'rc-tooltip';
 import 'rc-slider/assets/index.css';
 
 const Wrapper = styled.p`
@@ -92,13 +93,36 @@ const Container = styled.div`
 	margin-top: 10%;
 `
 
+const marks = {
+	0: {label: '0°', style: {top: '14px'}},
+	20: {label: '20°', style: {top: '14px'}},
+	40: {label: '40°', style: {top: '14px'}},
+	60: {label: '60°', style: {top: '14px'}},
+	80: {label: '80°', style: {top: '14px'}},
+	100: {label: '100°', style: {top: '14px'}},
+	120: {label: '120°', style: {top: '14px'}},
+	140: {label: '140°', style: {top: '14px'}},
+	160: {label: '160°', style: {top: '14px'}},
+	180: {label: '180°', style: {top: '14px'}},
+	200: {label: '200°', style: {top: '14px'}},
+	220: {label: '220°', style: {top: '14px'}},
+	240: {label: '240°', style: {top: '14px'}},
+	260: {label: '260°', style: {top: '14px'}},
+	280: {label: '280°', style: {top: '14px'}},
+	300: {label: '300°', style: {top: '14px'}},
+	320: {label: '320°', style: {top: '14px'}},
+	340: {label: '340°', style: {top: '14px'}},
+	360: {label: '360°', style: {top: '14px'}},
+	360: {label: '360°', style: {top: '14px'}},
+};
+
 class App extends Component {
   state = {
     colors: [
-		{degree: 93, hidden: false, colors:[{h: '359', s: '88', l: '68', a: '0.7', amount: 26, name: "color01", id: "color01"}, 
+		{degree: 93, hidden: false, colors:[{h: '359', s: '88', l: '68', a: '0.7', amount: 25, name: "color01", id: "color01"}, 
       	{h: '199', s: '100', l: '60', a: '0.6', amount: 75, name: "color02", id: "color02"}]},
-      	{degree: 181, hidden: false, colors:[{h: '98', s: '93', l: '50', a: '0.5', amount: 25, name: "color11", id: "color11"}, 
-      	{h: '191', s: '92', l: '50', a: '0.5', amount: 50, name: "color12", id: "color12"}]}
+      	{degree: 181, hidden: false, colors:[{h: '98', s: '93', l: '50', a: '0.5', amount: 30, name: "color11", id: "color11"}, 
+      	{h: '191', s: '92', l: '50', a: '0.5', amount: 70, name: "color12", id: "color12"}]}
     ],
     sidebar: '25%',
 	background: '100%',
@@ -134,8 +158,6 @@ handleColorAmountChange = (layer, colors) => {
 }
 
 handleChange = (layer, parameter, value) => {
-	console.log(layer)
-	console.log(parameter)
 	value = parameter === "degree" ? value.value : value
     let tmpColors = this.state.colors
     tmpColors[layer][parameter] = value
@@ -229,11 +251,13 @@ render() {
 						<ColorDistSlider layer={this.state.currentLayer} colors={this.state.colors[this.state.currentLayer].colors} handleColorAmountChange={this.handleColorAmountChange}  />
 						<Slider 
 							min={0} 
-							max={360}  
-							style={{height: "20px", width: "90%", margin: "20px auto"}}
+							max={360} 
+							marks={marks} 
+							style={{height: "20px", width: "90%", margin: "40px auto"}}
 							railStyle={{height: "20px"}} 
 							handleStyle={{height: "30px", borderRadius: "20%"}} 
 							trackStyle={{backgroundColor: `#abe2fb00`}}
+							dotStyle={{top: "16px"}}
 							onChange={value => this.handleChange(this.state.currentLayer, "degree", {value})}
 							value={this.state.colors[this.state.currentLayer].degree}
 						/>
