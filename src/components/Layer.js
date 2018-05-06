@@ -18,6 +18,7 @@ const LayerItem = styled.li.attrs({
     border: props => props.selected || '',
 })`
     display: block;
+    margin: auto;
     border: ${props => props.selected};
 `
 
