@@ -3,14 +3,16 @@ import styled from 'styled-components';
 
 const ColorBlock = styled.div.attrs({
     background: props => props.background || 'green',
+    border: props => props.selected || '',
 })`
     width: 100%;
     height: 50px;
     background: ${props => props.background};
     display: inline-block;
+    border: ${props => props.selected};
 
     ${ColorBlock}:hover {
-    	border: solid 1px gray;
+    	border: solid 3px black;
 	}
 `
 
@@ -71,6 +73,7 @@ class ColorPicker extends Component {
                 <ColorBlock 
                     onClick={this.toggleColor} 
                     background={`hsla(${this.state.background.h}, ${this.state.background.s * 100}%, ${this.state.background.l * 100}%, ${this.state.background.a})`}
+                    selected={disabled ? 'solid black 3px' : null}
                 >
                 {disabled ? null : <RemoveButton onClick={this.removeColor}><i class="fas fa-times" /></RemoveButton>}
                 </ColorBlock>
