@@ -125,7 +125,7 @@ const marks = {
 
 class App extends Component {
   state = {
-    colors: [
+    layers: [
 		{degree: 93, hidden: false, colors:[{h: '359', s: '88', l: '68', a: '0.7', amount: 25, name: "color01", id: "color01"}, 
       	{h: '199', s: '100', l: '60', a: '0.6', amount: 75, name: "color02", id: "color02"}]},
       	{degree: 181, hidden: false, colors:[{h: '98', s: '93', l: '50', a: '0.5', amount: 30, name: "color11", id: "color11"}, 
@@ -138,7 +138,7 @@ class App extends Component {
   };
 
 handleColorChange = (color) => {
-	let tmp = this.state.colors;
+	let tmp = this.state.layers;
 	
     tmp.forEach(layer => {
 		layer.colors.forEach(c => {
@@ -157,10 +157,10 @@ handleColorChange = (color) => {
 }
 
 handleColorAmountChange = (layer, colors) => {
-    let tmp = this.state.colors;
+    let tmp = this.state.layers;
     tmp[layer].colors = colors
     this.setState({
-      	colors: tmp
+      	layers: tmp
     });
 }
 
@@ -169,11 +169,11 @@ handleChange = (layer, parameter, value, event) => {
 		event.stopPropagation();
 	}
 	value = parameter === "degree" ? value.value : value
-    let tmpColors = this.state.colors
+    let tmpColors = this.state.layers
     tmpColors[layer][parameter] = value
 
     this.setState({
-		colors: tmpColors
+		layers: tmpColors
     });
 }
 
@@ -187,10 +187,10 @@ addColor = (layer) => {
 	if(layer === undefined) {
 		return
 	}
-	let tmpColors = this.state.colors
+	let tmpColors = this.state.layers
 	let uuid = this.uuidv4()
 	tmpColors[layer].colors.push({h: '0', s: '50', l: '50', a: '0.5', amount: 50, id: uuid})
-    this.setState({ colors: tmpColors });
+    this.setState({ layers: tmpColors });
 }
 
 toggleSidebar = (event) => {
@@ -198,14 +198,14 @@ toggleSidebar = (event) => {
 }
 
 removeColor = (id, layer) => {
-	let tmpColors = this.state.colors;
-	tmpColors[layer].colors = this.state.colors[layer].colors.filter(color => color.id !== id)
-	this.setState({ colors: tmpColors });	
+	let tmpColors = this.state.layers;
+	tmpColors[layer].colors = this.state.layers[layer].colors.filter(color => color.id !== id)
+	this.setState({ layers: tmpColors });	
 }
 
 getString = () => {
 	let str = '';
-	let strColors = this.state.colors.filter(({hidden}) => !hidden)
+	let strColors = this.state.layers.filter(({hidden}) => !hidden)
 
 	strColors.forEach((layer, index) => {
 		str+= `\nlinear-gradient(${layer.degree}deg, `;
@@ -222,7 +222,7 @@ getString = () => {
 
 getSelectedColor = () => {
 	let selectedColor = null;
-	this.state.colors.forEach(layer => {
+	this.state.layers.forEach(layer => {
 		layer.colors.forEach(color => {
 			if(color.id === this.state.selectedColorId) {
 				selectedColor = color;
@@ -235,7 +235,7 @@ getSelectedColor = () => {
 
 toggleTab = (layer) => {
 	this.setState({currentLayer: layer});
-	layer !== 3 ? this.setState({selectedColorId: this.state.colors[layer].colors[0].id}) : null;
+	layer !== 3 ? this.setState({selectedColorId: this.state.layers[layer].colors[0].id}) : null;
 }
 
 setSelectedColor = (colorId) => {
@@ -243,7 +243,7 @@ setSelectedColor = (colorId) => {
 }
 
 toggleLayers = (layer) => {
-	let tmpColors = this.state.colors
+	let tmpColors = this.state.layers
 
     if(layer === 0) {
 		tmpColors[0].hidden = false;
@@ -257,12 +257,12 @@ toggleLayers = (layer) => {
 	}
 
     this.setState({
-		colors: tmpColors
+		layers: tmpColors
     });
 }
 
 getHiddenLayer = () => {
-	let hiddenLayers = this.state.colors.filter(layer => layer.hidden);
+	let hiddenLayers = this.state.layers.filter(layer => layer.hidden);
 	console.log(hiddenLayers.length)
 	return hiddenLayers
 }
@@ -278,14 +278,14 @@ render() {
           			gradientr
         		</Wrapper>     		
 				<Container>
-					{this.state.colors.map((layer, layerIndex) => {
+					{this.state.layers.map((layer, layerIndex) => {
 						return <Tablink background={this.state.currentLayer === layerIndex ? '#ffffff42' : '#ffffffb0'} onClick={() => this.toggleTab(layerIndex)} >
 							Layer {layerIndex+1}
 						</Tablink>
 					})}
 					<Tablink background={this.state.currentLayer === 3 ? '#ffffff42' : '#ffffffb0'} onClick={() => this.toggleTab(3)} ><i class="fa fa-code" /></Tablink>
 					{this.state.currentLayer !== 3 ? ( <TabContent>
-						<ColorDistSlider layer={this.state.currentLayer} colors={this.state.colors[this.state.currentLayer].colors} handleColorAmountChange={this.handleColorAmountChange}  />
+						<ColorDistSlider layer={this.state.currentLayer} colors={this.state.layers[this.state.currentLayer].colors} handleColorAmountChange={this.handleColorAmountChange}  />
 						<Slider 
 							min={0} 
 							max={360} 
@@ -296,7 +296,7 @@ render() {
 							trackStyle={{backgroundColor: `#abe2fb00`}}
 							dotStyle={{top: "16px"}}
 							onChange={value => this.handleChange(this.state.currentLayer, "degree", {value})}
-							value={this.state.colors[this.state.currentLayer].degree}
+							value={this.state.layers[this.state.currentLayer].degree}
 						/>
 						<div style={{height: "20px", width: "90%", margin: "40px auto"}}>
 							<label>
@@ -304,7 +304,7 @@ render() {
 							</label>
 							<label style={{marginLeft: "10%"}}>
 								both layers
-							<input onClick={() => this.toggleLayers(2)} type="radio" name="hidden" value="both" checked={!this.state.colors[0].hidden && !this.state.colors[1].hidden } />
+							<input onClick={() => this.toggleLayers(2)} type="radio" name="hidden" value="both" checked={!this.state.layers[0].hidden && !this.state.layers[1].hidden } />
 							</label>
 							<label style={{marginLeft: "10%"}}>
 								layer 1
@@ -317,11 +317,11 @@ render() {
 						</div>
 						<LayerItem>
 						<Layer 
-						layer={this.state.colors[this.state.currentLayer]} 
+						layer={this.state.layers[this.state.currentLayer]} 
 						index={this.state.currentLayer} 
 						addColor={this.addColor} 
 						removeColor={this.removeColor} 
-						checked={this.state.colors[this.state.currentLayer].hidden}
+						checked={this.state.layers[this.state.currentLayer].hidden}
 						setColor={this.setSelectedColor}
 						selectedColor={this.state.selectedColorId}
 						/>
