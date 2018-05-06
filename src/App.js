@@ -28,10 +28,16 @@ const Background = styled.div.attrs({
 `;
 
 const CodeSnippit = styled.code`
-  	width: 80%;
-	background: white;
 	color: gray;
-	padding-left: 10px;
+	font-size: 2em;
+`
+
+const CodeEditor = styled.div`
+	margin: auto;
+	padding: 5%;
+	width: 80%;
+	height: 300px;
+	background: black;
 `
 
 const MenuButton = styled.button`
@@ -322,7 +328,7 @@ render() {
 						<LayerItem>
 							<ChromePicker onChange={ this.handleColorChange } color={ {h, s, l, a} } />
 						</LayerItem>
-					</TabContent>) : (<TabContent><CodeSnippit>{`${str}`}</CodeSnippit></TabContent>)}
+					</TabContent>) : (<TabContent><CodeEditor><CodeSnippit>{`${str}`}</CodeSnippit></CodeEditor></TabContent>)}
 				</Container>
 			</Background>
       	</div>
