@@ -7,6 +7,7 @@ import ColorDistSlider from './components/ColorDistSlider';
 import { ChromePicker } from 'react-color';
 import Slider from 'rc-slider';
 import Tooltip from 'rc-tooltip';
+import Highlight from 'react-highlight'
 import 'rc-slider/assets/index.css';
 
 const Wrapper = styled.p`
@@ -27,11 +28,17 @@ const Background = styled.div.attrs({
 	background: ${props => props.background};
 `;
 
-const CodeSnippit = styled.code`
-  	width: 80%;
-	background: white;
-	color: gray;
-	padding-left: 10px;
+const CodeEditor = styled.div`
+	margin: auto;
+	margin-top: 5%;
+	margin-bottom: 5%;
+	padding: 5%;
+	width: 80%;
+	height: 200px;
+	background: black;
+	word-wrap: break-word;
+	border: solid gray 3px;
+	font-size: 1.5em;
 `
 
 const MenuButton = styled.button`
@@ -201,9 +208,9 @@ getString = () => {
 	let strColors = this.state.colors.filter(({hidden}) => !hidden)
 
 	strColors.forEach((layer, index) => {
-		str+= `linear-gradient(${layer.degree}deg, `;
+		str+= `\nlinear-gradient(${layer.degree}deg, `;
         layer.colors.forEach((color, index) => {
-        	str+= `hsla(${color.h}, ${color.s}%, ${color.l}%,  ${color.a}) ${color.amount}%`
+        	str+= `\nhsla(${color.h}, ${color.s}%, ${color.l}%,  ${color.a}) ${color.amount}%`
         	str+= index === layer.colors.length-1 ? `)` : ',';
 		});
 	
@@ -322,7 +329,8 @@ render() {
 						<LayerItem>
 							<ChromePicker onChange={ this.handleColorChange } color={ {h, s, l, a} } />
 						</LayerItem>
-					</TabContent>) : (<TabContent><CodeSnippit>{`${str}`}</CodeSnippit></TabContent>)}
+					</TabContent>) : (<TabContent>
+					<CodeEditor><Highlight language="css"><span style={{wordBreak: "break-all", wordWrap: "break-word"}}>{`background: ${str}`}</span></Highlight></CodeEditor></TabContent>)}
 				</Container>
 			</Background>
       	</div>
