@@ -90,7 +90,7 @@ const Container = styled.div`
   	width: 75%;
     margin: auto;
 	border: solid 2px black;
-	margin-top: 10%;
+	margin-top: 5%;
 `
 
 const marks = {
@@ -235,6 +235,31 @@ setSelectedColor = (colorId) => {
 	this.setState({selectedColorId: colorId})
 }
 
+toggleLayers = (layer) => {
+	let tmpColors = this.state.colors
+
+    if(layer === 0) {
+		tmpColors[0].hidden = false;
+		tmpColors[1].hidden = true;
+	} else if (layer === 1) {
+		tmpColors[0].hidden = true;
+		tmpColors[1].hidden = false;
+	} else {
+		tmpColors[0].hidden = false;
+		tmpColors[1].hidden = false;
+	}
+
+    this.setState({
+		colors: tmpColors
+    });
+}
+
+getHiddenLayer = () => {
+	let hiddenLayers = this.state.colors.filter(layer => layer.hidden);
+	console.log(hiddenLayers.length)
+	return hiddenLayers
+}
+
 render() {
 	let str = this.getString();
 	let {h, s, l, a} = this.getSelectedColor();
@@ -249,11 +274,6 @@ render() {
 					{this.state.colors.map((layer, layerIndex) => {
 						return <Tablink background={this.state.currentLayer === layerIndex ? '#ffffff42' : '#ffffffb0'} onClick={() => this.toggleTab(layerIndex)} >
 							Layer {layerIndex+1}
-							{ this.state.colors[layerIndex].hidden ? (<button onClick={(e) => this.handleChange(layerIndex, "hidden", !this.state.colors[layerIndex].hidden, e)}>
-							hidden
-							</button>) : (<button onClick={(e) => this.handleChange(layerIndex, "hidden", !this.state.colors[layerIndex].hidden, e)}>
-							hide
-							</button>)}
 						</Tablink>
 					})}
 					<Tablink background={this.state.currentLayer === 3 ? '#ffffff42' : '#ffffffb0'} onClick={() => this.toggleTab(3)} ><i class="fa fa-code" /></Tablink>
@@ -271,11 +291,24 @@ render() {
 							onChange={value => this.handleChange(this.state.currentLayer, "degree", {value})}
 							value={this.state.colors[this.state.currentLayer].degree}
 						/>
+						<div style={{height: "20px", width: "90%", margin: "40px auto"}}>
+							<label>
+								both layers
+							<input onClick={() => this.toggleLayers(2)} type="radio" name="hidden" value="both" checked={!this.state.colors[0].hidden && !this.state.colors[1].hidden } />
+							</label>
+							<label style={{marginLeft: "30%"}}>
+								layer 1
+							<input onClick={() => this.toggleLayers(0)} type="radio" name="hidden" value="1" />
+							</label>
+							<label style={{marginLeft: "30%"}}>
+								layer 2
+							<input onClick={() => this.toggleLayers(1)} type="radio" name="hidden" value="2" />
+							</label>
+						</div>
 						<LayerItem>
 						<Layer 
 						layer={this.state.colors[this.state.currentLayer]} 
 						index={this.state.currentLayer} 
-						handleChange={this.handleChange} 
 						addColor={this.addColor} 
 						removeColor={this.removeColor} 
 						checked={this.state.colors[this.state.currentLayer].hidden}

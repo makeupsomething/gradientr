@@ -29,38 +29,29 @@ const ColorEditor = styled.div.attrs({
 
 class Layer extends Component {
     render() {
-        const {layer, index, handleChange, addColor, removeColor, checked, setColor, selectedColor} = this.props;
+        const {layer, index, addColor, removeColor, checked, setColor, selectedColor} = this.props;
 
         return (
             <div>
-                <div>
-                    <label>
-                    Hide Layer
-                    <input
-                        type="checkbox"
-                        checked={checked}
-                        onChange={() => handleChange(index, "hidden", !checked)} />
-                    </label>
-                </div>
-                    {layer.colors.map(color => {
-                        return <ColorEditor selected={color.id === selectedColor ? "solid 2px black" : null}>
-                                    <LayerItem>
-                                        <ColorPicker
-                                            h={color.h}
-                                            s={color.s}
-                                            l={color.l}
-                                            a={color.a}
-                                            amount={color.amount}
-                                            name={color.id}
-                                            layer={index}
-                                            setColor={setColor}
-                                            removeColor={removeColor}
-                                            disabled={color.id === selectedColor} >
-                                        </ColorPicker>
-                                    </LayerItem>
-                                </ColorEditor>
-                                })}
-                    <li>{layer.colors.length < 3 && index !== undefined ? (<AddButton onClick={() => addColor(index)}><i class="fas fa-plus" />Color</AddButton>) : null}</li>
+                {layer.colors.map(color => {
+                    return <ColorEditor selected={color.id === selectedColor ? "solid 2px black" : null}>
+                                <LayerItem>
+                                    <ColorPicker
+                                        h={color.h}
+                                        s={color.s}
+                                        l={color.l}
+                                        a={color.a}
+                                        amount={color.amount}
+                                        name={color.id}
+                                        layer={index}
+                                        setColor={setColor}
+                                        removeColor={removeColor}
+                                        disabled={color.id === selectedColor} >
+                                    </ColorPicker>
+                                </LayerItem>
+                            </ColorEditor>
+                            })}
+                <li>{layer.colors.length < 3 && index !== undefined ? (<AddButton onClick={() => addColor(index)}><i class="fas fa-plus" />Color</AddButton>) : null}</li>
             </div>
         );
     }
