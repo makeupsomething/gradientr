@@ -1,6 +1,16 @@
 import React, { Component } from 'react';
 import { Range } from 'rc-slider';
+import Tooltip from 'rc-tooltip';
 import 'rc-slider/assets/index.css';
+import 'rc-tooltip/assets/bootstrap.css';
+
+const marks = {
+    0: {label: '0%', style: {top: '14px'}},
+    25: {label: '25%', style: {top: '14px'}},
+    50: {label: '50%', style: {top: '14px'}},
+    75: {label: '75%', style: {top: '14px'}},
+	100: {label: '100%', style: {top: '14px'}},
+};
 
 class ColorDistSlider extends Component {
     state = {
@@ -37,7 +47,7 @@ class ColorDistSlider extends Component {
         this.state.colors.forEach((color, index) => {
             handleVals.push({backgroundColor: 
                 `hsla(${this.state.colors[index].h}, ${this.state.colors[index].s}%, ${this.state.colors[index].l}%, ${this.state.colors[index].a})`
-            });
+            , height: "30px", borderRadius: "20%"});
         });
         return handleVals;
     }
@@ -67,10 +77,13 @@ class ColorDistSlider extends Component {
                 min={0} 
                 max={100}  
                 pushable={5} 
+                marks={marks}
+                dotStyle={{top: "16px"}}
+                style={{height: "20px", width: "90%", margin: "30px auto"}}
                 value={this.state.colors.map(color => color.amount)} 
                 handleStyle={this.getHandleColors()} 
                 trackStyle={this.getTrackStyle()}
-                railStyle={{background: this.getRailStyle(), height: `20px`}} 
+                railStyle={{background: this.getRailStyle(), height: "20px"}} 
                 onChange={this.handleChange} 
                 allowCross={false}/> : null}
             </div>

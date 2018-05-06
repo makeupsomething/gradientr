@@ -2,8 +2,12 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import './App.css';
 import Layer from './components/Layer';
+import ControlPanel from './components/ControlPanel';
 import ColorDistSlider from './components/ColorDistSlider';
 import { ChromePicker } from 'react-color';
+import Slider from 'rc-slider';
+import Tooltip from 'rc-tooltip';
+import 'rc-slider/assets/index.css';
 
 const Wrapper = styled.p`
 	margin: auto;
@@ -39,27 +43,35 @@ const MenuButton = styled.button`
 `
 
 const Tablink = styled.button.attrs({
-	background: props => props.background || '#777'
+	background: props => props.background || '#ffffff42'
 })`
     background: ${props => props.background};
     color: white;
-    float: left;
     border: none;
     outline: none;
     cursor: pointer;
     padding: 14px 16px;
     font-size: 17px;
-	width: 25%;
+	width: 33.3%;
 	
 	${Tablink}:hover {
-    	background-color: #222;
+    	border: solid 1px gray;
 	}
 `
 
-const TabContent = styled.div`
+const TabContent = styled.ul`
     color: white;
-    display: block;
-	background-color: #555;
+	background-color: #ffffff42;
+	width: 100%;
+	list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+`
+
+const LayerItem = styled.li`
+	display: inline-block;
+	width: 50%;
 `
 
 const Sidebar = styled.div.attrs({
@@ -74,18 +86,43 @@ const Sidebar = styled.div.attrs({
 	padding-top: 3%;
 `
 
-const AngleSlider = styled.div`
-	margin: 10px 0;
-	padding-left: 10px;
+const Container = styled.div`
+	width: 80%;  
+    margin: auto;
+	border: solid 2px black;
+	margin-top: 3%;
 `
+
+const marks = {
+	0: {label: '0°', style: {top: '14px'}},
+	20: {label: '20°', style: {top: '14px'}},
+	40: {label: '40°', style: {top: '14px'}},
+	60: {label: '60°', style: {top: '14px'}},
+	80: {label: '80°', style: {top: '14px'}},
+	100: {label: '100°', style: {top: '14px'}},
+	120: {label: '120°', style: {top: '14px'}},
+	140: {label: '140°', style: {top: '14px'}},
+	160: {label: '160°', style: {top: '14px'}},
+	180: {label: '180°', style: {top: '14px'}},
+	200: {label: '200°', style: {top: '14px'}},
+	220: {label: '220°', style: {top: '14px'}},
+	240: {label: '240°', style: {top: '14px'}},
+	260: {label: '260°', style: {top: '14px'}},
+	280: {label: '280°', style: {top: '14px'}},
+	300: {label: '300°', style: {top: '14px'}},
+	320: {label: '320°', style: {top: '14px'}},
+	340: {label: '340°', style: {top: '14px'}},
+	360: {label: '360°', style: {top: '14px'}},
+	360: {label: '360°', style: {top: '14px'}},
+};
 
 class App extends Component {
   state = {
     colors: [
-		{degree: 93, hidden: false, colors:[{h: '359', s: '88', l: '68', a: '0.7', amount: 26, name: "color01", id: "color01"}, 
+		{degree: 93, hidden: false, colors:[{h: '359', s: '88', l: '68', a: '0.7', amount: 25, name: "color01", id: "color01"}, 
       	{h: '199', s: '100', l: '60', a: '0.6', amount: 75, name: "color02", id: "color02"}]},
-      	{degree: 181, hidden: false, colors:[{h: '98', s: '93', l: '50', a: '0.5', amount: 25, name: "color11", id: "color11"}, 
-      	{h: '191', s: '92', l: '50', a: '0.5', amount: 50, name: "color12", id: "color12"}]}
+      	{degree: 181, hidden: false, colors:[{h: '98', s: '93', l: '50', a: '0.5', amount: 30, name: "color11", id: "color11"}, 
+      	{h: '191', s: '92', l: '50', a: '0.5', amount: 70, name: "color12", id: "color12"}]}
     ],
     sidebar: '25%',
 	background: '100%',
@@ -120,7 +157,11 @@ handleColorAmountChange = (layer, colors) => {
     });
 }
 
-handleChange = (layer, parameter, value) => {
+handleChange = (layer, parameter, value, event) => {
+	if(event) {
+		event.stopPropagation();
+	}
+	value = parameter === "degree" ? value.value : value
     let tmpColors = this.state.colors
     tmpColors[layer][parameter] = value
 
@@ -185,8 +226,38 @@ getSelectedColor = () => {
 	return selectedColor
 }
 
+toggleTab = (layer) => {
+	this.setState({currentLayer: layer});
+	layer !== 3 ? this.setState({selectedColorId: this.state.colors[layer].colors[0].id}) : null;
+}
+
 setSelectedColor = (colorId) => {
 	this.setState({selectedColorId: colorId})
+}
+
+toggleLayers = (layer) => {
+	let tmpColors = this.state.colors
+
+    if(layer === 0) {
+		tmpColors[0].hidden = false;
+		tmpColors[1].hidden = true;
+	} else if (layer === 1) {
+		tmpColors[0].hidden = true;
+		tmpColors[1].hidden = false;
+	} else {
+		tmpColors[0].hidden = false;
+		tmpColors[1].hidden = false;
+	}
+
+    this.setState({
+		colors: tmpColors
+    });
+}
+
+getHiddenLayer = () => {
+	let hiddenLayers = this.state.colors.filter(layer => layer.hidden);
+	console.log(hiddenLayers.length)
+	return hiddenLayers
 }
 
 render() {
@@ -198,44 +269,62 @@ render() {
       		<Background className="gradientr" background={str} width={this.state.background}>
         		<Wrapper>
           			gradientr
-        		</Wrapper>
-      		</Background>
-			<MenuButton onClick={this.toggleSidebar}><i class="fas fa-bars"></i></MenuButton>
-      		<Sidebar width={this.state.sidebar}>
-			  <ul style={{"list-style-type": "none", margin: "0", padding: "0"}}>
-			  <li>
-			  <ChromePicker onChange={ this.handleColorChange } color={ {h, s, l, a} } />
-			  </li>
-			  <li>
-			  <ColorDistSlider layer={this.state.currentLayer} colors={this.state.colors[this.state.currentLayer].colors} handleColorAmountChange={this.handleColorAmountChange}  />
-			  </li>
-			  <li>
-			  <AngleSlider>
-                    <label>Angle</label>
-                    <input type="range" min="0" max="359" value={this.state.colors[this.state.currentLayer].degree} onChange={(event) => this.handleChange(this.state.currentLayer, "degree", event.target.value)} />
-				</AngleSlider>
-			  </li>
-			  <li>{this.state.colors.map((layer, layerIndex) => {
-				  return <Tablink background={this.state.currentLayer === layerIndex ? '#555' : '#777'} onClick={() => this.setState({currentLayer: layerIndex})} >{layerIndex}</Tablink>
-				  
-			  })}</li>
-				</ul>
-				<br />
-				<br />
-				<TabContent>
-				<Layer 
-					layer={this.state.colors[this.state.currentLayer]} 
-					index={this.state.currentLayer} 
-					handleChange={this.handleChange} 
-					addColor={this.addColor} 
-					removeColor={this.removeColor} 
-					checked={this.state.colors[this.state.currentLayer].hidden}
-					setColor={this.setSelectedColor}
-					selectedColor={this.state.selectedColorId}
-					/>
-				</TabContent>
-				<CodeSnippit>{`${str}`}</CodeSnippit>
-      		</Sidebar>
+        		</Wrapper>     		
+				<Container>
+					{this.state.colors.map((layer, layerIndex) => {
+						return <Tablink background={this.state.currentLayer === layerIndex ? '#ffffff42' : '#ffffffb0'} onClick={() => this.toggleTab(layerIndex)} >
+							Layer {layerIndex+1}
+						</Tablink>
+					})}
+					<Tablink background={this.state.currentLayer === 3 ? '#ffffff42' : '#ffffffb0'} onClick={() => this.toggleTab(3)} ><i class="fa fa-code" /></Tablink>
+					{this.state.currentLayer !== 3 ? ( <TabContent>
+						<ColorDistSlider layer={this.state.currentLayer} colors={this.state.colors[this.state.currentLayer].colors} handleColorAmountChange={this.handleColorAmountChange}  />
+						<Slider 
+							min={0} 
+							max={360} 
+							marks={marks} 
+							style={{height: "20px", width: "90%", margin: "40px auto"}}
+							railStyle={{height: "20px"}} 
+							handleStyle={{height: "30px", borderRadius: "20%"}} 
+							trackStyle={{backgroundColor: `#abe2fb00`}}
+							dotStyle={{top: "16px"}}
+							onChange={value => this.handleChange(this.state.currentLayer, "degree", {value})}
+							value={this.state.colors[this.state.currentLayer].degree}
+						/>
+						<div style={{height: "20px", width: "90%", margin: "40px auto"}}>
+							<label>
+								Show Layer:
+							</label>
+							<label style={{marginLeft: "10%"}}>
+								both layers
+							<input onClick={() => this.toggleLayers(2)} type="radio" name="hidden" value="both" checked={!this.state.colors[0].hidden && !this.state.colors[1].hidden } />
+							</label>
+							<label style={{marginLeft: "10%"}}>
+								layer 1
+							<input onClick={() => this.toggleLayers(0)} type="radio" name="hidden" value="1" />
+							</label>
+							<label style={{marginLeft: "10%"}}>
+								layer 2
+							<input onClick={() => this.toggleLayers(1)} type="radio" name="hidden" value="2" />
+							</label>
+						</div>
+						<LayerItem>
+						<Layer 
+						layer={this.state.colors[this.state.currentLayer]} 
+						index={this.state.currentLayer} 
+						addColor={this.addColor} 
+						removeColor={this.removeColor} 
+						checked={this.state.colors[this.state.currentLayer].hidden}
+						setColor={this.setSelectedColor}
+						selectedColor={this.state.selectedColorId}
+						/>
+						</LayerItem>
+						<LayerItem>
+							<ChromePicker onChange={ this.handleColorChange } color={ {h, s, l, a} } />
+						</LayerItem>
+					</TabContent>) : (<TabContent><CodeSnippit>{`${str}`}</CodeSnippit></TabContent>)}
+				</Container>
+			</Background>
       	</div>
     );
   }

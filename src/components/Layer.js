@@ -5,65 +5,49 @@ import ColorPicker from './ColorPicker';
 const AddButton = styled.button`
   	z-index: 2;
   	background-color: #ffffff42;
-  	border: 2px solid gray;
+  	border: 3px solid black;
   	border-radius: 3px;
 	text-align: center;
-	color: gray;
+    color: white;
+    font-size: 1.5em;
 	width:  20%;
-    height:  20%;
+    height:  50px;
 	margin-right: 5px;
 `
 
 const LayerItem = styled.li.attrs({
     border: props => props.selected || '',
 })`
-    display: inline;
-    border: ${props => props.selected};
-`
-
-const ColorEditor = styled.div.attrs({
-    border: props => props.selected || '',
-})`
+    display: block;
+    margin: auto;
+    margin-right: 100px;
+    margin-bottom: 10px;
     border: ${props => props.selected};
 `
 
 class Layer extends Component {
     render() {
-        const {layer, index, handleChange, addColor, removeColor, checked, setColor, selectedColor} = this.props;
+        const {layer, index, addColor, removeColor, checked, setColor, selectedColor} = this.props;
 
         return (
             <div>
-                <label>
-                    Hide Layer
-                    <input
-                        type="checkbox"
-                        checked={checked}
-                        onChange={() => handleChange(index, "hidden", !checked)} />
-                </label>
-                <ul style={{"list-style-type": "none", margin: "0", padding: "0", paddingLeft: "10px"}}>
-                    {layer.colors.map(color => {
-                        return <ColorEditor selected={color.id === selectedColor ? "solid 2px black" : null}>
-                                    <LayerItem>
-                                        <ColorPicker
-                                            h={color.h}
-                                            s={color.s}
-                                            l={color.l}
-                                            a={color.a}
-                                            amount={color.amount}
-                                            name={color.id}
-                                            layer={index}
-                                            setColor={setColor}>
-                                        </ColorPicker>
-                                    </LayerItem>
-                                    <LayerItem>
-                                        <AddButton disabled={color.id === selectedColor} onClick={() => removeColor(color.id, index)}> 
-                                            <i class="fas fa-trash" />
-                                        </AddButton>
-                                    </LayerItem>
-                                </ColorEditor>
-                                })}
-                    <li>{layer.colors.length < 3 && index !== undefined ? (<AddButton onClick={() => addColor(index)}><i class="fas fa-plus" />Color</AddButton>) : null}</li>
-                </ul>
+                {layer.colors.map(color => {
+                    return <LayerItem>
+                                <ColorPicker
+                                    h={color.h}
+                                    s={color.s}
+                                    l={color.l}
+                                    a={color.a}
+                                    amount={color.amount}
+                                    name={color.id}
+                                    layer={index}
+                                    setColor={setColor}
+                                    removeColor={removeColor}
+                                    disabled={color.id === selectedColor} >
+                                </ColorPicker>
+                            </LayerItem>
+                            })}
+                <li>{layer.colors.length < 3 && index !== undefined ? (<AddButton onClick={() => addColor(index)}><i class="fas fa-plus" /></AddButton>) : null}</li>
             </div>
         );
     }
