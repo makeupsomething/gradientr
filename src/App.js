@@ -87,10 +87,10 @@ const Sidebar = styled.div.attrs({
 `
 
 const Container = styled.div`
-  	width: 75%;
+	width: 80%;  
     margin: auto;
 	border: solid 2px black;
-	margin-top: 5%;
+	margin-top: 3%;
 `
 
 const marks = {

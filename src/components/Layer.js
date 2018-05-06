@@ -5,12 +5,13 @@ import ColorPicker from './ColorPicker';
 const AddButton = styled.button`
   	z-index: 2;
   	background-color: #ffffff42;
-  	border: 2px solid gray;
+  	border: 3px solid black;
   	border-radius: 3px;
 	text-align: center;
-	color: gray;
+    color: white;
+    font-size: 1.5em;
 	width:  20%;
-    height:  20%;
+    height:  50px;
 	margin-right: 5px;
 `
 
@@ -19,6 +20,8 @@ const LayerItem = styled.li.attrs({
 })`
     display: block;
     margin: auto;
+    margin-right: 100px;
+    margin-bottom: 10px;
     border: ${props => props.selected};
 `
 
@@ -44,7 +47,7 @@ class Layer extends Component {
                                 </ColorPicker>
                             </LayerItem>
                             })}
-                <li>{layer.colors.length < 3 && index !== undefined ? (<AddButton onClick={() => addColor(index)}><i class="fas fa-plus" />Color</AddButton>) : null}</li>
+                <li>{layer.colors.length < 3 && index !== undefined ? (<AddButton onClick={() => addColor(index)}><i class="fas fa-plus" /></AddButton>) : null}</li>
             </div>
         );
     }
