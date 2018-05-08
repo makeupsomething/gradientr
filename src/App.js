@@ -53,7 +53,7 @@ const Tablink = styled.button.attrs({
 	width: 33.3%;
 	
 	${Tablink}:hover {
-    	border: solid 1px gray;
+    	background: #1010100a;
 	}
 `
 
@@ -83,11 +83,16 @@ const Container = styled.div`
 
 const ToggleButton = styled.button`
   	background-color: #ffffff42;
-	  border: 2px solid gray;
-	  color: white;
-	  width: 10%;
-	  height: 10%;
-	  font-size: 1em;
+	border: 2px solid gray;
+	color: white;
+	width: 10%;
+	height: 10%;
+	font-size: 1em;
+	cursor: pointer;
+
+	${ToggleButton}:hover {
+		background: #1010100a;
+	}
 `
 
 const marks = {

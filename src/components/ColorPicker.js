@@ -5,6 +5,7 @@ const Section = styled.div`
 
     margin-right: 10%;
     margin-left: 10%;
+    cursor: pointer;
 
     ${Section}:hover{
         box-shadow: 1px 1px 10px 0px black;
