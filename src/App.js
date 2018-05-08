@@ -81,6 +81,15 @@ const Container = styled.div`
 	margin-top: 15vh;
 `
 
+const ToggleButton = styled.button`
+  	background-color: #ffffff42;
+	  border: 2px solid gray;
+	  color: white;
+	  width: 10%;
+	  height: 10%;
+	  font-size: 1em;
+`
+
 const marks = {
 	0: {label: '0°', style: {top: '14px'}},
 	20: {label: '20°', style: {top: '14px'}},
@@ -260,10 +269,10 @@ render() {
         		<Wrapper>
           			gradientr
         		</Wrapper> 
-				{this.state.containerHidden ? <button style={{position: "fixed", bottom: this.state.containerHidden ? "0" : '67%', left: "10%"}} onClick={this.togglePanel}>hide</button> : null}
+				{this.state.containerHidden ? <ToggleButton style={{position: "fixed", bottom: this.state.containerHidden ? "0" : '67%', left: "10%"}} onClick={this.togglePanel}>show</ToggleButton> : null}
 				<br />		
 				<Container style={{animation: !this.state.containerHidden ? "slide-top .5s ease-in-out both": "slide-bottom 0.5s ease-in-out 0s 1 normal both"}}>
-					{!this.state.containerHidden ? <button onClick={this.togglePanel}>hide</button> : null}
+					{!this.state.containerHidden ? <ToggleButton onClick={this.togglePanel}>hide</ToggleButton> : null}
 					<br />	
 					{this.state.layers.map((layer, layerIndex) => {
 						return <Tablink background={this.state.currentLayer === layerIndex ? '#ffffff42' : '#ffffffb0'} onClick={() => this.toggleTab(layerIndex)} >
