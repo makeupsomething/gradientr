@@ -35,18 +35,9 @@ const CodeEditor = styled.div`
 	padding: 5%;
 	width: 80%;
 	height: 200px;
-	background: black;
 	word-wrap: break-word;
 	border: solid gray 3px;
 	font-size: 1.5em;
-`
-
-const MenuButton = styled.button`
-  	position: absolute;
-  	right: 0;
-  	z-index: 2;
-  	background-color: #ffffff42;
-  	border: 2px solid gray;
 `
 
 const Tablink = styled.button.attrs({
@@ -62,7 +53,7 @@ const Tablink = styled.button.attrs({
 	width: 33.3%;
 	
 	${Tablink}:hover {
-    	border: solid 1px gray;
+    	background: #1010100a;
 	}
 `
 
@@ -70,10 +61,11 @@ const TabContent = styled.ul`
     color: white;
 	background-color: #ffffff42;
 	width: 100%;
+	height: 85%;
 	list-style-type: none;
     margin: 0;
     padding: 0;
-    overflow: hidden;
+    overflow: scroll;
 `
 
 const LayerItem = styled.li`
@@ -81,23 +73,26 @@ const LayerItem = styled.li`
 	width: 50%;
 `
 
-const Sidebar = styled.div.attrs({
-	background: props => props.background || '#ffffff42',
-})`
-  	background: ${props => props.background};
-  	height: 100%;
-  	width: ${props => props.width};
-  	right: 0
-  	position: absolute;
-  	overflow: scroll;
-	padding-top: 3%;
+const Container = styled.div`
+	width: 80vw;  
+	height: 79vh;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 15vh;
 `
 
-const Container = styled.div`
-	width: 80%;  
-    margin: auto;
-	border: solid 2px black;
-	margin-top: 15%;
+const ToggleButton = styled.button`
+  	background-color: #ffffff42;
+	border: 2px solid gray;
+	color: white;
+	width: 10%;
+	height: 10%;
+	font-size: 1em;
+	cursor: pointer;
+
+	${ToggleButton}:hover {
+		background: #1010100a;
+	}
 `
 
 const marks = {
@@ -131,7 +126,7 @@ class App extends Component {
       	{degree: 181, hidden: false, colors:[{h: '98', s: '93', l: '50', a: '0.5', amount: 30, name: "color11", id: "color11"}, 
       	{h: '191', s: '92', l: '50', a: '0.5', amount: 70, name: "color12", id: "color12"}]}
     ],
-    containerHidden: true,
+    containerHidden: false,
 	background: '100%',
 	selectedColorId: 'color01',
 	currentLayer: 0,
@@ -278,10 +273,12 @@ render() {
       		<Background className="gradientr" background={str} width={this.state.background}>
         		<Wrapper>
           			gradientr
-        		</Wrapper>     		
-				<Container style={{animation: this.state.containerHidden ? "slide-top .5s ease-in-out both": "slide-bottom 0.5s ease-in-out 0s 1 normal both"}}>
-					<button onClick={this.togglePanel}>hide</button>
-					<br />
+        		</Wrapper> 
+				{this.state.containerHidden ? <ToggleButton style={{position: "fixed", bottom: this.state.containerHidden ? "0" : '67%', left: "10%"}} onClick={this.togglePanel}>show</ToggleButton> : null}
+				<br />		
+				<Container style={{animation: !this.state.containerHidden ? "slide-top .5s ease-in-out both": "slide-bottom 0.5s ease-in-out 0s 1 normal both"}}>
+					{!this.state.containerHidden ? <ToggleButton onClick={this.togglePanel}>hide</ToggleButton> : null}
+					<br />	
 					{this.state.layers.map((layer, layerIndex) => {
 						return <Tablink background={this.state.currentLayer === layerIndex ? '#ffffff42' : '#ffffffb0'} onClick={() => this.toggleTab(layerIndex)} >
 							Layer {layerIndex+1}
