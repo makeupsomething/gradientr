@@ -18,5 +18,5 @@ body {
   width: 100%;
 }
 
-@keyframes slide-bottom{0%{transform:translateY(0)}100%{transform:translateY(60%)}}
-@keyframes slide-top{0%{transform:translateY(0)}100%{transform:translateY(-33%)}}
+@keyframes slide-bottom{0%{transform:translateY(0)}100%{transform:translateY(75vh)}}
+@keyframes slide-top{0%{transform:translateY(0)}100%{transform:translateY(-20vh)}}

@@ -74,11 +74,11 @@ const LayerItem = styled.li`
 `
 
 const Container = styled.div`
-	width: 80%;  
-	height: 79%;
+	width: 80vw;  
+	height: 79vh;
 	margin-left: auto;
 	margin-right: auto;
-	margin-top: 15%;
+	margin-top: 15vh;
 `
 
 const marks = {
@@ -112,7 +112,7 @@ class App extends Component {
       	{degree: 181, hidden: false, colors:[{h: '98', s: '93', l: '50', a: '0.5', amount: 30, name: "color11", id: "color11"}, 
       	{h: '191', s: '92', l: '50', a: '0.5', amount: 70, name: "color12", id: "color12"}]}
     ],
-    containerHidden: true,
+    containerHidden: false,
 	background: '100%',
 	selectedColorId: 'color01',
 	currentLayer: 0,
@@ -259,10 +259,12 @@ render() {
       		<Background className="gradientr" background={str} width={this.state.background}>
         		<Wrapper>
           			gradientr
-        		</Wrapper>     		
-				<Container style={{animation: this.state.containerHidden ? "slide-top .5s ease-in-out both": "slide-bottom 0.5s ease-in-out 0s 1 normal both"}}>
-					<button onClick={this.togglePanel}>hide</button>
-					<br />
+        		</Wrapper> 
+				{this.state.containerHidden ? <button style={{position: "fixed", bottom: this.state.containerHidden ? "0" : '67%', left: "10%"}} onClick={this.togglePanel}>hide</button> : null}
+				<br />		
+				<Container style={{animation: !this.state.containerHidden ? "slide-top .5s ease-in-out both": "slide-bottom 0.5s ease-in-out 0s 1 normal both"}}>
+					{!this.state.containerHidden ? <button onClick={this.togglePanel}>hide</button> : null}
+					<br />	
 					{this.state.layers.map((layer, layerIndex) => {
 						return <Tablink background={this.state.currentLayer === layerIndex ? '#ffffff42' : '#ffffffb0'} onClick={() => this.toggleTab(layerIndex)} >
 							Layer {layerIndex+1}
