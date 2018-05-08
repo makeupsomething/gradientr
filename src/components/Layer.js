@@ -7,6 +7,14 @@ const AddButton = styled.button`
     font-size: 1.5em;
 	width:  20%;
     height:  20%;
+    margin-left: 10%;
+    background: #1010100a;
+    border: solid 2px gray;
+    padding: 5%;
+
+    ${AddButton}:hover{
+        box-shadow: 1px 1px 10px 0px black;
+    }
 `
 
 const LayerItem = styled.li.attrs({

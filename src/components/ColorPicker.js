@@ -1,6 +1,16 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
+const Section = styled.div`
+
+    margin-right: 10%;
+    margin-left: 10%;
+
+    ${Section}:hover{
+        box-shadow: 1px 1px 10px 0px black;
+    }
+`
+
 const ColorBlock = styled.div.attrs({
     background: props => props.background || 'green',
 })`
@@ -41,7 +51,7 @@ const RemoveButton = styled.button`
     color: "darkgray";
 
     ${RemoveButton}:hover{
-        color: black;
+        box-shadow: 1px 1px 10px 0px black;
     }
 `
 
@@ -88,17 +98,15 @@ class ColorPicker extends Component {
     render() {
         const { disabled } = this.props;
         return (
-                <div style={{marginBottom: "2%", padding: "4% 1%", border: disabled ? "solid 2px gray": ""}}>
-                <ColorBlock 
-                    onClick={this.toggleColor} 
+                <Section onClick={this.toggleColor} style={{background: disabled ? "#1010100a" : "", marginBottom: "2%", padding: "4% 1%", border: disabled ? "solid 2px gray": ""}}>
+                <ColorBlock  
                     background={`hsla(${this.state.background.h}, ${this.state.background.s * 100}%, ${this.state.background.l * 100}%, ${this.state.background.a})`}
                     selected={disabled ? 'solid black 3px' : null}
                 >
                 </ColorBlock>
                 <ColorValue value={`hsla(${this.state.background.h}, ${this.state.background.s * 100}%, ${this.state.background.l * 100}%, ${this.state.background.a})`} />
                 <RemoveButton onClick={this.removeColor}><a style={{fontSize: "3em", verticalAlign: "-31%"}} class="fas fa-times" /></RemoveButton>
-
-                </div>
+                </Section>
         );
     }
 }
