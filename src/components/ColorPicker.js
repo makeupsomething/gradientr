@@ -3,23 +3,18 @@ import styled from 'styled-components';
 
 const ColorBlock = styled.div.attrs({
     background: props => props.background || 'green',
-    border: props => props.selected || '',
 })`
     width: 100%;
-    height: 50px;
+    height: 50%;
     background: ${props => props.background};
     display: inline-block;
-    border: ${props => props.selected};
-
-    ${ColorBlock}:hover {
-    	border: solid 3px black;
-	}
 `
 
 const RemoveButton = styled.button`
     height: 80%;
     width: 14%;
-    margin: 5px 10% 5px 85%;
+    float: right;
+    margin-right: 5%;
     background: #ffffff00;
     font-size: 2em;
     color: white;
@@ -75,7 +70,7 @@ class ColorPicker extends Component {
                     background={`hsla(${this.state.background.h}, ${this.state.background.s * 100}%, ${this.state.background.l * 100}%, ${this.state.background.a})`}
                     selected={disabled ? 'solid black 3px' : null}
                 >
-                {disabled ? null : <RemoveButton onClick={this.removeColor}><i class="fas fa-times" /></RemoveButton>}
+                <RemoveButton onClick={this.removeColor}><i class="fas fa-times" /></RemoveButton>
                 </ColorBlock>
             </span>
         );

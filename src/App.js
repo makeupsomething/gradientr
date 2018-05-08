@@ -35,18 +35,9 @@ const CodeEditor = styled.div`
 	padding: 5%;
 	width: 80%;
 	height: 200px;
-	background: black;
 	word-wrap: break-word;
 	border: solid gray 3px;
 	font-size: 1.5em;
-`
-
-const MenuButton = styled.button`
-  	position: absolute;
-  	right: 0;
-  	z-index: 2;
-  	background-color: #ffffff42;
-  	border: 2px solid gray;
 `
 
 const Tablink = styled.button.attrs({
@@ -70,10 +61,11 @@ const TabContent = styled.ul`
     color: white;
 	background-color: #ffffff42;
 	width: 100%;
+	height: 85%;
 	list-style-type: none;
     margin: 0;
     padding: 0;
-    overflow: hidden;
+    overflow: scroll;
 `
 
 const LayerItem = styled.li`
@@ -81,22 +73,11 @@ const LayerItem = styled.li`
 	width: 50%;
 `
 
-const Sidebar = styled.div.attrs({
-	background: props => props.background || '#ffffff42',
-})`
-  	background: ${props => props.background};
-  	height: 100%;
-  	width: ${props => props.width};
-  	right: 0
-  	position: absolute;
-  	overflow: scroll;
-	padding-top: 3%;
-`
-
 const Container = styled.div`
 	width: 80%;  
-    margin: auto;
-	border: solid 2px black;
+	height: 79%;
+	margin-left: auto;
+	margin-right: auto;
 	margin-top: 15%;
 `
 
