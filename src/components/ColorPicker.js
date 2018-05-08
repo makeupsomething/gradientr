@@ -4,21 +4,45 @@ import styled from 'styled-components';
 const ColorBlock = styled.div.attrs({
     background: props => props.background || 'green',
 })`
-    width: 100%;
-    height: 50%;
+    width: 10%;
+    max-height: 100%;
+    margin-left: 5%;
+    padding: 5% 8%;
     background: ${props => props.background};
-    display: inline-block;
+    display: inline;
+    vertical-align: center;
+`
+
+const ColorValue = styled.input`
+    width: 50%;
+    height: 100%;
+    padding: 3% 2%;
+    margin-left: 3%;
+    font-size: 1em;
+    vertical-align: center;
+`
+
+const AmountValue = styled.input`
+    width: 10%;
+    height: 100%;
+    padding: 3% 2%;
+    margin-left: 3%;
+    font-size: 1em;
 `
 
 const RemoveButton = styled.button`
-    height: 80%;
-    width: 14%;
-    float: right;
-    margin-right: 5%;
+    width: 10%;
+    height: 100%;
+    margin-left: 3%;
     background: #ffffff00;
-    font-size: 2em;
-    color: white;
+    text-align: center;
+    display: inline;
     border: none;
+    color: "darkgray";
+
+    ${RemoveButton}:hover{
+        color: black;
+    }
 `
 
 class ColorPicker extends Component {
@@ -64,15 +88,17 @@ class ColorPicker extends Component {
     render() {
         const { disabled } = this.props;
         return (
-            <span>
+                <div style={{marginBottom: "2%", padding: "4% 1%", border: disabled ? "solid 2px gray": ""}}>
                 <ColorBlock 
                     onClick={this.toggleColor} 
                     background={`hsla(${this.state.background.h}, ${this.state.background.s * 100}%, ${this.state.background.l * 100}%, ${this.state.background.a})`}
                     selected={disabled ? 'solid black 3px' : null}
                 >
-                <RemoveButton onClick={this.removeColor}><i class="fas fa-times" /></RemoveButton>
                 </ColorBlock>
-            </span>
+                <ColorValue value={`hsla(${this.state.background.h}, ${this.state.background.s * 100}%, ${this.state.background.l * 100}%, ${this.state.background.a})`} />
+                <RemoveButton onClick={this.removeColor}><a style={{fontSize: "3em", verticalAlign: "-31%"}} class="fas fa-times" /></RemoveButton>
+
+                </div>
         );
     }
 }
