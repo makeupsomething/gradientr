@@ -11,6 +11,7 @@ const AddButton = styled.button`
     background: #1010100a;
     border: solid 2px gray;
     padding: 5%;
+    cursor: pointer;
 
     ${AddButton}:hover{
         box-shadow: 1px 1px 10px 0px black;
