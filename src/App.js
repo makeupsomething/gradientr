@@ -299,7 +299,7 @@ render() {
 							onChange={value => this.handleChange(this.state.currentLayer, "degree", {value})}
 							value={this.state.layers[this.state.currentLayer].degree}
 						/>
-						<div style={{height: "20px", width: "90%", margin: "40px auto"}}>
+						<div style={{height: "20px", width: "90%", margin: "20px auto"}}>
 							<label>
 								Show Layer:
 							</label>
