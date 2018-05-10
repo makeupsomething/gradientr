@@ -7,7 +7,8 @@ import ColorDistSlider from './components/ColorDistSlider';
 import { ChromePicker } from 'react-color';
 import Slider from 'rc-slider';
 import Tooltip from 'rc-tooltip';
-import Highlight from 'react-highlight'
+import Highlight from 'react-highlight';
+import CustomPicker from './components/CustomPicker';
 import 'rc-slider/assets/index.css';
 
 const Wrapper = styled.p`
@@ -70,7 +71,8 @@ const TabContent = styled.ul`
 
 const LayerItem = styled.li`
 	display: inline-block;
-	width: 50%;
+	vertical-align: center;
+	width: 100%;
 `
 
 const Container = styled.div`
@@ -317,18 +319,22 @@ render() {
 							</label>
 						</div>
 						<LayerItem>
-						<Layer 
-						layer={this.state.layers[this.state.currentLayer]} 
-						index={this.state.currentLayer} 
-						addColor={this.addColor} 
-						removeColor={this.removeColor} 
-						checked={this.state.layers[this.state.currentLayer].hidden}
-						setColor={this.setSelectedColor}
-						selectedColor={this.state.selectedColorId}
-						/>
-						</LayerItem>
-						<LayerItem>
-							<ChromePicker onChange={ this.handleColorChange } color={ {h, s, l, a} } />
+							<ul>
+							<li style={{display: "inline-block", width: "50%"}}>
+							<Layer 
+							layer={this.state.layers[this.state.currentLayer]} 
+							index={this.state.currentLayer} 
+							addColor={this.addColor} 
+							removeColor={this.removeColor} 
+							checked={this.state.layers[this.state.currentLayer].hidden}
+							setColor={this.setSelectedColor}
+							selectedColor={this.state.selectedColorId}
+							/>
+							</li>
+							<li style={{display: "inline-block", width: "50%"}}>
+							<CustomPicker onChange={ this.handleColorChange } color={ {h, s, l, a} } />
+							</li>
+							</ul>
 						</LayerItem>
 					</TabContent>) : (<TabContent>
 					<CodeEditor><Highlight language="css"><span style={{wordBreak: "break-all", wordWrap: "break-word"}}>{`background: ${str}`}</span></Highlight></CodeEditor></TabContent>)}
