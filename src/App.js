@@ -7,7 +7,8 @@ import ColorDistSlider from './components/ColorDistSlider';
 import { ChromePicker } from 'react-color';
 import Slider from 'rc-slider';
 import Tooltip from 'rc-tooltip';
-import Highlight from 'react-highlight'
+import Highlight from 'react-highlight';
+import CustomPicker from './components/CustomPicker';
 import 'rc-slider/assets/index.css';
 
 const Wrapper = styled.p`
@@ -70,15 +71,16 @@ const TabContent = styled.ul`
 
 const LayerItem = styled.li`
 	display: inline-block;
-	width: 50%;
+	vertical-align: center;
+	width: 100%;
 `
 
 const Container = styled.div`
-	width: 80vw;  
-	height: 79vh;
+	width: 85vw;  
+	height: 84vh;
 	margin-left: auto;
 	margin-right: auto;
-	margin-top: 15vh;
+	margin-top: 10vh;
 `
 
 const ToggleButton = styled.button`
@@ -291,7 +293,7 @@ render() {
 							min={0} 
 							max={360} 
 							marks={marks} 
-							style={{height: "20px", width: "90%", margin: "40px auto"}}
+							style={{height: "20px", width: "90%", margin: "30px auto"}}
 							railStyle={{height: "20px"}} 
 							handleStyle={{height: "30px", borderRadius: "20%"}} 
 							trackStyle={{backgroundColor: `#abe2fb00`}}
@@ -299,7 +301,7 @@ render() {
 							onChange={value => this.handleChange(this.state.currentLayer, "degree", {value})}
 							value={this.state.layers[this.state.currentLayer].degree}
 						/>
-						<div style={{height: "20px", width: "90%", margin: "20px auto"}}>
+						<div style={{height: "20px", width: "90%", margin: "30px auto"}}>
 							<label>
 								Show Layer:
 							</label>
@@ -317,18 +319,22 @@ render() {
 							</label>
 						</div>
 						<LayerItem>
-						<Layer 
-						layer={this.state.layers[this.state.currentLayer]} 
-						index={this.state.currentLayer} 
-						addColor={this.addColor} 
-						removeColor={this.removeColor} 
-						checked={this.state.layers[this.state.currentLayer].hidden}
-						setColor={this.setSelectedColor}
-						selectedColor={this.state.selectedColorId}
-						/>
-						</LayerItem>
-						<LayerItem>
-							<ChromePicker onChange={ this.handleColorChange } color={ {h, s, l, a} } />
+							<ul>
+							<li style={{display: "inline-block", width: "50%", float: 'left'}}>
+							<Layer 
+							layer={this.state.layers[this.state.currentLayer]} 
+							index={this.state.currentLayer} 
+							addColor={this.addColor} 
+							removeColor={this.removeColor} 
+							checked={this.state.layers[this.state.currentLayer].hidden}
+							setColor={this.setSelectedColor}
+							selectedColor={this.state.selectedColorId}
+							/>
+							</li>
+							<li style={{display: "inline-block", width: "50%", float: 'left'}}>
+							<CustomPicker onChange={ this.handleColorChange } color={ {h, s, l, a} } />
+							</li>
+							</ul>
 						</LayerItem>
 					</TabContent>) : (<TabContent>
 					<CodeEditor><Highlight language="css"><span style={{wordBreak: "break-all", wordWrap: "break-word"}}>{`background: ${str}`}</span></Highlight></CodeEditor></TabContent>)}
