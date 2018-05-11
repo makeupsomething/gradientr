@@ -320,7 +320,7 @@ render() {
 						</div>
 						<LayerItem>
 							<ul>
-							<li style={{display: "inline-block", width: "50%"}}>
+							<li style={{display: "inline-block", width: "50%", float: 'left'}}>
 							<Layer 
 							layer={this.state.layers[this.state.currentLayer]} 
 							index={this.state.currentLayer} 
@@ -331,7 +331,7 @@ render() {
 							selectedColor={this.state.selectedColorId}
 							/>
 							</li>
-							<li style={{display: "inline-block", width: "50%"}}>
+							<li style={{display: "inline-block", width: "50%", float: 'left'}}>
 							<CustomPicker onChange={ this.handleColorChange } color={ {h, s, l, a} } />
 							</li>
 							</ul>
