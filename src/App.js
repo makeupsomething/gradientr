@@ -76,11 +76,11 @@ const LayerItem = styled.li`
 `
 
 const Container = styled.div`
-	width: 80vw;  
-	height: 79vh;
+	width: 85vw;  
+	height: 84vh;
 	margin-left: auto;
 	margin-right: auto;
-	margin-top: 15vh;
+	margin-top: 10vh;
 `
 
 const ToggleButton = styled.button`
@@ -293,7 +293,7 @@ render() {
 							min={0} 
 							max={360} 
 							marks={marks} 
-							style={{height: "20px", width: "90%", margin: "40px auto"}}
+							style={{height: "20px", width: "90%", margin: "30px auto"}}
 							railStyle={{height: "20px"}} 
 							handleStyle={{height: "30px", borderRadius: "20%"}} 
 							trackStyle={{backgroundColor: `#abe2fb00`}}
@@ -301,7 +301,7 @@ render() {
 							onChange={value => this.handleChange(this.state.currentLayer, "degree", {value})}
 							value={this.state.layers[this.state.currentLayer].degree}
 						/>
-						<div style={{height: "20px", width: "90%", margin: "20px auto"}}>
+						<div style={{height: "20px", width: "90%", margin: "30px auto"}}>
 							<label>
 								Show Layer:
 							</label>
