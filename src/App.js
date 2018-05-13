@@ -58,9 +58,11 @@ const Tablink = styled.button.attrs({
 	}
 `
 
-const TabContent = styled.ul`
+const TabContent = styled.ul.attrs({
+	background: props => props.background || '#ffffff42'
+})`
     color: white;
-	background-color: #ffffff42;
+	background: ${props => props.background};
 	width: 100%;
 	height: 85%;
 	list-style-type: none;
@@ -132,6 +134,7 @@ class App extends Component {
 	background: '100%',
 	selectedColorId: 'color01',
 	currentLayer: 0,
+	editing: false,
   };
 
 handleColorChange = (color) => {
@@ -164,6 +167,9 @@ handleColorAmountChange = (layer, colors) => {
 handleChange = (layer, parameter, value, event) => {
 	if(event) {
 		event.stopPropagation();
+	}
+	if(!this.state.editing) {
+		this.setState({editing: true})
 	}
 	value = parameter === "degree" ? value.value : value
     let tmpColors = this.state.layers
@@ -287,7 +293,7 @@ render() {
 						</Tablink>
 					})}
 					<Tablink background={this.state.currentLayer === 3 ? '#ffffff42' : '#ffffffb0'} onClick={() => this.toggleTab(3)} ><i style={{mixBlendMode: "exclusion"}} class="fa fa-code" /></Tablink>
-					{this.state.currentLayer !== 3 ? ( <TabContent>
+					{this.state.currentLayer !== 3 ? ( <TabContent background={this.state.editing ? '#ffffff00' : null}>
 						<ColorDistSlider layer={this.state.currentLayer} colors={this.state.layers[this.state.currentLayer].colors} handleColorAmountChange={this.handleColorAmountChange}  />
 						<Slider 
 							min={0} 
@@ -299,6 +305,7 @@ render() {
 							trackStyle={{backgroundColor: `#abe2fb00`}}
 							dotStyle={{top: "16px"}}
 							onChange={value => this.handleChange(this.state.currentLayer, "degree", {value})}
+							onAfterChange={() => this.setState({editing: false})}
 							value={this.state.layers[this.state.currentLayer].degree}
 						/>
 						<div style={{height: "20px", width: "90%", margin: "30px auto"}}>
