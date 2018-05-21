@@ -17,6 +17,7 @@ const Wrapper = styled.p`
 	font-size: 7.5em;
 	background: transparent;
 	mix-blend-mode: exclusion;
+	font-family: 'Kaushan Script', cursive;
 `;
 
 const Background = styled.div.attrs({
@@ -282,17 +283,17 @@ render() {
         		<Wrapper>
           			gradientr
         		</Wrapper> 
-				{this.state.containerHidden ? <ToggleButton style={{position: "fixed", bottom: this.state.containerHidden ? "0" : '67%', left: "10%"}} onClick={this.togglePanel}><span style={{mixBlendMode: "exclusion"}}>show</span></ToggleButton> : null}
+				{this.state.containerHidden ? <ToggleButton style={{position: "fixed", bottom: this.state.containerHidden ? "0" : '67%', left: "10%"}} onClick={this.togglePanel}><span>show</span></ToggleButton> : null}
 				<br />		
 				<Container style={{animation: !this.state.containerHidden ? "slide-top .5s ease-in-out both": "slide-bottom 0.5s ease-in-out 0s 1 normal both"}}>
-					{!this.state.containerHidden ? <ToggleButton onClick={this.togglePanel}><span style={{mixBlendMode: "exclusion"}}>hide</span></ToggleButton> : null}
+					{!this.state.containerHidden ? <ToggleButton onClick={this.togglePanel}><span>hide</span></ToggleButton> : null}
 					<br />	
 					{this.state.layers.map((layer, layerIndex) => {
 						return <Tablink background={this.state.currentLayer === layerIndex ? '#ffffff42' : '#ffffffb0'} onClick={() => this.toggleTab(layerIndex)} >
-							<span style={{mixBlendMode: `${this.state.currentLayer === layerIndex ? "difference" : "exclusion"}`}}>Layer {layerIndex+1}</span>
+							<span>Layer {layerIndex+1}</span>
 						</Tablink>
 					})}
-					<Tablink background={this.state.currentLayer === 3 ? '#ffffff42' : '#ffffffb0'} onClick={() => this.toggleTab(3)} ><i style={{mixBlendMode: "exclusion"}} class="fa fa-code" /></Tablink>
+					<Tablink background={this.state.currentLayer === 3 ? '#ffffff42' : '#ffffffb0'} onClick={() => this.toggleTab(3)} ><i class="fa fa-code" /></Tablink>
 					{this.state.currentLayer !== 3 ? ( <TabContent background={this.state.editing ? '#ffffff00' : null}>
 						<ColorDistSlider layer={this.state.currentLayer} colors={this.state.layers[this.state.currentLayer].colors} handleColorAmountChange={this.handleColorAmountChange}  />
 						<Slider 
@@ -310,17 +311,17 @@ render() {
 						/>
 						<div style={{height: "20px", width: "90%", margin: "30px auto"}}>
 							<label>
-								<span style={{mixBlendMode: "exclusion"}}>Show Layer:</span>
+								<span>Show Layer:</span>
 							</label>
 							<label style={{marginLeft: "10%"}}>
-								<span style={{mixBlendMode: "exclusion"}}>both layers</span>
+								<span>both layers</span>
 							<input onClick={() => this.toggleLayers(2)} type="radio" name="hidden" value="both" checked={!this.state.layers[0].hidden && !this.state.layers[1].hidden } />
 							</label>
 							<label style={{marginLeft: "10%"}}>
-								<span style={{mixBlendMode: "exclusion"}}>layer 1</span>
+								<span>layer 1</span>
 							<input onClick={() => this.toggleLayers(0)} type="radio" name="hidden" value="1" />
 							</label>
-							<label style={{marginLeft: "10%", mixBlendMode: "exclusion"}}>
+							<label style={{marginLeft: "10%"}}>
 								<span>layer 2</span>
 							<input onClick={() => this.toggleLayers(1)} type="radio" name="hidden" value="2" />
 							</label>
