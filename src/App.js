@@ -158,6 +158,9 @@ handleColorChange = (color) => {
 }
 
 handleColorAmountChange = (layer, colors) => {
+	if(!this.state.editing) {
+		this.setState({editing: true})
+	}
     let tmp = this.state.layers;
     tmp[layer].colors = colors
     this.setState({
@@ -179,6 +182,10 @@ handleChange = (layer, parameter, value, event) => {
     this.setState({
 		layers: tmpColors
     });
+}
+
+finishEditing = () => {
+	this.setState({editing: false})
 }
 
 uuidv4 = () => {
@@ -295,7 +302,7 @@ render() {
 					})}
 					<Tablink background={this.state.currentLayer === 3 ? '#ffffff42' : '#ffffffb0'} onClick={() => this.toggleTab(3)} ><i class="fa fa-code" /></Tablink>
 					{this.state.currentLayer !== 3 ? ( <TabContent background={this.state.editing ? '#ffffff00' : null}>
-						<ColorDistSlider layer={this.state.currentLayer} colors={this.state.layers[this.state.currentLayer].colors} handleColorAmountChange={this.handleColorAmountChange}  />
+						<ColorDistSlider layer={this.state.currentLayer} colors={this.state.layers[this.state.currentLayer].colors} handleColorAmountChange={this.handleColorAmountChange} finishEditing={this.finishEditing} />
 						<Slider 
 							min={0} 
 							max={360} 

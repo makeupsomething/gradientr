@@ -71,6 +71,9 @@ class ColorDistSlider extends Component {
     }
 
     render() {
+        
+        const { finishEditing } = this.props;
+
         return (
             <div>
                 {this.state.colors.length > 0 ? <Range 
@@ -85,6 +88,7 @@ class ColorDistSlider extends Component {
                 trackStyle={this.getTrackStyle()}
                 railStyle={{background: this.getRailStyle(), height: "20px"}} 
                 onChange={this.handleChange} 
+                onAfterChange={finishEditing}
                 allowCross={false}/> : null}
             </div>
         );
