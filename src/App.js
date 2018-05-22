@@ -53,27 +53,20 @@ handleColorChange = (color) => {
 	});
 }
 
-handleColorAmountChange = (layer, colors) => {
+handleChange = (value) => {
 	if(!this.state.editing) {
 		this.setState({editing: true})
 	}
-    let tmp = this.state.layers;
-    tmp[layer].colors = colors
-    this.setState({
-      	layers: tmp
-    });
-}
+	let tmp = this.state.layers
 
-handleChange = (parameter, value, event) => {
-	if(!this.state.editing) {
-		this.setState({editing: true})
+	if(value.length) {
+		tmp[this.state.currentLayer].colors = value
+	} else {
+		tmp[this.state.currentLayer].degree= value
 	}
-	value = parameter === "degree" ? value.value : value
-    let tmpColors = this.state.layers
-    tmpColors[this.state.currentLayer][parameter] = value
 
     this.setState({
-		layers: tmpColors
+		layers: tmp
     });
 }
 
@@ -98,7 +91,6 @@ addColor = (layer) => {
 }
 
 togglePanel = (event) => {
-	console.log("toggle")
 	event.stopPropagation()
 	this.setState({containerHidden: !this.state.containerHidden})
 }
@@ -169,7 +161,6 @@ toggleLayers = (layer) => {
 
 getHiddenLayer = () => {
 	let hiddenLayers = this.state.layers.filter(layer => layer.hidden);
-	console.log(hiddenLayers.length)
 	return hiddenLayers
 }
 
@@ -198,7 +189,7 @@ render() {
 						<ColorDistSlider 
 							layer={this.state.currentLayer} 
 							colors={this.state.layers[this.state.currentLayer].colors} 
-							handleColorAmountChange={this.handleColorAmountChange} 
+							handleColorAmountChange={this.handleChange} 
 							finishEditing={this.finishEditing} 
 						/>
 						<AngleSlider 

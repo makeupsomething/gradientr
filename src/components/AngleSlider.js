@@ -40,7 +40,7 @@ class AngleSlider extends Component {
                 handleStyle={{height: "30px", borderRadius: "20%"}} 
                 trackStyle={{backgroundColor: `#abe2fb00`}}
                 dotStyle={{top: "16px"}}
-                onChange={value => handleChange("degree", {value})}
+                onChange={handleChange}
                 onAfterChange={finishEditing}
                 value={currentValue}
             />

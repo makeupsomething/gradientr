@@ -39,7 +39,7 @@ class ColorDistSlider extends Component {
         let tmp = this.state.colors
         tmp.forEach((color, index) => color.amount = value[index])
         this.setState({ colors: tmp });
-        handleColorAmountChange(layer, this.state.colors)  
+        handleColorAmountChange(this.state.colors)  
     }
 
     getHandleColors = () => {
