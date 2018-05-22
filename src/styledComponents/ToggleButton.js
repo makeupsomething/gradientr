@@ -8,6 +8,7 @@ const ToggleButton = styled.button`
 	height: 40px;
 	font-size: 1em;
 	cursor: pointer;
+	display: block;
 
 	${ToggleButton}:hover {
 		background: #1010100a;
