@@ -8,6 +8,7 @@ import ColorDistSlider from './components/ColorDistSlider';
 import { ChromePicker } from 'react-color';
 import Highlight from 'react-highlight';
 import CustomPicker from './components/CustomPicker';
+import LayerToggle from './components/LayerToggle';
 
 import Wrapper from './styledComponents/Wrapper';
 import Background from './styledComponents/Background';
@@ -168,6 +169,8 @@ render() {
 	let str = this.getString();
 	let {h, s, l, a} = this.getSelectedColor();
 
+
+
     return (
 		<div>
       		<Background className="gradientr" background={str} width={this.state.background}>
@@ -195,23 +198,10 @@ render() {
 							finishEditing={this.finishEditing}
 							currentValue={this.state.layers[this.state.currentLayer].degree} 
 						/>
-						<div style={{height: "20px", width: "90%", margin: "30px auto"}}>
-							<label>
-								<span>Show Layer:</span>
-							</label>
-							<label style={{marginLeft: "10%"}}>
-								<span>both layers</span>
-							<input onClick={() => this.toggleLayers(2)} type="radio" name="hidden" value="both" checked={!this.state.layers[0].hidden && !this.state.layers[1].hidden } />
-							</label>
-							<label style={{marginLeft: "10%"}}>
-								<span>layer 1</span>
-							<input onClick={() => this.toggleLayers(0)} type="radio" name="hidden" value="1" />
-							</label>
-							<label style={{marginLeft: "10%"}}>
-								<span>layer 2</span>
-							<input onClick={() => this.toggleLayers(1)} type="radio" name="hidden" value="2" />
-							</label>
-						</div>
+						<LayerToggle 
+							layers={this.state.layers}
+							toggleLayers={this.toggleLayers}
+						/>
 						<LayerItem>
 							<ul>
 								<li style={{display: "inline-block", width: "50%", float: 'left'}}>
