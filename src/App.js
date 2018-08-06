@@ -177,9 +177,8 @@ render() {
         		<Wrapper>
           			gradientr
         		</Wrapper> 
-				{this.state.containerHidden ? <ToggleButton style={{position: "fixed", bottom: "0", left: "10%"}} onClick={this.togglePanel}><span>show</span></ToggleButton> : null}	
 				<Container style={{animation: !this.state.containerHidden ? "slide-top .5s ease-in-out both": "slide-bottom 0.5s ease-in-out 0s 1 normal both"}}>
-					<ToggleButton onClick={this.togglePanel}><span>hide</span></ToggleButton>	
+					<ToggleButton onClick={this.togglePanel} style={ this.state.containerHidden ? {position: "fixed", bottom: "0", left: "10%"} : null}><span>hide</span></ToggleButton>	
 					{this.state.layers.map((layer, layerIndex) => {
 						return <Tablink background={this.state.currentLayer === layerIndex ? '#ffffff42' : '#ffffffb0'} onClick={() => this.toggleTab(layerIndex)} >
 							<span>Layer {layerIndex+1}</span>
