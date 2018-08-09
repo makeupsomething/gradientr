@@ -1,142 +1,36 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
 import './App.css';
 import Layer from './components/Layer';
-import ControlPanel from './components/ControlPanel';
+import AngleSlider from './components/AngleSlider';
 import ColorDistSlider from './components/ColorDistSlider';
-import { ChromePicker } from 'react-color';
-import Slider from 'rc-slider';
-import Tooltip from 'rc-tooltip';
 import Highlight from 'react-highlight';
 import CustomPicker from './components/CustomPicker';
-import 'rc-slider/assets/index.css';
+import LayerToggle from './components/LayerToggle';
 
-const Wrapper = styled.p`
-	margin: auto;
-	text-align: center;
-	font-size: 7.5em;
-	background: transparent;
-	mix-blend-mode: exclusion;
-	font-family: 'Kaushan Script', cursive;
-`;
+import Wrapper from './styledComponents/Wrapper';
+import Background from './styledComponents/Background';
+import CodeEditor from './styledComponents/CodeEditor';
+import Container from './styledComponents/Container';
+import Tablink from './styledComponents/Tablink';
+import ToggleButton from './styledComponents/ToggleButton';
+import TabContent from './styledComponents/TabContent';
+import LayerItem from './styledComponents/LayerItem';
 
-const Background = styled.div.attrs({
-	background: props => props.background || 'green',
-	width: props => props.width || '80%',
-})`
-	position: absolute;
-	height: 100%;
-	width: ${props => props.width};
-	background: ${props => props.background};
-`;
-
-const CodeEditor = styled.div`
-	margin: auto;
-	margin-top: 5%;
-	margin-bottom: 5%;
-	padding: 5%;
-	width: 80%;
-	height: 200px;
-	word-wrap: break-word;
-	border: solid gray 3px;
-	font-size: 1.5em;
-`
-
-const Tablink = styled.button.attrs({
-	background: props => props.background || '#ffffff42'
-})`
-    background: ${props => props.background};
-	color: white;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    padding: 14px 16px;
-    font-size: 17px;
-	width: 33.3%;
-	
-	${Tablink}:hover {
-    	background: #1010100a;
-	}
-`
-
-const TabContent = styled.ul.attrs({
-	background: props => props.background || '#ffffff42'
-})`
-    color: white;
-	background: ${props => props.background};
-	width: 100%;
-	height: 85%;
-	list-style-type: none;
-    margin: 0;
-    padding: 0;
-	overflow: scroll;
-`
-
-const LayerItem = styled.li`
-	display: inline-block;
-	vertical-align: center;
-	width: 100%;
-`
-
-const Container = styled.div`
-	width: 85vw;  
-	height: 84vh;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 10vh;
-`
-
-const ToggleButton = styled.button`
-  	background-color: #ffffff42;
-	border: 2px solid gray;
-	color: white;
-	width: 10%;
-	height: 10%;
-	font-size: 1em;
-	cursor: pointer;
-
-	${ToggleButton}:hover {
-		background: #1010100a;
-	}
-`
-
-const marks = {
-	0: {label: '0°', style: {top: '14px'}},
-	20: {label: '20°', style: {top: '14px'}},
-	40: {label: '40°', style: {top: '14px'}},
-	60: {label: '60°', style: {top: '14px'}},
-	80: {label: '80°', style: {top: '14px'}},
-	100: {label: '100°', style: {top: '14px'}},
-	120: {label: '120°', style: {top: '14px'}},
-	140: {label: '140°', style: {top: '14px'}},
-	160: {label: '160°', style: {top: '14px'}},
-	180: {label: '180°', style: {top: '14px'}},
-	200: {label: '200°', style: {top: '14px'}},
-	220: {label: '220°', style: {top: '14px'}},
-	240: {label: '240°', style: {top: '14px'}},
-	260: {label: '260°', style: {top: '14px'}},
-	280: {label: '280°', style: {top: '14px'}},
-	300: {label: '300°', style: {top: '14px'}},
-	320: {label: '320°', style: {top: '14px'}},
-	340: {label: '340°', style: {top: '14px'}},
-	360: {label: '360°', style: {top: '14px'}},
-	360: {label: '360°', style: {top: '14px'}},
-};
 
 class App extends Component {
-  state = {
-    layers: [
-		{degree: 93, hidden: false, colors:[{h: '359', s: '88', l: '68', a: '0.7', amount: 25, name: "color01", id: "color01"}, 
-      	{h: '199', s: '100', l: '60', a: '0.6', amount: 75, name: "color02", id: "color02"}]},
-      	{degree: 181, hidden: false, colors:[{h: '98', s: '93', l: '50', a: '0.5', amount: 30, name: "color11", id: "color11"}, 
-      	{h: '191', s: '92', l: '50', a: '0.5', amount: 70, name: "color12", id: "color12"}]}
-    ],
-    containerHidden: false,
-	background: '100%',
-	selectedColorId: 'color01',
-	currentLayer: 0,
-	editing: false,
-  };
+	state = {
+		layers: [
+			{degree: 93, hidden: false, colors:[{h: '359', s: '88', l: '68', a: '0.7', amount: 25, name: "color01", id: "color01"}, 
+			{h: '199', s: '100', l: '60', a: '0.6', amount: 75, name: "color02", id: "color02"}]},
+			{degree: 181, hidden: false, colors:[{h: '98', s: '93', l: '50', a: '0.5', amount: 30, name: "color11", id: "color11"}, 
+			{h: '191', s: '92', l: '50', a: '0.5', amount: 70, name: "color12", id: "color12"}]}
+		],
+		containerHidden: true,
+		background: '100%',
+		selectedColorId: 'color01',
+		currentLayer: 0,
+		editing: false,
+	};
 
 handleColorChange = (color) => {
 	let tmp = this.state.layers;
@@ -157,30 +51,20 @@ handleColorChange = (color) => {
 	});
 }
 
-handleColorAmountChange = (layer, colors) => {
+handleChange = (value) => {
 	if(!this.state.editing) {
 		this.setState({editing: true})
 	}
-    let tmp = this.state.layers;
-    tmp[layer].colors = colors
-    this.setState({
-      	layers: tmp
-    });
-}
+	let tmp = this.state.layers
 
-handleChange = (layer, parameter, value, event) => {
-	if(event) {
-		event.stopPropagation();
+	if(value.length) {
+		tmp[this.state.currentLayer].colors = value
+	} else {
+		tmp[this.state.currentLayer].degree= value
 	}
-	if(!this.state.editing) {
-		this.setState({editing: true})
-	}
-	value = parameter === "degree" ? value.value : value
-    let tmpColors = this.state.layers
-    tmpColors[layer][parameter] = value
 
     this.setState({
-		layers: tmpColors
+		layers: tmp
     });
 }
 
@@ -205,7 +89,6 @@ addColor = (layer) => {
 }
 
 togglePanel = (event) => {
-	console.log("toggle")
 	event.stopPropagation()
 	this.setState({containerHidden: !this.state.containerHidden})
 }
@@ -276,7 +159,6 @@ toggleLayers = (layer) => {
 
 getHiddenLayer = () => {
 	let hiddenLayers = this.state.layers.filter(layer => layer.hidden);
-	console.log(hiddenLayers.length)
 	return hiddenLayers
 }
 
@@ -290,69 +172,55 @@ render() {
         		<Wrapper>
           			gradientr
         		</Wrapper> 
-				{this.state.containerHidden ? <ToggleButton style={{position: "fixed", bottom: this.state.containerHidden ? "0" : '67%', left: "10%"}} onClick={this.togglePanel}><span>show</span></ToggleButton> : null}
-				<br />		
-				<Container style={{animation: !this.state.containerHidden ? "slide-top .5s ease-in-out both": "slide-bottom 0.5s ease-in-out 0s 1 normal both"}}>
-					{!this.state.containerHidden ? <ToggleButton onClick={this.togglePanel}><span>hide</span></ToggleButton> : null}
-					<br />	
+				<Container>
 					{this.state.layers.map((layer, layerIndex) => {
-						return <Tablink background={this.state.currentLayer === layerIndex ? '#ffffff42' : '#ffffffb0'} onClick={() => this.toggleTab(layerIndex)} >
+						return (
+						<Tablink background={this.state.currentLayer === layerIndex ? '#ffffff42' : '#ffffffb0'} onClick={() => this.toggleTab(layerIndex)} >
 							<span>Layer {layerIndex+1}</span>
-						</Tablink>
+						</Tablink>)
 					})}
 					<Tablink background={this.state.currentLayer === 3 ? '#ffffff42' : '#ffffffb0'} onClick={() => this.toggleTab(3)} ><i class="fa fa-code" /></Tablink>
-					{this.state.currentLayer !== 3 ? ( <TabContent background={this.state.editing ? '#ffffff00' : null}>
-						<ColorDistSlider layer={this.state.currentLayer} colors={this.state.layers[this.state.currentLayer].colors} handleColorAmountChange={this.handleColorAmountChange} finishEditing={this.finishEditing} />
-						<Slider 
-							min={0} 
-							max={360} 
-							marks={marks} 
-							style={{height: "20px", width: "90%", margin: "30px auto"}}
-							railStyle={{height: "20px"}} 
-							handleStyle={{height: "30px", borderRadius: "20%"}} 
-							trackStyle={{backgroundColor: `#abe2fb00`}}
-							dotStyle={{top: "16px"}}
-							onChange={value => this.handleChange(this.state.currentLayer, "degree", {value})}
-							onAfterChange={() => this.setState({editing: false})}
-							value={this.state.layers[this.state.currentLayer].degree}
+					{this.state.currentLayer !== 3 ? 
+					(<TabContent background={this.state.editing ? '#ffffff00' : null}>
+						<ColorDistSlider 
+							layer={this.state.currentLayer} 
+							colors={this.state.layers[this.state.currentLayer].colors} 
+							handleColorAmountChange={this.handleChange} 
+							finishEditing={this.finishEditing} 
 						/>
-						<div style={{height: "20px", width: "90%", margin: "30px auto"}}>
-							<label>
-								<span>Show Layer:</span>
-							</label>
-							<label style={{marginLeft: "10%"}}>
-								<span>both layers</span>
-							<input onClick={() => this.toggleLayers(2)} type="radio" name="hidden" value="both" checked={!this.state.layers[0].hidden && !this.state.layers[1].hidden } />
-							</label>
-							<label style={{marginLeft: "10%"}}>
-								<span>layer 1</span>
-							<input onClick={() => this.toggleLayers(0)} type="radio" name="hidden" value="1" />
-							</label>
-							<label style={{marginLeft: "10%"}}>
-								<span>layer 2</span>
-							<input onClick={() => this.toggleLayers(1)} type="radio" name="hidden" value="2" />
-							</label>
-						</div>
+						<AngleSlider 
+							handleChange={this.handleChange}
+							finishEditing={this.finishEditing}
+							currentValue={this.state.layers[this.state.currentLayer].degree} 
+						/>
+						<LayerToggle 
+							layers={this.state.layers}
+							toggleLayers={this.toggleLayers}
+						/>
 						<LayerItem>
 							<ul>
-							<li style={{display: "inline-block", width: "50%", float: 'left'}}>
-							<Layer 
-							layer={this.state.layers[this.state.currentLayer]} 
-							index={this.state.currentLayer} 
-							addColor={this.addColor} 
-							removeColor={this.removeColor} 
-							checked={this.state.layers[this.state.currentLayer].hidden}
-							setColor={this.setSelectedColor}
-							selectedColor={this.state.selectedColorId}
-							/>
-							</li>
-							<li style={{display: "inline-block", width: "50%", float: 'left'}}>
-							<CustomPicker onChange={ this.handleColorChange } color={ {h, s, l, a} } />
-							</li>
+								<li style={{display: "inline-block", width: "50%", float: 'left'}}>
+									<Layer 
+									layer={this.state.layers[this.state.currentLayer]} 
+									index={this.state.currentLayer} 
+									addColor={this.addColor} 
+									removeColor={this.removeColor} 
+									checked={this.state.layers[this.state.currentLayer].hidden}
+									setColor={this.setSelectedColor}
+									selectedColor={this.state.selectedColorId}
+									/>
+								</li>
+								<li style={{display: "inline-block", width: "50%", float: 'left'}}>
+									<CustomPicker onChange={ this.handleColorChange } color={ {h, s, l, a} } />
+								</li>
 							</ul>
 						</LayerItem>
-					</TabContent>) : (<TabContent>
-					<CodeEditor><Highlight language="css"><span style={{wordBreak: "break-all", wordWrap: "break-word"}}>{`background: ${str}`}</span></Highlight></CodeEditor></TabContent>)}
+					</TabContent>) : 
+					(<TabContent>
+						<CodeEditor>
+							<Highlight language="css"><span style={{wordBreak: "break-all", wordWrap: "break-word"}}>{`background: ${str}`}</span></Highlight>
+						</CodeEditor>
+					</TabContent>)}
 				</Container>
 			</Background>
       	</div>
