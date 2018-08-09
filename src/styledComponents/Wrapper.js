@@ -6,8 +6,6 @@ const Wrapper = styled.p`
     font-size: 7.5em;
     color: white;
     background: transparent;
-    mix-blend-mode: exclusion;
-    font-family: 'Kaushan Script', cursive;
 `;
 
 export default Wrapper;

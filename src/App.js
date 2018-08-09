@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
 import './App.css';
 import Layer from './components/Layer';
-import ControlPanel from './components/ControlPanel';
 import AngleSlider from './components/AngleSlider';
 import ColorDistSlider from './components/ColorDistSlider';
-import { ChromePicker } from 'react-color';
 import Highlight from 'react-highlight';
 import CustomPicker from './components/CustomPicker';
 import LayerToggle from './components/LayerToggle';
@@ -28,7 +25,7 @@ class App extends Component {
 			{degree: 181, hidden: false, colors:[{h: '98', s: '93', l: '50', a: '0.5', amount: 30, name: "color11", id: "color11"}, 
 			{h: '191', s: '92', l: '50', a: '0.5', amount: 70, name: "color12", id: "color12"}]}
 		],
-		containerHidden: false,
+		containerHidden: true,
 		background: '100%',
 		selectedColorId: 'color01',
 		currentLayer: 0,
@@ -169,23 +166,22 @@ render() {
 	let str = this.getString();
 	let {h, s, l, a} = this.getSelectedColor();
 
-
-
     return (
 		<div>
       		<Background className="gradientr" background={str} width={this.state.background}>
         		<Wrapper>
           			gradientr
         		</Wrapper> 
-				<Container style={{animation: !this.state.containerHidden ? "slide-top .5s ease-in-out both": "slide-bottom 0.5s ease-in-out 0s 1 normal both"}}>
-					<ToggleButton onClick={this.togglePanel} style={ this.state.containerHidden ? {position: "fixed", bottom: "0", left: "10%"} : null}><span>hide</span></ToggleButton>	
+				<Container>
 					{this.state.layers.map((layer, layerIndex) => {
-						return <Tablink background={this.state.currentLayer === layerIndex ? '#ffffff42' : '#ffffffb0'} onClick={() => this.toggleTab(layerIndex)} >
+						return (
+						<Tablink background={this.state.currentLayer === layerIndex ? '#ffffff42' : '#ffffffb0'} onClick={() => this.toggleTab(layerIndex)} >
 							<span>Layer {layerIndex+1}</span>
-						</Tablink>
+						</Tablink>)
 					})}
 					<Tablink background={this.state.currentLayer === 3 ? '#ffffff42' : '#ffffffb0'} onClick={() => this.toggleTab(3)} ><i class="fa fa-code" /></Tablink>
-					{this.state.currentLayer !== 3 ? ( <TabContent background={this.state.editing ? '#ffffff00' : null}>
+					{this.state.currentLayer !== 3 ? 
+					(<TabContent background={this.state.editing ? '#ffffff00' : null}>
 						<ColorDistSlider 
 							layer={this.state.currentLayer} 
 							colors={this.state.layers[this.state.currentLayer].colors} 
@@ -219,8 +215,12 @@ render() {
 								</li>
 							</ul>
 						</LayerItem>
-					</TabContent>) : (<TabContent>
-					<CodeEditor><Highlight language="css"><span style={{wordBreak: "break-all", wordWrap: "break-word"}}>{`background: ${str}`}</span></Highlight></CodeEditor></TabContent>)}
+					</TabContent>) : 
+					(<TabContent>
+						<CodeEditor>
+							<Highlight language="css"><span style={{wordBreak: "break-all", wordWrap: "break-word"}}>{`background: ${str}`}</span></Highlight>
+						</CodeEditor>
+					</TabContent>)}
 				</Container>
 			</Background>
       	</div>
