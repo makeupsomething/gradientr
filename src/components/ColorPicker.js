@@ -106,7 +106,9 @@ class ColorPicker extends Component {
                 >
                 </ColorBlock>
                 <ColorValue value={`hsla(${this.state.background.h}, ${this.state.background.s * 100}%, ${this.state.background.l * 100}%, ${this.state.background.a})`} />
-                <RemoveButton onClick={this.removeColor}><a style={{fontSize: "3em", verticalAlign: "-31%"}} class="fas fa-times" /></RemoveButton>
+                {!disabled ? <RemoveButton onClick={this.removeColor}>
+                    <a style={{fontSize: "3em", verticalAlign: "-31%"}} class="fas fa-times" />
+                </RemoveButton> : null}
                 </Section>
         );
     }
