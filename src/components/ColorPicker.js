@@ -42,7 +42,7 @@ const AmountValue = styled.input`
 `
 
 const RemoveButton = styled.button`
-    width: 10%;
+    width: 40px;
     height: 100%;
     margin-left: 3%;
     background: #ffffff00;
