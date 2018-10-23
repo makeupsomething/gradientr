@@ -31,25 +31,29 @@ class Layer extends Component {
         const {layer, index, addColor, removeColor, checked, setColor, selectedColor} = this.props;
 
         return (
-            <div style={{bottom: "0"}}>
-                {layer.colors.map(color => {
-                    return <LayerItem>
-                                <ColorPicker
-                                    h={color.h}
-                                    s={color.s}
-                                    l={color.l}
-                                    a={color.a}
-                                    amount={color.amount}
-                                    name={color.id}
-                                    layer={index}
-                                    setColor={setColor}
-                                    removeColor={removeColor}
-                                    disabled={color.id === selectedColor} >
-                                </ColorPicker>
-                            </LayerItem>
-                            })}
-                <LayerItem>{layer.colors.length < 3 && index !== undefined ? (<AddButton onClick={() => addColor(index)}><i class="fas fa-plus" /></AddButton>) : null}</LayerItem>
-            </div>
+            <Context.Consumer>
+                {(state) => (          
+                    <div style={{bottom: "0"}}>
+                        {layer.colors.map(color => {
+                            return <LayerItem>
+                                        <ColorPicker
+                                            h={color.h}
+                                            s={color.s}
+                                            l={color.l}
+                                            a={color.a}
+                                            amount={color.amount}
+                                            name={color.id}
+                                            layer={state.index}
+                                            setColor={setColor}
+                                            removeColor={removeColor}
+                                            disabled={color.id === selectedColor} >
+                                        </ColorPicker>
+                                    </LayerItem>
+                                    })}
+                        <LayerItem>{layer.colors.length < 3 && index !== undefined ? (<AddButton onClick={() => addColor(index)}><i class="fas fa-plus" /></AddButton>) : null}</LayerItem>
+                    </div>
+                )}
+            </Context.Consumer>
         );
     }
 }

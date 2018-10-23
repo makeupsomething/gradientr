@@ -15,6 +15,8 @@ import Tablink from './styledComponents/Tablink';
 import TabContent from './styledComponents/TabContent';
 import LayerItem from './styledComponents/LayerItem';
 
+const Context = React.createContext();
+
 
 class App extends Component {
 	state = {
@@ -165,8 +167,9 @@ render() {
 	let str = this.getString();
 	let {h, s, l, a} = this.getSelectedColor();
 
+	//TODO: update to use fragements
     return (
-		<div>
+		<Context.Provider value={this.state}>
       		<Background className="gradientr" background={str} width={this.state.background}>
         		<Wrapper>
           			gradientr
@@ -222,7 +225,7 @@ render() {
 					</TabContent>)}
 				</Container>
 			</Background>
-      	</div>
+      	</Context.Provider>
     );
   }
 }
