@@ -164,65 +164,68 @@ getHiddenLayer = () => {
 render() {
 	let str = this.getString();
 	let {h, s, l, a} = this.getSelectedColor();
+	const { currentLayer, layers, editing, selectedColorId, background } = this.state;
 
     return (
-		<div>
-      		<Background className="gradientr" background={str} width={this.state.background}>
-        		<Wrapper>
-          			gradientr
-        		</Wrapper> 
-				<Container>
-					{this.state.layers.map((layer, layerIndex) => {
-						return (
-						<Tablink background={this.state.currentLayer === layerIndex ? '#ffffff42' : '#ffffffb0'} onClick={() => this.toggleTab(layerIndex)} >
-							<span>Layer {layerIndex+1}</span>
-						</Tablink>)
-					})}
-					<Tablink background={this.state.currentLayer === 3 ? '#ffffff42' : '#ffffffb0'} onClick={() => this.toggleTab(3)} ><i class="fa fa-code" /></Tablink>
-					{this.state.currentLayer !== 3 ? 
-					(<TabContent background={this.state.editing ? '#ffffff00' : null}>
-						<ColorDistSlider 
-							layer={this.state.currentLayer} 
-							colors={this.state.layers[this.state.currentLayer].colors} 
-							handleColorAmountChange={this.handleChange} 
-							finishEditing={this.finishEditing} 
-						/>
-						<AngleSlider 
-							handleChange={this.handleChange}
-							finishEditing={this.finishEditing}
-							currentValue={this.state.layers[this.state.currentLayer].degree} 
-						/>
-						<LayerToggle 
-							layers={this.state.layers}
-							toggleLayers={this.toggleLayers}
-						/>
-						<LayerItem>
-							<ul>
-								<li style={{display: "inline-block", width: "50%", float: 'left'}}>
-									<Layer 
-									layer={this.state.layers[this.state.currentLayer]} 
-									index={this.state.currentLayer} 
-									addColor={this.addColor} 
-									removeColor={this.removeColor} 
-									checked={this.state.layers[this.state.currentLayer].hidden}
-									setColor={this.setSelectedColor}
-									selectedColor={this.state.selectedColorId}
-									/>
-								</li>
-								<li style={{display: "inline-block", width: "50%", float: 'left'}}>
-									<CustomPicker onChange={ this.handleColorChange } color={ {h, s, l, a} } />
-								</li>
-							</ul>
-						</LayerItem>
-					</TabContent>) : 
-					(<TabContent>
-						<CodeEditor>
-							<Highlight language="css"><span style={{wordBreak: "break-all", wordWrap: "break-word"}}>{`background: ${str}`}</span></Highlight>
-						</CodeEditor>
-					</TabContent>)}
-				</Container>
-			</Background>
-      	</div>
+	<Background className="gradientr" background={str} width={background}>
+		<Wrapper>
+			gradientr
+		</Wrapper> 
+		<Container>
+			{layers.map((layer, layerIndex) => {
+				return (
+				<Tablink background={currentLayer === layerIndex ? '#ffffff42' : '#ffffffb0'} onClick={() => this.toggleTab(layerIndex)} >
+					<span>Layer {layerIndex+1}</span>
+				</Tablink>)
+			})}
+			<Tablink background={currentLayer === 3 ? '#ffffff42' : '#ffffffb0'} onClick={() => this.toggleTab(3)}>
+				<i class="fa fa-code" />
+			</Tablink>
+			{currentLayer !== 3 ? 
+			(<TabContent background={editing ? '#ffffff00' : null}>
+				<ColorDistSlider 
+					layer={currentLayer} 
+					colors={layers[currentLayer].colors} 
+					handleColorAmountChange={this.handleChange} 
+					finishEditing={this.finishEditing} 
+				/>
+				<AngleSlider 
+					handleChange={this.handleChange}
+					finishEditing={this.finishEditing}
+					currentValue={layers[currentLayer].degree} 
+				/>
+				<LayerToggle 
+					layers={layers}
+					toggleLayers={this.toggleLayers}
+				/>
+				<LayerItem>
+					<ul>
+						<li style={{display: "inline-block", width: "50%", float: 'left'}}>
+							<Layer 
+							layer={layers[currentLayer]} 
+							index={currentLayer} 
+							addColor={this.addColor} 
+							removeColor={this.removeColor} 
+							checked={layers[currentLayer].hidden}
+							setColor={this.setSelectedColor}
+							selectedColor={selectedColorId}
+							/>
+						</li>
+						<li style={{display: "inline-block", width: "50%", float: 'left'}}>
+							<CustomPicker onChange={ this.handleColorChange } color={ {h, s, l, a} } />
+						</li>
+					</ul>
+				</LayerItem>
+			</TabContent>) : 
+			(<TabContent>
+				<CodeEditor>
+					<Highlight language="css">
+						<span style={{wordBreak: "break-all", wordWrap: "break-word"}}>{`background: ${str}`}</span>
+					</Highlight>
+				</CodeEditor>
+			</TabContent>)}
+		</Container>
+	</Background>
     );
   }
 }
