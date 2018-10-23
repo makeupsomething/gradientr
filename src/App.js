@@ -12,7 +12,6 @@ import Background from './styledComponents/Background';
 import CodeEditor from './styledComponents/CodeEditor';
 import Container from './styledComponents/Container';
 import Tablink from './styledComponents/Tablink';
-import ToggleButton from './styledComponents/ToggleButton';
 import TabContent from './styledComponents/TabContent';
 import LayerItem from './styledComponents/LayerItem';
 
