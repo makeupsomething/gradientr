@@ -1,12 +1,10 @@
 import styled from 'styled-components';
 
 const Background = styled.div.attrs({
-	background: props => props.background || 'green',
-	width: props => props.width || '80%',
+	background: props => props.background || 'pappyawhip',
 })`
-	position: absolute;
-	height: 100%;
-	width: ${props => props.width};
+	height: 100vh;
+	width: 100vw;
 	background: ${props => props.background};
 `;
 

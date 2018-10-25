@@ -1,9 +1,11 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 const Container = styled.div`
 	width: 85vw;  
-	margin: auto;
-	margin-top: 5%;
+	position: absolute;
+	left: 50%;
+	-webkit-transform: translateX(-50%);
+	transform: translateX(-50%)
 `
 
 export default Container;
