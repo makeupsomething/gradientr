@@ -15,14 +15,21 @@ import Tablink from './styledComponents/Tablink';
 import TabContent from './styledComponents/TabContent';
 import LayerItem from './styledComponents/LayerItem';
 
-
+/*
+linear-gradient(93deg, 
+hsla(188.80656108597287, 100%, 50%,  0.73) 25%,
+hsla(301.20475113122177, 100%, 60%,  0.32) 75%),
+linear-gradient(0deg, 
+hsla(53.602941176470594, 93.00000000000001%, 50%,  0.75) 30%,
+hsla(291.4309954751131, 92%, 50%,  0.5) 70%)
+*/
 class App extends Component {
 	state = {
 		layers: [
-			{degree: 93, hidden: false, colors:[{h: '359', s: '88', l: '68', a: '0.7', amount: 25, name: "color01", id: "color01"}, 
-			{h: '199', s: '100', l: '60', a: '0.6', amount: 75, name: "color02", id: "color02"}]},
-			{degree: 181, hidden: false, colors:[{h: '98', s: '93', l: '50', a: '0.5', amount: 30, name: "color11", id: "color11"}, 
-			{h: '191', s: '92', l: '50', a: '0.5', amount: 70, name: "color12", id: "color12"}]}
+			{degree: 93, hidden: false, colors:[{h: '188', s: '100', l: '50', a: '0.73', amount: 25, name: "color01", id: "color01"}, 
+			{h: '301', s: '100', l: '60', a: '0.3', amount: 75, name: "color02", id: "color02"}]},
+			{degree: 0, hidden: false, colors:[{h: '53', s: '93', l: '50', a: '0.75', amount: 30, name: "color11", id: "color11"}, 
+			{h: '291', s: '92', l: '50', a: '0.5', amount: 70, name: "color12", id: "color12"}]}
 		],
 		containerHidden: true,
 		background: '100%',
