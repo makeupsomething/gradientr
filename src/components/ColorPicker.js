@@ -15,7 +15,6 @@ const Section = styled.div`
 const ColorBlock = styled.div.attrs({
     background: props => props.background || 'green',
 })`
-    width: 10%;
     max-height: 100%;
     margin-left: 5%;
     padding: 5% 8%;
@@ -25,12 +24,13 @@ const ColorBlock = styled.div.attrs({
 `
 
 const ColorValue = styled.input`
-    width: 50%;
+    width: 55%;
     height: 100%;
     padding: 3% 2%;
     margin-left: 3%;
     font-size: 1em;
-    vertical-align: center;
+    border: none;
+    border-radius: 10px;
 `
 
 const AmountValue = styled.input`
@@ -99,7 +99,7 @@ class ColorPicker extends Component {
     render() {
         const { disabled } = this.props;
         return (
-                <Section onClick={this.toggleColor} style={{background: disabled ? "#1010100a" : "", marginBottom: "2%", padding: "4% 1%", border: disabled ? "solid 2px gray": ""}}>
+            <Section onClick={this.toggleColor} style={{background: disabled ? "#1010100a" : "", marginBottom: "2%", padding: "4% 1%", border: disabled ? "solid 2px gray": ""}}>
                 <ColorBlock  
                     background={`hsla(${this.state.background.h}, ${this.state.background.s * 100}%, ${this.state.background.l * 100}%, ${this.state.background.a})`}
                     selected={disabled ? 'solid black 3px' : null}
@@ -109,7 +109,7 @@ class ColorPicker extends Component {
                 {!disabled ? <RemoveButton onClick={this.removeColor}>
                     <a style={{fontSize: "3em", verticalAlign: "-31%"}} class="fas fa-times" />
                 </RemoveButton> : null}
-                </Section>
+            </Section>
         );
     }
 }
