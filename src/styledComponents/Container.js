@@ -2,8 +2,10 @@ import styled, { keyframes } from 'styled-components';
 
 const Container = styled.div`
 	width: 85vw;  
-	height: 75vh;
-	margin: auto;
+	position: absolute;
+	left: 50%;
+	-webkit-transform: translateX(-50%);
+	transform: translateX(-50%)
 `
 
 export default Container;
