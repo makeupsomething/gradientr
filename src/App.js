@@ -15,14 +15,6 @@ import Tablink from './styledComponents/Tablink';
 import TabContent from './styledComponents/TabContent';
 import LayerItem from './styledComponents/LayerItem';
 
-/*
-linear-gradient(93deg, 
-hsla(188.80656108597287, 100%, 50%,  0.73) 25%,
-hsla(301.20475113122177, 100%, 60%,  0.32) 75%),
-linear-gradient(0deg, 
-hsla(53.602941176470594, 93.00000000000001%, 50%,  0.75) 30%,
-hsla(291.4309954751131, 92%, 50%,  0.5) 70%)
-*/
 class App extends Component {
 	state = {
 		layers: [
@@ -137,7 +129,9 @@ getSelectedColor = () => {
 
 toggleTab = (layer) => {
 	this.setState({currentLayer: layer});
-	layer !== 3 ? this.setState({selectedColorId: this.state.layers[layer].colors[0].id}) : null;
+	if(layer !== 3) {
+		this.setState({selectedColorId: this.state.layers[layer].colors[0].id})
+	}
 }
 
 setSelectedColor = (colorId) => {
