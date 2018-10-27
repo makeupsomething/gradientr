@@ -13,6 +13,7 @@
     "styled-components": "^3.2.3"
   },
   "devDependencies": {
+    "jest": "^23.6.0",
     "react-scripts": "^2.0.5"
   },
   "scripts": {
@@ -20,7 +21,7 @@
     "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "test": "jest",
     "eject": "react-scripts eject"
   },
   "browserslist": [
