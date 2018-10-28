@@ -1,6 +1,14 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
+
+import { 
+	setLayers, 
+	setSelectedColor, 
+	setCurrentLayer,
+	setEdting,
+} from '../actions/layers';
 
 const marks = {
 	0: {label: '0°', style: {top: '14px'}},
@@ -26,9 +34,20 @@ const marks = {
 };
 
 class AngleSlider extends Component {
+
+	handleChange = (value) => {
+        const { layerData, selectedColor, layerIndex, editing, selectedColorId } =  this.props.layers;
+        layerData[layerIndex].degree = value
+        this.props.dispatch(setLayers(layerData));
+	}
+
+	finishEditing = () => {
+        this.props.dispatch(setEdting(false))
+    }
+	
     render() {
 
-        const { currentValue, handleChange, finishEditing } = this.props;
+        const { layerData, layerIndex } = this.props.layers;
 
         return (
             <Slider 
@@ -40,12 +59,18 @@ class AngleSlider extends Component {
                 handleStyle={{height: "30px", borderRadius: "20%"}} 
                 trackStyle={{backgroundColor: `#abe2fb00`}}
                 dotStyle={{top: "16px"}}
-                onChange={handleChange}
-                onAfterChange={finishEditing}
-                value={currentValue}
+                onChange={this.handleChange}
+                onAfterChange={this.finishEditing}
+                value={layerData[layerIndex].degree}
             />
         );
     }
 }
 
-export default AngleSlider;
+function mapStateToProps({ layers }) {
+	return {
+		layers,
+	}
+}
+
+export default connect(mapStateToProps)(AngleSlider);

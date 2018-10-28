@@ -61,23 +61,6 @@ handleColorChange = (color) => {
 	});
 }
 
-handleChange = (value) => {
-	if(!this.state.editing) {
-		this.setState({editing: true})
-	}
-	let tmp = this.props.layers
-
-	if(value.length) {
-		tmp[this.state.currentLayer].colors = value
-	} else {
-		tmp[this.state.currentLayer].degree= value
-	}
-
-    this.setState({
-		layers: tmp
-    });
-}
-
 finishEditing = () => {
 	this.setState({editing: false})
 }
@@ -122,21 +105,6 @@ getString = () => {
 
 	return str;
 }
-
-/*getSelectedColor = () => {
-	if(Object.keys(this.props.layers).length === 0)
-		return
-	let selectedColor = null;
-	this.props.layers.forEach(layer => {
-		layer.colors.forEach(color => {
-			if(color.id === this.state.selectedColorId) {
-				selectedColor = color;
-			}
-		});
-	});
-
-	return selectedColor
-}*/
 
 toggleTab = (layer) => {
 	this.props.dispatch(setCurrentLayer({ layerIndex: layer }))
@@ -196,11 +164,7 @@ render() {
 		{layerData && layerData.length > 0 && layerIndex !== 3 ? 
 			(<TabContent background={editing ? '#ffffff00' : null}>
 				<ColorDistSlider/>
-				<AngleSlider 
-					handleChange={this.handleChange}
-					finishEditing={this.finishEditing}
-					currentValue={layerData[layerIndex].degree} 
-				/>
+				<AngleSlider/>
 				<LayerToggle 
 					layers={layerData}
 					toggleLayers={this.toggleLayers}
