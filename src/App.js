@@ -113,10 +113,6 @@ toggleTab = (layer) => {
 	}
 }
 
-setSelectedColor = (colorId) => {
-	this.setState({selectedColorId: colorId})
-}
-
 toggleLayers = (layer) => {
 	let tmpColors = this.props.layers
 
@@ -172,15 +168,7 @@ render() {
 				<LayerItem>
 					<ul>
 						<li style={{display: "inline-block", width: "50%", float: 'left'}}>
-							<Layer 
-							layer={layerData[layerIndex]} 
-							index={layerIndex} 
-							addColor={this.addColor} 
-							removeColor={this.removeColor} 
-							checked={layerData[layerIndex].hidden}
-							setColor={this.setSelectedColor}
-							selectedColor={selectedColorId}
-							/>
+							<Layer/>
 						</li>
 						<li style={{display: "inline-block", width: "50%", float: 'left'}}>
 							<CustomPicker onChange={ this.handleColorChange } color={ {h, s, l, a} } />

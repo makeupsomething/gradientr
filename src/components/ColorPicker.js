@@ -1,5 +1,13 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
+
+import { 
+	setLayers, 
+	setSelectedColor, 
+	setCurrentLayer,
+	setEdting,
+} from '../actions/layers';
 
 const Section = styled.div`
 
@@ -86,14 +94,16 @@ class ColorPicker extends Component {
     }
 
     toggleColor = (event) => {
-        const { setColor, name } = this.props;
-        setColor(name)
+        const { name } = this.props;
+        this.props.dispatch(setSelectedColor(name))
     }
 
     removeColor = (event) => {
         event.stopPropagation();
-        const { removeColor, name, layer } = this.props;
-        removeColor(name, layer)
+        const { name } = this.props;
+        const { layerData, layerIndex } =  this.props.layers;
+        layerData[layerIndex].colors = layerData[layerIndex].colors.filter(color => color.id !== name)
+        this.props.dispatch(setLayers(layerData));
     }
 
     render() {
@@ -114,4 +124,10 @@ class ColorPicker extends Component {
     }
 }
 
-export default ColorPicker;
+function mapStateToProps({ layers }) {
+	return {
+		layers,
+	}
+}
+
+export default connect(mapStateToProps)(ColorPicker);
