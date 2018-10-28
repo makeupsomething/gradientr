@@ -24,8 +24,6 @@ import TabContent from './styledComponents/TabContent';
 import LayerItem from './styledComponents/LayerItem';
 
 class App extends Component {
-	state = {
-	};
 
 componentDidMount() {
 	this.props.dispatch(setLayers(
@@ -59,10 +57,6 @@ handleColorChange = (color) => {
 	this.props.dispatch(setLayers(layerData))
 }
 
-finishEditing = () => {
-	this.setState({editing: false})
-}
-
 getString = () => {
 	if(Object.keys(this.props.layers).length === 0)
 		return
@@ -89,11 +83,6 @@ toggleTab = (layer) => {
 	}
 }
 
-getHiddenLayer = () => {
-	let hiddenLayers = this.props.layers.filter(layer => layer.hidden);
-	return hiddenLayers
-}
-
 render() {
 	let str = this.getString();
 	const { layerData, selectedColor, layerIndex, editing, selectedColorId } =  this.props.layers;
@@ -108,11 +97,11 @@ render() {
 		<Container>
 			{layerData.map((layer, li) => {
 					return (
-					<Tablink background={layerIndex === li ? '#ffffff42' : '#ffffffb0'} onClick={() => this.toggleTab(li)} key={`tab-${li}`} >
+					<Tablink background={layerIndex === li} onClick={() => this.toggleTab(li)} key={`tab-${li}`} >
 						<span>Layer {li+1}</span>
 					</Tablink>)
 			})}
-			<Tablink background={layerIndex === 3 ? '#ffffff42' : '#ffffffb0'} onClick={() => this.toggleTab(3)} key="tab-3">
+			<Tablink background={layerIndex === 3} onClick={() => this.toggleTab(3)} key="tab-3">
 				<i className="fa fa-code" />
 			</Tablink>
 			{layerIndex !== 3 ? 
