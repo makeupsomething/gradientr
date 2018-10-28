@@ -89,25 +89,6 @@ toggleTab = (layer) => {
 	}
 }
 
-toggleLayers = (layer) => {
-	let tmpColors = this.props.layers
-
-    if(layer === 0) {
-		tmpColors[0].hidden = false;
-		tmpColors[1].hidden = true;
-	} else if (layer === 1) {
-		tmpColors[0].hidden = true;
-		tmpColors[1].hidden = false;
-	} else {
-		tmpColors[0].hidden = false;
-		tmpColors[1].hidden = false;
-	}
-
-    this.setState({
-		layers: tmpColors
-    });
-}
-
 getHiddenLayer = () => {
 	let hiddenLayers = this.props.layers.filter(layer => layer.hidden);
 	return hiddenLayers
@@ -123,43 +104,41 @@ render() {
 		<Wrapper>
 			gradientr
 		</Wrapper> 
+		{layerData && layerData.length > 0 ? (
 		<Container>
-		{layerData && layerData.length > 0 ? layerData.map((layer, li) => {
-				return (
-				<Tablink background={layerIndex === li ? '#ffffff42' : '#ffffffb0'} onClick={() => this.toggleTab(li)} key={`tab-${li}`} >
-					<span>Layer {li+1}</span>
-				</Tablink>)
-		}) : null}
-		<Tablink background={layerIndex === 3 ? '#ffffff42' : '#ffffffb0'} onClick={() => this.toggleTab(3)} key="tab-3">
-			<i className="fa fa-code" />
-		</Tablink>
-		{layerData && layerData.length > 0 && layerIndex !== 3 ? 
-			(<TabContent background={editing ? '#ffffff00' : null}>
-				<ColorDistSlider/>
-				<AngleSlider/>
-				<LayerToggle 
-					layers={layerData}
-					toggleLayers={this.toggleLayers}
-				/>
-				<LayerItem>
-					<ul>
-						<li style={{display: "inline-block", width: "50%", float: 'left'}}>
-							<Layer/>
-						</li>
-						<li style={{display: "inline-block", width: "50%", float: 'left'}}>
-							<CustomPicker onChange={ this.handleColorChange } color={ {h, s, l, a} } />
-						</li>
-					</ul>
-				</LayerItem>
-			</TabContent>) : 
-			(<TabContent>
-				<CodeEditor>
-					<Highlight language="css">
-						<span style={{wordBreak: "break-all", wordWrap: "break-word"}}>{`background: ${str}`}</span>
-					</Highlight>
-				</CodeEditor>
-			</TabContent>)}
-		</Container>
+			{layerData.map((layer, li) => {
+					return (
+					<Tablink background={layerIndex === li ? '#ffffff42' : '#ffffffb0'} onClick={() => this.toggleTab(li)} key={`tab-${li}`} >
+						<span>Layer {li+1}</span>
+					</Tablink>)
+			})}
+			<Tablink background={layerIndex === 3 ? '#ffffff42' : '#ffffffb0'} onClick={() => this.toggleTab(3)} key="tab-3">
+				<i className="fa fa-code" />
+			</Tablink>
+			{layerIndex !== 3 ? 
+				(<TabContent background={editing ? '#ffffff00' : null}>
+					<ColorDistSlider/>
+					<AngleSlider/>
+					<LayerToggle/>
+					<LayerItem>
+						<ul>
+							<li style={{display: "inline-block", width: "50%", float: 'left'}}>
+								<Layer/>
+							</li>
+							<li style={{display: "inline-block", width: "50%", float: 'left'}}>
+								<CustomPicker onChange={ this.handleColorChange } color={ {h, s, l, a} } />
+							</li>
+						</ul>
+					</LayerItem>
+				</TabContent>) : 
+				(<TabContent>
+					<CodeEditor>
+						<Highlight language="css">
+							<span style={{wordBreak: "break-all", wordWrap: "break-word"}}>{`background: ${str}`}</span>
+						</Highlight>
+					</CodeEditor>
+				</TabContent>)}
+		</Container>) : null}
 	</Background>
     );
   }
