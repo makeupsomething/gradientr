@@ -43,48 +43,24 @@ componentDidMount() {
 }
 
 handleColorChange = (color) => {
-	let tmp = this.props.layers;
+	const { layerData, selectedColor, layerIndex, editing, selectedColorId } =  this.props.layers;
 	
-    tmp.forEach(layer => {
+    layerData.forEach(layer => {
 		layer.colors.forEach(c => {
-			if(this.state.selectedColorId === c.id) {
+			if(selectedColorId === c.id) {
 				c.h = color.hsl.h;
 				c.s = color.hsl.s * 100;
 				c.l = color.hsl.l * 100;
 				c.a = color.hsl.a;
 			}
 		});
-    });
-
-    this.setState({
-		colors: tmp
 	});
+	
+	this.props.dispatch(setLayers(layerData))
 }
 
 finishEditing = () => {
 	this.setState({editing: false})
-}
-
-uuidv4 = () => {
-	return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
-	  (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
-	)
-}
-
-addColor = (layer) => {
-	if(layer === undefined) {
-		return
-	}
-	let tmpColors = this.props.layers
-	let uuid = this.uuidv4()
-	tmpColors[layer].colors.push({h: '0', s: '50', l: '50', a: '0.5', amount: 50, id: uuid})
-    this.setState({ layers: tmpColors });
-}
-
-removeColor = (id, layer) => {
-	let tmpColors = this.props.layers;
-	tmpColors[layer].colors = this.props.layers[layer].colors.filter(color => color.id !== id)
-	this.setState({ layers: tmpColors });	
 }
 
 getString = () => {
