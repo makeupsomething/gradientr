@@ -1,4 +1,12 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { 
+	setLayers, 
+	setSelectedColor, 
+	setCurrentLayer,
+	setEdting,
+} from './actions/layers';
+
 import './App.css';
 import Layer from './components/Layer';
 import AngleSlider from './components/AngleSlider';
@@ -17,21 +25,25 @@ import LayerItem from './styledComponents/LayerItem';
 
 class App extends Component {
 	state = {
-		layers: [
+	};
+
+componentDidMount() {
+	this.props.dispatch(setLayers(
+		[
 			{degree: 93, hidden: false, colors:[{h: '188', s: '100', l: '50', a: '0.73', amount: 25, name: "color01", id: "color01"}, 
 			{h: '301', s: '100', l: '60', a: '0.3', amount: 75, name: "color02", id: "color02"}]},
 			{degree: 0, hidden: false, colors:[{h: '53', s: '93', l: '50', a: '0.75', amount: 30, name: "color11", id: "color11"}, 
 			{h: '291', s: '92', l: '50', a: '0.5', amount: 70, name: "color12", id: "color12"}]}
-		],
-		containerHidden: true,
-		background: '100%',
-		selectedColorId: 'color01',
-		currentLayer: 0,
-		editing: false,
-	};
+		]
+	));
+	this.props.dispatch(setSelectedColor('color01'))
+	this.props.dispatch(setCurrentLayer({ layerIndex: 0 }))
+	this.props.dispatch(setEdting(false))
+
+}
 
 handleColorChange = (color) => {
-	let tmp = this.state.layers;
+	let tmp = this.props.layers;
 	
     tmp.forEach(layer => {
 		layer.colors.forEach(c => {
@@ -53,7 +65,7 @@ handleChange = (value) => {
 	if(!this.state.editing) {
 		this.setState({editing: true})
 	}
-	let tmp = this.state.layers
+	let tmp = this.props.layers
 
 	if(value.length) {
 		tmp[this.state.currentLayer].colors = value
@@ -80,26 +92,23 @@ addColor = (layer) => {
 	if(layer === undefined) {
 		return
 	}
-	let tmpColors = this.state.layers
+	let tmpColors = this.props.layers
 	let uuid = this.uuidv4()
 	tmpColors[layer].colors.push({h: '0', s: '50', l: '50', a: '0.5', amount: 50, id: uuid})
     this.setState({ layers: tmpColors });
 }
 
-togglePanel = (event) => {
-	event.stopPropagation()
-	this.setState({containerHidden: !this.state.containerHidden})
-}
-
 removeColor = (id, layer) => {
-	let tmpColors = this.state.layers;
-	tmpColors[layer].colors = this.state.layers[layer].colors.filter(color => color.id !== id)
+	let tmpColors = this.props.layers;
+	tmpColors[layer].colors = this.props.layers[layer].colors.filter(color => color.id !== id)
 	this.setState({ layers: tmpColors });	
 }
 
 getString = () => {
+	if(Object.keys(this.props.layers).length === 0)
+		return
 	let str = '';
-	let strColors = this.state.layers.filter(({hidden}) => !hidden)
+	let strColors = this.props.layers.layerData.filter(({hidden}) => !hidden)
 
 	strColors.forEach((layer, index) => {
 		str+= `\nlinear-gradient(${layer.degree}deg, `;
@@ -114,9 +123,11 @@ getString = () => {
 	return str;
 }
 
-getSelectedColor = () => {
+/*getSelectedColor = () => {
+	if(Object.keys(this.props.layers).length === 0)
+		return
 	let selectedColor = null;
-	this.state.layers.forEach(layer => {
+	this.props.layers.forEach(layer => {
 		layer.colors.forEach(color => {
 			if(color.id === this.state.selectedColorId) {
 				selectedColor = color;
@@ -125,12 +136,12 @@ getSelectedColor = () => {
 	});
 
 	return selectedColor
-}
+}*/
 
 toggleTab = (layer) => {
-	this.setState({currentLayer: layer});
+	this.props.dispatch(setCurrentLayer({ layerIndex: layer }))
 	if(layer !== 3) {
-		this.setState({selectedColorId: this.state.layers[layer].colors[0].id})
+		this.props.dispatch(setSelectedColor(this.props.layers.layerData[layer].colors[0].id))
 	}
 }
 
@@ -139,7 +150,7 @@ setSelectedColor = (colorId) => {
 }
 
 toggleLayers = (layer) => {
-	let tmpColors = this.state.layers
+	let tmpColors = this.props.layers
 
     if(layer === 0) {
 		tmpColors[0].hidden = false;
@@ -158,56 +169,51 @@ toggleLayers = (layer) => {
 }
 
 getHiddenLayer = () => {
-	let hiddenLayers = this.state.layers.filter(layer => layer.hidden);
+	let hiddenLayers = this.props.layers.filter(layer => layer.hidden);
 	return hiddenLayers
 }
 
 render() {
 	let str = this.getString();
-	let {h, s, l, a} = this.getSelectedColor();
-	const { currentLayer, layers, editing, selectedColorId, background } = this.state;
+	const { layerData, selectedColor, layerIndex, editing, selectedColorId } =  this.props.layers;
+	let {h, s, l, a} = selectedColor || {h:1, s:1, l:1, a:1}
 
     return (
-	<Background className="gradientr" background={str} width={background}>
+	<Background className="gradientr" background={str}>
 		<Wrapper>
 			gradientr
 		</Wrapper> 
 		<Container>
-			{layers.map((layer, layerIndex) => {
+		{layerData && layerData.length > 0 ? layerData.map((layer, li) => {
 				return (
-				<Tablink background={currentLayer === layerIndex ? '#ffffff42' : '#ffffffb0'} onClick={() => this.toggleTab(layerIndex)} >
-					<span>Layer {layerIndex+1}</span>
+				<Tablink background={layerIndex === li ? '#ffffff42' : '#ffffffb0'} onClick={() => this.toggleTab(li)} key={`tab-${li}`} >
+					<span>Layer {li+1}</span>
 				</Tablink>)
-			})}
-			<Tablink background={currentLayer === 3 ? '#ffffff42' : '#ffffffb0'} onClick={() => this.toggleTab(3)}>
-				<i class="fa fa-code" />
-			</Tablink>
-			{currentLayer !== 3 ? 
+		}) : null}
+		<Tablink background={layerIndex === 3 ? '#ffffff42' : '#ffffffb0'} onClick={() => this.toggleTab(3)} key="tab-3">
+			<i className="fa fa-code" />
+		</Tablink>
+		{layerData && layerData.length > 0 && layerIndex !== 3 ? 
 			(<TabContent background={editing ? '#ffffff00' : null}>
-				<ColorDistSlider 
-					layer={currentLayer} 
-					colors={layers[currentLayer].colors} 
-					handleColorAmountChange={this.handleChange} 
-					finishEditing={this.finishEditing} 
-				/>
+				<ColorDistSlider/>
 				<AngleSlider 
 					handleChange={this.handleChange}
 					finishEditing={this.finishEditing}
-					currentValue={layers[currentLayer].degree} 
+					currentValue={layerData[layerIndex].degree} 
 				/>
 				<LayerToggle 
-					layers={layers}
+					layers={layerData}
 					toggleLayers={this.toggleLayers}
 				/>
 				<LayerItem>
 					<ul>
 						<li style={{display: "inline-block", width: "50%", float: 'left'}}>
 							<Layer 
-							layer={layers[currentLayer]} 
-							index={currentLayer} 
+							layer={layerData[layerIndex]} 
+							index={layerIndex} 
 							addColor={this.addColor} 
 							removeColor={this.removeColor} 
-							checked={layers[currentLayer].hidden}
+							checked={layerData[layerIndex].hidden}
 							setColor={this.setSelectedColor}
 							selectedColor={selectedColorId}
 							/>
@@ -231,4 +237,10 @@ render() {
   }
 }
 
-export default App;
+function mapStateToProps({ layers }) {
+	return {
+		layers,
+	}
+}
+
+export default connect(mapStateToProps)(App);
