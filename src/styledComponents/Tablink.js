@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const Tablink = styled.button.attrs({
-	background: props => props.background || '#ffffff42'
+	background: props => props.background ?  '#ffffff42' : '#ffffffb0'
 })`
     background: ${props => props.background};
 	color: white;

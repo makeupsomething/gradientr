@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Range } from 'rc-slider';
-import Tooltip from 'rc-tooltip';
 import 'rc-slider/assets/index.css';
 import 'rc-tooltip/assets/bootstrap.css';
+
+import { 
+	setLayers, 
+	setSelectedColor, 
+	setCurrentLayer,
+	setEdting,
+} from '../actions/layers';
 
 const marks = {
     0: {label: '0%', style: {top: '14px'}},
@@ -19,80 +26,90 @@ class ColorDistSlider extends Component {
     };
 
     componentDidMount = () => {
-        const { colors } = this.props;
-        this.setState({colors: colors});
+        const { layerData, selectedColor, layerIndex, editing, selectedColorId } =  this.props.layers;
+        this.setState({colors: layerData[layerIndex].colors});
     }
 
     componentDidUpdate = (prevProps, prevState, snapshot) => {
-        const { colors } = this.props;
-        if(colors.length !== this.state.colors.length) {
-            this.setState({colors: colors});
+        const { layerData, selectedColor, layerIndex, editing, selectedColorId } =  this.props.layers;
+        if(layerData[layerIndex].colors.length !== this.state.colors.length) {
+            this.setState({colors: layerData[layerIndex].colors});
         } else {
-            if(!colors.every((v,i)=> v === this.state.colors[i])) {
-                this.setState({colors: colors});
+            if(!layerData[layerIndex].colors.every((v,i)=> v === this.state.colors[i])) {
+                this.setState({colors: layerData[layerIndex].colors});
             }
         }
     }
 
     handleChange = (value) => {
-        const { layer, handleColorAmountChange } = this.props;
-        let tmp = this.state.colors
-        tmp.forEach((color, index) => color.amount = value[index])
-        this.setState({ colors: tmp });
-        handleColorAmountChange(this.state.colors)  
+        const { layerData, selectedColor, layerIndex, editing } =  this.props.layers;
+        layerData[layerIndex].colors.forEach((color, index) => color.amount = value[index])
+        this.props.dispatch(setLayers(layerData));
     }
 
     getHandleColors = () => {
+        const { layerData, selectedColor, layerIndex, editing, selectedColorId } =  this.props.layers;
         let handleVals = []
-        this.state.colors.forEach((color, index) => {
+        layerData[layerIndex].colors.forEach((color, index) => {
             handleVals.push({backgroundColor: 
-                `hsla(${this.state.colors[index].h}, ${this.state.colors[index].s}%, ${this.state.colors[index].l}%, ${this.state.colors[index].a})`
+                `hsla(${layerData[layerIndex].colors[index].h}, ${layerData[layerIndex].colors[index].s}%, ${layerData[layerIndex].colors[index].l}%, ${layerData[layerIndex].colors[index].a})`
             , height: "30px", borderRadius: "20%"});
         });
         return handleVals;
     }
 
     getTrackStyle = () => {
+        const { layerData, selectedColor, layerIndex, editing, selectedColorId } =  this.props.layers;
         let trackVals = []
-        this.state.colors.forEach(color => {
+        layerData[layerIndex].colors.forEach(color => {
             trackVals.push({backgroundColor: `#abe2fb00`})
         })
         return trackVals
     }
 
     getRailStyle = () => {
+        const { layerData, selectedColor, layerIndex, editing, selectedColorId } =  this.props.layers;
         let str = '';
         str+= `linear-gradient(90deg, `;
-        this.state.colors.forEach((color, index) => {
+        layerData[layerIndex].colors.forEach((color, index) => {
             str+= `hsla(${color.h}, ${color.s}%, ${color.l}%,  ${color.a}) ${color.amount}%`
-        	str+= index === this.state.colors.length-1 ? `)` : ',';
+        	str+= index === layerData[layerIndex].colors.length-1 ? `)` : ',';
         });
         return str
     }
 
+    finishEditing = () => {
+        this.props.dispatch(setEdting(false))
+    }
+
     render() {
-        
-        const { finishEditing } = this.props;
+        const { layerData, selectedColor, layerIndex, editing, selectedColorId } =  this.props.layers;
 
         return (
             <div>
-                {this.state.colors.length > 0 ? <Range 
+                {layerData[layerIndex].colors.length > 0 ? <Range 
                 min={0} 
                 max={100}  
                 pushable={5} 
                 marks={marks}
                 dotStyle={{top: "16px"}}
                 style={{height: "20px", width: "90%", margin: "30px auto"}}
-                value={this.state.colors.map(color => color.amount)} 
+                value={layerData[layerIndex].colors.map(color => color.amount)} 
                 handleStyle={this.getHandleColors()} 
                 trackStyle={this.getTrackStyle()}
                 railStyle={{background: this.getRailStyle(), height: "20px"}} 
                 onChange={this.handleChange} 
-                onAfterChange={finishEditing}
+                onAfterChange={this.finishEditing}
                 allowCross={false}/> : null}
             </div>
         );
     }
 }
 
-export default ColorDistSlider;
+function mapStateToProps({ layers }) {
+	return {
+		layers,
+	}
+}
+
+export default connect(mapStateToProps)(ColorDistSlider);

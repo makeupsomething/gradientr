@@ -1,6 +1,14 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 import ColorPicker from './ColorPicker';
+
+import { 
+	setLayers, 
+	setSelectedColor, 
+	setCurrentLayer,
+	setEdting,
+} from '../actions/layers';
 
 const AddButton = styled.button`
 	text-align: center;
@@ -27,31 +35,58 @@ const LayerItem = styled.li.attrs({
 `
 
 class Layer extends Component {
+
+    uuidv4 = () => {
+        return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+          (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+        )
+    }
+
+    addColor = (layer) => {
+        const { layerData, selectedColor, layerIndex, editing, selectedColorId } =  this.props.layers;
+        if(layer === undefined) {
+            return
+        }
+        let uuid = this.uuidv4()
+        layerData[layer].colors.push({h: '0', s: '50', l: '50', a: '0.5', amount: 50, id: uuid})
+        this.props.dispatch(setLayers(layerData));
+    }
+
     render() {
-        const {layer, index, addColor, removeColor, checked, setColor, selectedColor} = this.props;
+        const { layerData, selectedColor, layerIndex, editing, selectedColorId } =  this.props.layers;
 
         return (
             <div style={{bottom: "0"}}>
-                {layer.colors.map(color => {
+                {layerData[layerIndex].colors.map(color => {
                     return <LayerItem>
                                 <ColorPicker
                                     h={color.h}
                                     s={color.s}
                                     l={color.l}
                                     a={color.a}
-                                    amount={color.amount}
                                     name={color.id}
-                                    layer={index}
-                                    setColor={setColor}
-                                    removeColor={removeColor}
-                                    disabled={color.id === selectedColor} >
+                                    disabled={color.id === selectedColorId} >
                                 </ColorPicker>
                             </LayerItem>
                             })}
-                <LayerItem>{layer.colors.length < 3 && index !== undefined ? (<AddButton onClick={() => addColor(index)}><i class="fas fa-plus" /></AddButton>) : null}</LayerItem>
+                <LayerItem>
+                    {layerData[layerIndex].colors.length < 3 && layerIndex !== undefined 
+                        ? (
+                        <AddButton onClick={() => this.addColor(layerIndex)}>
+                            <i class="fas fa-plus" />
+                        </AddButton>) 
+                        : null
+                    }
+                </LayerItem>
             </div>
         );
     }
 }
 
-export default Layer;
+function mapStateToProps({ layers }) {
+	return {
+		layers,
+	}
+}
+
+export default connect(mapStateToProps)(Layer);
