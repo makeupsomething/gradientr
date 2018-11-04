@@ -25,22 +25,6 @@ class ColorDistSlider extends Component {
         amounts: [],
     };
 
-    componentDidMount = () => {
-        const { layerData, selectedColor, layerIndex, editing, selectedColorId } =  this.props.layers;
-        this.setState({colors: layerData[layerIndex].colors});
-    }
-
-    componentDidUpdate = (prevProps, prevState, snapshot) => {
-        const { layerData, selectedColor, layerIndex, editing, selectedColorId } =  this.props.layers;
-        if(layerData[layerIndex].colors.length !== this.state.colors.length) {
-            this.setState({colors: layerData[layerIndex].colors});
-        } else {
-            if(!layerData[layerIndex].colors.every((v,i)=> v === this.state.colors[i])) {
-                this.setState({colors: layerData[layerIndex].colors});
-            }
-        }
-    }
-
     handleChange = (value) => {
         const { layerData, selectedColor, layerIndex, editing } =  this.props.layers;
         layerData[layerIndex].colors.forEach((color, index) => color.amount = value[index])
