@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 import { 
-	setSelectedColor, 
+    setSelectedColor,
+    setLayers, 
 } from '../actions/layers';
 
 const ColorBlock = styled.div.attrs({
@@ -14,12 +15,15 @@ const ColorBlock = styled.div.attrs({
     height: ${props => props.height};
     width: ${props => props.width};
     margin: 5px;
-    background: ${props => props.background};
+    background-color: ${props => props.background};
     border-radius: 50%;
     float: left;
     cursor: pointer;
     box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 2px;
     transition: all .5s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     ${ColorBlock}:hover {
         box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 10px;
@@ -31,21 +35,42 @@ const ColorBlock = styled.div.attrs({
 `
 
 class ColorPicker extends Component {
+    state = {
+        hover: false
+    };
 
-    toggleColor = (event) => {
+    toggleColor = () => {
         const { color } = this.props;
         this.props.dispatch(setSelectedColor(color.id))
     }
 
+    mouseEnter = () => {
+        this.setState({ hover: true });
+    }
+
+    mouseExit = () => {
+        this.setState({ hover: false });
+    }
+
+    removeColor = () => {
+        const { layerData, layerIndex, selectedColor } =  this.props.layers;
+        layerData[layerIndex].colors = layerData[layerIndex].colors.filter(color => color.id !== selectedColor.id)
+        this.props.dispatch(setLayers(layerData));
+        this.props.dispatch(setSelectedColor(layerData[layerIndex].colors[0].id))
+    }
+
     render() {
-        const { disabled, color } = this.props;
+        const { selected, color } = this.props;
 
         return (
             <ColorBlock  
-                onClick={this.toggleColor}
+                onMouseEnter={this.mouseEnter}
+                onMouseLeave={this.mouseExit}
+                onClick={selected ? this.removeColor : this.toggleColor}
                 background={`hsla(${color.h}, ${color.s}%, ${color.l}%, ${color.a})`}
-                selected={disabled}
+                selected={selected}
             >
+            {this.state.hover && selected ? <div><i class="fas fa-trash"/></div>: <div>{color.amount}%</div>}
             </ColorBlock>
         );
     }
