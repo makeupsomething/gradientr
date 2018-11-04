@@ -6,6 +6,7 @@ const Wrapper = styled.p`
     font-size: 7.5em;
     color: white;
     background: transparent;
+    margin-bottom: 50px;
 `;
 
 export default Wrapper;
