@@ -24,7 +24,10 @@ import TabContent from './styledComponents/TabContent';
 import LayerItem from './styledComponents/LayerItem';
 
 class App extends Component {
-
+    state = {
+        hidden: false
+	};
+	
 componentDidMount() {
 	this.props.dispatch(setLayers(
 		[
@@ -83,6 +86,10 @@ toggleTab = (layer) => {
 	}
 }
 
+toggleContainer = () => {
+	this.setState({ hidden: !this.state.hidden })
+}
+
 render() {
 	let str = this.getString();
 	const { layerData, selectedColor, layerIndex, editing, selectedColorId } =  this.props.layers;
@@ -93,8 +100,9 @@ render() {
 		<Wrapper>
 			gradientr
 		</Wrapper> 
+		<button onClick={() => this.toggleContainer()}>hide</button>
 		{layerData && layerData.length > 0 ? (
-		<Container>
+		<Container hide={this.state.hidden}>
 			{layerData.map((layer, li) => {
 					return (
 					<Tablink background={layerIndex === li} onClick={() => this.toggleTab(li)} key={`tab-${li}`} >
@@ -110,7 +118,7 @@ render() {
 					<AngleSlider/>
 					<LayerToggle/>
 					<LayerItem>
-						<Layer style={{width: "50%"}}/>
+						<Layer/>
 						<CustomPicker onChange={ this.handleColorChange } color={ {h, s, l, a} } />
 					</LayerItem>
 				</TabContent>) : 

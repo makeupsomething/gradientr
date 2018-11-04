@@ -15,6 +15,7 @@ const AddButton = styled.button`
     border-radius: 50%;
     cursor: pointer;
     box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 2px;
+    transition: all .3s;
 
     ${AddButton}:hover {
         box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 10px;
@@ -27,9 +28,10 @@ const AddButton = styled.button`
 
 const ItemContainer = styled.span`
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
     width: 50%;
+    transition: all .3s;
 `
 
 class Layer extends Component {
