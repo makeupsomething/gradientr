@@ -5,7 +5,6 @@ import ColorPicker from './ColorPicker';
 
 import { 
 	setLayers, 
-	setSelectedColor, 
 } from '../actions/layers';
 
 const AddButton = styled.button`
@@ -26,6 +25,13 @@ const AddButton = styled.button`
     }
 `
 
+const ItemContainer = styled.span`
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 50%;
+`
+
 class Layer extends Component {
 
     uuidv4 = () => {
@@ -34,21 +40,18 @@ class Layer extends Component {
         )
     }
 
-    addColor = (layer) => {
-        const { layerData, selectedColor, layerIndex, editing, selectedColorId } =  this.props.layers;
-        if(layer === undefined) {
-            return
-        }
+    addColor = () => {
+        const { layerData, layerIndex } =  this.props.layers;
         let uuid = this.uuidv4()
-        layerData[layer].colors.push({h: '185', s: '100', l: '50', a: '0.75', amount: 50, id: uuid})
+        layerData[layerIndex].colors.push({h: '185', s: '100', l: '50', a: '0.75', amount: 50, id: uuid})
         this.props.dispatch(setLayers(layerData));
     }
 
     render() {
-        const { layerData, selectedColor, layerIndex, editing, selectedColorId } =  this.props.layers;
+        const { layerData, layerIndex, selectedColorId } =  this.props.layers;
 
         return (
-            <Fragment>
+            <ItemContainer>
                 {layerData[layerIndex].colors.map(color => {
                     return (
                     <ColorPicker
@@ -58,10 +61,10 @@ class Layer extends Component {
                     </ColorPicker>)
                     })}
                     {layerData[layerIndex].colors.length < 5 ? (
-                    <AddButton onClick={() => this.addColor(layerIndex)}>
+                    <AddButton onClick={() => this.addColor()}>
                         <i class="fas fa-plus" />
                     </AddButton>) : null}
-            </Fragment>
+            </ItemContainer>
         );
     }
 }

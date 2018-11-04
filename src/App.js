@@ -110,14 +110,8 @@ render() {
 					<AngleSlider/>
 					<LayerToggle/>
 					<LayerItem>
-						<ul>
-							<li style={{display: "inline", width: "50%", float: 'left'}}>
-								<Layer/>
-							</li>
-							<li style={{display: "inline-block", width: "50%", float: 'left'}}>
-								<CustomPicker onChange={ this.handleColorChange } color={ {h, s, l, a} } />
-							</li>
-						</ul>
+						<Layer style={{width: "50%"}}/>
+						<CustomPicker onChange={ this.handleColorChange } color={ {h, s, l, a} } />
 					</LayerItem>
 				</TabContent>) : 
 				(<TabContent>
