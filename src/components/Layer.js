@@ -61,7 +61,7 @@ class Layer extends Component {
             return
         }
         let uuid = this.uuidv4()
-        layerData[layer].colors.push({h: '0', s: '50', l: '50', a: '0.5', amount: 50, id: uuid})
+        layerData[layer].colors.push({h: '185', s: '100', l: '50', a: '0.75', amount: 50, id: uuid})
         this.props.dispatch(setLayers(layerData));
     }
 
