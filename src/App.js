@@ -111,7 +111,7 @@ render() {
 					<LayerToggle/>
 					<LayerItem>
 						<ul>
-							<li style={{display: "inline-block", width: "50%", float: 'left'}}>
+							<li style={{display: "inline", width: "50%", float: 'left'}}>
 								<Layer/>
 							</li>
 							<li style={{display: "inline-block", width: "50%", float: 'left'}}>

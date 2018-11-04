@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import ColorPicker from './ColorPicker';
@@ -11,28 +11,41 @@ import {
 } from '../actions/layers';
 
 const AddButton = styled.button`
-	text-align: center;
-    font-size: 1.5em;
-	width:  20%;
-    height:  20%;
-    margin-left: 10%;
+	width:  100px;
+    height:  100px;
+    margin: 5px;
     background: #1010100a;
-    border: solid 2px gray;
-    padding: 5%;
+    border-radius: 50%;
     cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 2px;
 
-    ${AddButton}:hover{
-        box-shadow: 1px 1px 10px 0px black;
+    ${AddButton}:hover {
+        box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 10px;
+    }
+
+    ${AddButton}:active {
+        box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 2px;
     }
 `
 
-const LayerItem = styled.li.attrs({
-    border: props => props.selected || '',
-})`
-    display: block;
-    margin: auto;
-    border: ${props => props.selected};
+const RemoveButton = styled.button`
+	width:  100px;
+    height:  100px;
+    margin: 5px;
+    background: #1010100a;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 2px;
+
+    ${AddButton}:hover {
+        box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 10px;
+    }
+
+    ${AddButton}:active {
+        box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 2px;
+    }
 `
+
 
 class Layer extends Component {
 
@@ -52,33 +65,38 @@ class Layer extends Component {
         this.props.dispatch(setLayers(layerData));
     }
 
+    removeColor = (layer) => {
+        if(layer === undefined) {
+            return
+        }
+        const { layerData, layerIndex, selectedColor } =  this.props.layers;
+        layerData[layerIndex].colors = layerData[layerIndex].colors.filter(color => color.id !== selectedColor.id)
+        this.props.dispatch(setLayers(layerData));
+        this.props.dispatch(setSelectedColor(layerData[layerIndex].colors[0].id))
+    }
+
     render() {
         const { layerData, selectedColor, layerIndex, editing, selectedColorId } =  this.props.layers;
 
         return (
-            <div style={{bottom: "0"}}>
+            <Fragment>
                 {layerData[layerIndex].colors.map(color => {
-                    return <LayerItem>
-                                <ColorPicker
-                                    h={color.h}
-                                    s={color.s}
-                                    l={color.l}
-                                    a={color.a}
-                                    name={color.id}
-                                    disabled={color.id === selectedColorId} >
-                                </ColorPicker>
-                            </LayerItem>
+                    return <ColorPicker
+                            color={color}
+                            name={color.id}
+                            disabled={color.id === selectedColorId} >
+                        </ColorPicker>
                             })}
-                <LayerItem>
                     {layerData[layerIndex].colors.length < 3 && layerIndex !== undefined 
                         ? (
                         <AddButton onClick={() => this.addColor(layerIndex)}>
                             <i class="fas fa-plus" />
                         </AddButton>) 
-                        : null
+                        : (<RemoveButton onClick={() => this.removeColor(layerIndex)}>
+                        <i class="fas fa-minus" />
+                        </RemoveButton>)
                     }
-                </LayerItem>
-            </div>
+            </Fragment>
         );
     }
 }
