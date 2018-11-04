@@ -1,28 +1,35 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import ColorPicker from './ColorPicker';
 
 import { 
 	setLayers, 
 } from '../actions/layers';
 
+const fadeIn = keyframes`
+from {
+    opacity: 0;
+}
+
+to {
+	opacity: 1;
+}
+`;
+
 const AddButton = styled.button`
 	width:  100px;
     height:  100px;
     margin: 5px;
-    background: #1010100a;
+    background-color: #1010100a;
     border-radius: 50%;
     cursor: pointer;
     box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 2px;
     transition: all .3s;
+    animation: ${fadeIn} .3s linear;
 
     ${AddButton}:hover {
         box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 10px;
-    }
-
-    ${AddButton}:active {
-        box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 2px;
     }
 `
 
