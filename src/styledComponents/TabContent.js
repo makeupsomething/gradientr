@@ -1,12 +1,9 @@
 import styled from 'styled-components';
 
-const TabContent = styled.ul.attrs({
-	background: props => props.background || '#ffffff42'
-})`
+const TabContent = styled.ul`
     color: white;
-	background: ${props => props.background};
+	background: #4c4c4c;
 	width: 100%;
-	height: 85%;
 	list-style-type: none;
     margin: 0;
     padding: 0;

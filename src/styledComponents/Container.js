@@ -12,12 +12,11 @@ to {
 
 
 const Container = styled.div`
-	width: 85vw;
-	margin: auto;
+	width: 70vw;
 	animation: ${fadeIn} .3s linear;
-	transform: rotate(0deg);
 	opacity: 1;
-  	transition: opacity .2s ease-out;
+	transition: opacity .2s ease-out;
+	margin: auto;
 
 	${ props => props.hide && css`
 		opacity: 0;

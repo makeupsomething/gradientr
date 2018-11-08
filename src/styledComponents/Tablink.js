@@ -1,9 +1,7 @@
 import styled from 'styled-components';
 
-const Tablink = styled.button.attrs({
-	background: props => props.background ?  '#ffffff42' : '#ffffffb0'
-})`
-    background: ${props => props.background};
+const Tablink = styled.button`
+    background: #4c4c4c;
 	color: white;
     border: none;
     outline: none;
@@ -11,9 +9,10 @@ const Tablink = styled.button.attrs({
     padding: 14px 16px;
     font-size: 17px;
 	width: 33.3%;
+    border-bottom: solid 3px ${props => props.borderColor};
 	
 	${Tablink}:hover {
-    	background: #1010100a;
+    	border-bottom: solid 3px lightblue;
 	}
 `
 

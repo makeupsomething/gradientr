@@ -13,9 +13,8 @@ import AngleSlider from './components/AngleSlider';
 import ColorDistSlider from './components/ColorDistSlider';
 import Highlight from 'react-highlight';
 import CustomPicker from './components/CustomPicker';
-import LayerToggle from './components/LayerToggle';
 
-import Wrapper from './styledComponents/Wrapper';
+import { Header, HideConsoleButton, Title } from './styledComponents/Header';
 import Background from './styledComponents/Background';
 import CodeEditor from './styledComponents/CodeEditor';
 import Container from './styledComponents/Container';
@@ -97,30 +96,29 @@ render() {
 
     return (
 	<Background className="gradientr" background={str}>
-		<Wrapper>
-			gradientr
-		</Wrapper> 
-		<button onClick={() => this.toggleContainer()}>hide</button>
+		<Header>
+			<Title>Gradientr</Title>
+			<HideConsoleButton onClick={this.toggleContainer}>Hide Console</HideConsoleButton>
+		</Header>
 		{layerData && layerData.length > 0 ? (
 		<Container hide={this.state.hidden}>
 			{layerData.map((layer, li) => {
 					return (
-					<Tablink background={layerIndex === li} onClick={() => this.toggleTab(li)} key={`tab-${li}`} >
+					<Tablink borderColor={layerIndex === li ? 'lightblue' : 'gray'} onClick={() => this.toggleTab(li)} key={`tab-${li}`} >
 						<span>Layer {li+1}</span>
 					</Tablink>)
 			})}
-			<Tablink background={layerIndex === 3} onClick={() => this.toggleTab(3)} key="tab-3">
+			<Tablink borderColor={layerIndex === 3 ? 'lightblue' : 'gray'} onClick={() => this.toggleTab(3)} key="tab-3">
 				<i className="fa fa-code" />
 			</Tablink>
 			{layerIndex !== 3 ? 
-				(<TabContent background={editing ? '#ffffff00' : null}>
-					<ColorDistSlider/>
-					<AngleSlider/>
-					<LayerToggle/>
+				(<TabContent>
 					<LayerItem>
 						<Layer/>
 						<CustomPicker onChange={ this.handleColorChange } color={ {h, s, l, a} } />
 					</LayerItem>
+					<ColorDistSlider/>
+					<AngleSlider/>
 				</TabContent>) : 
 				(<TabContent>
 					<CodeEditor>
