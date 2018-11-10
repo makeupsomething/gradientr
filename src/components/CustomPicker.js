@@ -20,6 +20,7 @@ export const Chrome = ({ onChange, disableAlpha, rgb, hsl, hsv, hex, renderers,
         margin: 'auto',
         marginTop: '15px',
         width: '45%',
+        margin: "10px",
       },
       saturation: {
         width: '100%',
