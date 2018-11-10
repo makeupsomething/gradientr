@@ -19,8 +19,8 @@ to {
 
 const ColorBlock = styled.div.attrs({
     background: props => props.background || 'green',
-    height: props => props.selected ? '100px' : '50px',
-    width: props => props.selected ? '100px' : '50px',
+    height: props => props.selected ? '75px' : '50px',
+    width: props => props.selected ? '75px' : '50px',
 })`
     height: ${props => props.height};
     width: ${props => props.width};
