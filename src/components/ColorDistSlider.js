@@ -70,8 +70,7 @@ class ColorDistSlider extends Component {
         const { layerData, selectedColor, layerIndex, editing, selectedColorId } =  this.props.layers;
 
         return (
-            <div>
-                {layerData[layerIndex].colors.length > 0 ? <Range 
+            <Range 
                 min={0} 
                 max={100}  
                 pushable={5} 
@@ -84,8 +83,7 @@ class ColorDistSlider extends Component {
                 railStyle={{background: this.getRailStyle(), height: "20px"}} 
                 onChange={this.handleChange} 
                 onAfterChange={this.finishEditing}
-                allowCross={false}/> : null}
-            </div>
+                allowCross={false}/> 
         );
     }
 }

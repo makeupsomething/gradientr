@@ -2,6 +2,8 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import styled, { keyframes } from 'styled-components';
 import ColorPicker from './ColorPicker';
+import AngleSlider from './AngleSlider';
+import ColorDistSlider from './ColorDistSlider';
 
 import { 
 	setLayers, 
@@ -18,8 +20,8 @@ to {
 `;
 
 const AddButton = styled.button`
-	width:  100px;
-    height:  100px;
+	width:  50px;
+    height:  50px;
     margin: 5px;
     background-color: #1010100a;
     border-radius: 50%;
@@ -35,9 +37,18 @@ const AddButton = styled.button`
 
 const ItemContainer = styled.span`
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 50%;
+`
+
+const ColorContainer = styled.span`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
     transition: all .3s;
 `
 
@@ -61,6 +72,7 @@ class Layer extends Component {
 
         return (
             <ItemContainer>
+                <ColorContainer>
                 {layerData[layerIndex].colors.map(color => {
                     return (
                     <ColorPicker
@@ -73,6 +85,9 @@ class Layer extends Component {
                     <AddButton onClick={() => this.addColor()}>
                         <i class="fas fa-plus" />
                     </AddButton>) : null}
+                </ColorContainer>
+            <AngleSlider />
+            <ColorDistSlider />
             </ItemContainer>
         );
     }

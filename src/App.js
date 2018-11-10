@@ -9,8 +9,6 @@ import {
 
 import './App.css';
 import Layer from './components/Layer';
-import AngleSlider from './components/AngleSlider';
-import ColorDistSlider from './components/ColorDistSlider';
 import Highlight from 'react-highlight';
 import CustomPicker from './components/CustomPicker';
 
@@ -117,8 +115,6 @@ render() {
 						<Layer/>
 						<CustomPicker onChange={ this.handleColorChange } color={ {h, s, l, a} } />
 					</LayerItem>
-					<ColorDistSlider/>
-					<AngleSlider/>
 				</TabContent>) : 
 				(<TabContent>
 					<CodeEditor>
