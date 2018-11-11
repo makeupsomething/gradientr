@@ -42,7 +42,7 @@ componentDidMount() {
 
 handleColorChange = (color) => {
 	const { layerData, selectedColor, layerIndex, editing, selectedColorId } =  this.props.layers;
-	
+	this.props.dispatch(setEdting(true))
     layerData.forEach(layer => {
 		layer.colors.forEach(c => {
 			if(selectedColorId === c.id) {
@@ -87,6 +87,10 @@ toggleContainer = () => {
 	this.setState({ hidden: !this.state.hidden })
 }
 
+finishEditing = (color, event) => {
+	this.props.dispatch(setEdting(false))
+}
+
 render() {
 	let str = this.getString();
 	const { layerData, selectedColor, layerIndex, editing, selectedColorId } =  this.props.layers;
@@ -102,18 +106,18 @@ render() {
 		<Container hide={this.state.hidden}>
 			{layerData.map((layer, li) => {
 					return (
-					<Tablink borderColor={layerIndex === li ? 'lightblue' : 'gray'} onClick={() => this.toggleTab(li)} key={`tab-${li}`} >
+					<Tablink editing={editing} borderColor={layerIndex === li ? 'lightblue' : 'gray'} onClick={() => this.toggleTab(li)} key={`tab-${li}`} >
 						<span>Layer {li+1}</span>
 					</Tablink>)
 			})}
-			<Tablink borderColor={layerIndex === 3 ? 'lightblue' : 'gray'} onClick={() => this.toggleTab(3)} key="tab-3">
+			<Tablink editing={editing} borderColor={layerIndex === 3 ? 'lightblue' : 'gray'} onClick={() => this.toggleTab(3)} key="tab-3">
 				<i className="fa fa-code" />
 			</Tablink>
 			{layerIndex !== 3 ? 
-				(<TabContent>
+				(<TabContent editing={editing}>
 					<LayerItem>
 						<Layer/>
-						<CustomPicker onChange={ this.handleColorChange } color={ {h, s, l, a} } />
+						<CustomPicker onChange={ this.handleColorChange } onChangeComplete={ this.finishEditing } color={ {h, s, l, a} } />
 					</LayerItem>
 				</TabContent>) : 
 				(<TabContent>

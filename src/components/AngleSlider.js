@@ -36,6 +36,7 @@ const marks = {
 class AngleSlider extends Component {
 
 	handleChange = (value) => {
+		this.props.dispatch(setEdting(true))
         const { layerData, selectedColor, layerIndex, editing, selectedColorId } =  this.props.layers;
         layerData[layerIndex].degree = value
         this.props.dispatch(setLayers(layerData));

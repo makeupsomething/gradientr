@@ -26,6 +26,7 @@ class ColorDistSlider extends Component {
     };
 
     handleChange = (value) => {
+        this.props.dispatch(setEdting(true))
         const { layerData, selectedColor, layerIndex, editing } =  this.props.layers;
         layerData[layerIndex].colors.forEach((color, index) => color.amount = value[index])
         this.props.dispatch(setLayers(layerData));
