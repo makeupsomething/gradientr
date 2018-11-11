@@ -42,7 +42,7 @@ componentDidMount() {
 
 handleColorChange = (color) => {
 	const { layerData, selectedColor, layerIndex, editing, selectedColorId } =  this.props.layers;
-	this.props.dispatch(setEdting(true))
+	this.props.dispatch(setEdting('color'))
     layerData.forEach(layer => {
 		layer.colors.forEach(c => {
 			if(selectedColorId === c.id) {
@@ -87,7 +87,7 @@ toggleContainer = () => {
 	this.setState({ hidden: !this.state.hidden })
 }
 
-finishEditing = (color, event) => {
+finishEditing = () => {
 	this.props.dispatch(setEdting(false))
 }
 
@@ -117,7 +117,7 @@ render() {
 				(<TabContent editing={editing}>
 					<LayerItem>
 						<Layer/>
-						<CustomPicker onChange={ this.handleColorChange } onChangeComplete={ this.finishEditing } color={ {h, s, l, a} } />
+						<CustomPicker opacity={editing && editing !== 'color' ? "0" : "1"} onChange={ this.handleColorChange } onChangeComplete={ this.finishEditing } color={ {h, s, l, a} } />
 					</LayerItem>
 				</TabContent>) : 
 				(<TabContent>
