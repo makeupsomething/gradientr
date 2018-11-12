@@ -10,7 +10,6 @@ to {
 }
 `;
 
-
 const Container = styled.div`
 	width: 80vw;
 	animation: ${fadeIn} 2s ease-in;

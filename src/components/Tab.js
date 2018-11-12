@@ -10,7 +10,7 @@ import {
 const Tablink = styled.button.attrs({
 	backgroundColor: props => props.editing ?  '#7b7b7b1f' : '#4c4c4c',
     transition: props => props.editing ? 'background-color .1s linear' : 'background-color 5s linear',
-    borderBottom: props => props.selected ? 'lighblue' : 'gray',
+    borderBottom: props => props.selected ? 'lightblue' : 'gray',
 })`
     background-color: ${props => props.backgroundColor};
 	color: white;
