@@ -3,6 +3,7 @@ import {
     SET_SELECTED_COLOR,
     SET_CURRENT_LAYER,
     SET_EDITING,
+    SET_HIDDEN,
 } from '../actions/layers';
 
 
@@ -36,6 +37,11 @@ export default function layers(state = {}, action) {
             return {
                 ...state,
                 editing: action.editingStatus,
+            }
+        case SET_HIDDEN:
+            return {
+                ...state,
+                hidden: action.hiddenStatus,
             }
         default:
             return state;

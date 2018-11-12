@@ -5,6 +5,7 @@ import {
 	setSelectedColor, 
 	setCurrentLayer,
 	setEdting,
+	hideContainer,
 } from './actions/layers';
 
 import './App.css';
@@ -12,7 +13,7 @@ import Layer from './components/Layer';
 import Highlight from 'react-highlight';
 import CustomPicker from './components/CustomPicker';
 
-import { Header, HideConsoleButton, Title } from './styledComponents/Header';
+import HideContainerButton, { Header, Title } from './styledComponents/Header';
 import Background from './styledComponents/Background';
 import CodeEditor from './styledComponents/CodeEditor';
 import Container from './styledComponents/Container';
@@ -21,9 +22,6 @@ import TabContent from './styledComponents/TabContent';
 import LayerItem from './styledComponents/LayerItem';
 
 class App extends Component {
-    state = {
-        hidden: false
-	};
 	
 componentDidMount() {
 	this.props.dispatch(setLayers(
@@ -76,29 +74,23 @@ getString = () => {
 	return str;
 }
 
-toggleContainer = () => {
-	this.setState({ hidden: !this.state.hidden })
-}
-
 finishEditing = () => {
 	this.props.dispatch(setEdting(false))
 }
 
 render() {
 	let str = this.getString();
-	const { layerData, selectedColor, layerIndex, editing, selectedColorId } =  this.props.layers;
+	const { layerData, selectedColor, layerIndex, editing, hidden } =  this.props.layers;
 	let {h, s, l, a} = selectedColor || {h:1, s:1, l:1, a:1}
 
     return (
 	<Background className="gradientr" background={str}>
 		<Header>
 			<Title>Gradientr</Title>
-			<HideConsoleButton onClick={this.toggleContainer}>
-				Hide Console
-			</HideConsoleButton>
+			<HideContainerButton />
 		</Header>
 		{layerData && layerData.length > 0 ? (
-		<Container hide={this.state.hidden}>
+		<Container hide={hidden}>
 			<Tab index={0} />
 			<Tab index={1} />
 			<Tab index={2} />

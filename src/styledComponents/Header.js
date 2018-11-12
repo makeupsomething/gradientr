@@ -1,5 +1,10 @@
+import React from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 
+import { 
+    hideContainer
+} from '../actions/layers';
 
 export const Header = styled.header`
     width: 100vw;
@@ -17,7 +22,37 @@ export const Title = styled.span`
     align-self: flex-start;
 `
 
-export const HideConsoleButton = styled.button`
+export const Button = styled.button`
     margin: 5px;
     margin-right: 15px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 17px;
+    background-color: inherit;
+    color: white;
+    border-bottom: solid 3px lightblue;
 `
+
+function HideContainerButton(props) {
+    const { hidden } =  props.layers;
+
+    return (
+        <Button onClick={() => toggleContainer(props)}>
+            {hidden ? ("Show Container") : ("Hide Container")}
+        </Button>
+    )
+}
+
+function toggleContainer(props) {
+	const { hidden } = props.layers;
+	props.dispatch(hideContainer(!hidden))
+}
+
+function mapStateToProps({ layers }) {
+	return {
+		layers,
+	}
+}
+
+export default connect(mapStateToProps)(HideContainerButton);
