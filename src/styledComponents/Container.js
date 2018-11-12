@@ -13,9 +13,9 @@ to {
 
 const Container = styled.div`
 	width: 80vw;
-	animation: ${fadeIn} .3s linear;
+	animation: ${fadeIn} 2s ease-in;
 	opacity: 1;
-	transition: opacity .2s ease-out;
+	transition: opacity .2s ease-in;
 	position: absolute; 
 	left: 0; 
 	right: 0; 
