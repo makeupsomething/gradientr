@@ -16,7 +16,7 @@ import { Header, HideConsoleButton, Title } from './styledComponents/Header';
 import Background from './styledComponents/Background';
 import CodeEditor from './styledComponents/CodeEditor';
 import Container from './styledComponents/Container';
-import Tablink from './styledComponents/Tablink';
+import Tab from './components/Tab';
 import TabContent from './styledComponents/TabContent';
 import LayerItem from './styledComponents/LayerItem';
 
@@ -76,13 +76,6 @@ getString = () => {
 	return str;
 }
 
-toggleTab = (layer) => {
-	this.props.dispatch(setCurrentLayer({ layerIndex: layer }))
-	if(layer !== 3) {
-		this.props.dispatch(setSelectedColor(this.props.layers.layerData[layer].colors[0].id))
-	}
-}
-
 toggleContainer = () => {
 	this.setState({ hidden: !this.state.hidden })
 }
@@ -100,30 +93,33 @@ render() {
 	<Background className="gradientr" background={str}>
 		<Header>
 			<Title>Gradientr</Title>
-			<HideConsoleButton onClick={this.toggleContainer}>Hide Console</HideConsoleButton>
+			<HideConsoleButton onClick={this.toggleContainer}>
+				Hide Console
+			</HideConsoleButton>
 		</Header>
 		{layerData && layerData.length > 0 ? (
 		<Container hide={this.state.hidden}>
-			{layerData.map((layer, li) => {
-					return (
-					<Tablink editing={editing} borderColor={layerIndex === li ? 'lightblue' : 'gray'} onClick={() => this.toggleTab(li)} key={`tab-${li}`} >
-						<span>Layer {li+1}</span>
-					</Tablink>)
-			})}
-			<Tablink editing={editing} borderColor={layerIndex === 3 ? 'lightblue' : 'gray'} onClick={() => this.toggleTab(3)} key="tab-3">
-				<i className="fa fa-code" />
-			</Tablink>
-			{layerIndex !== 3 ? 
+			<Tab index={0} />
+			<Tab index={1} />
+			<Tab index={2} />
+			{layerIndex !== 2 ? 
 				(<TabContent editing={editing}>
 					<LayerItem>
 						<Layer/>
-						<CustomPicker opacity={editing && editing !== 'color' ? "0" : "1"} onChange={ this.handleColorChange } onChangeComplete={ this.finishEditing } color={ {h, s, l, a} } />
+						<CustomPicker 
+							opacity={editing && editing !== 'color' ? "0" : "1"} 
+							onChange={ this.handleColorChange } 
+							onChangeComplete={ this.finishEditing } 
+							color={ {h, s, l, a} } 
+						/>
 					</LayerItem>
 				</TabContent>) : 
 				(<TabContent>
 					<CodeEditor>
 						<Highlight language="css">
-							<span style={{wordBreak: "break-all", wordWrap: "break-word"}}>{`background: ${str}`}</span>
+							<span style={{wordBreak: "break-all", wordWrap: "break-word"}}>
+								{`background: ${str}`}
+							</span>
 						</Highlight>
 					</CodeEditor>
 				</TabContent>)}
