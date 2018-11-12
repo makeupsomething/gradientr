@@ -19,7 +19,7 @@ const Tablink = styled.button.attrs({
     cursor: pointer;
     padding: 14px 16px;
     font-size: 17px;
-	width: 33.33333333%;
+	width: 50%;
     border-bottom: solid 3px ${props => props.borderBottom};
     transition: ${props => props.transition};
 	

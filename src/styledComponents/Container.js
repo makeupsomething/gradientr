@@ -19,7 +19,7 @@ const Container = styled.div`
 	left: 0; 
 	right: 0; 
 	margin-left: auto; 
-	margin-right: auto; 
+	margin-right: auto;
 	bottom: 5%;
 
 	${ props => props.hide && css`

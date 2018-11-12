@@ -10,9 +10,24 @@ import {
 export default function layers(state = {}, action) {
     switch(action.type) {
         case SET_LAYERS:
+            let str = '';
+            console.log(action.layers)
+	        let strColors = action.layers.filter(({hidden}) => !hidden)
+
+            strColors.forEach((layer, index) => {
+                str+= `\nlinear-gradient(${layer.degree}deg, `;
+                layer.colors.forEach((color, index) => {
+                    str+= `\nhsla(${color.h}, ${color.s}%, ${color.l}%,  ${color.a}) ${color.amount}%`
+                    str+= index === layer.colors.length-1 ? `)` : ',';
+                });
+	
+                str+= index === strColors.length-1 ? '' : ',';
+            });
+    
             return {
                 ...state,
                 layerData: action.layers,
+                gradientString: str,
             };
         case SET_SELECTED_COLOR:
             let selectedColor = null;

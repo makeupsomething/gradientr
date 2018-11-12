@@ -4,6 +4,8 @@ import styled, { keyframes } from 'styled-components';
 import ColorPicker from './ColorPicker';
 import AngleSlider from './AngleSlider';
 import ColorDistSlider from './ColorDistSlider';
+import CodeEditor from '../styledComponents/CodeEditor';
+import Highlight from 'react-highlight';
 
 import { 
 	setLayers, 
@@ -68,7 +70,7 @@ class Layer extends Component {
     }
 
     render() {
-        const { layerData, layerIndex, selectedColorId } =  this.props.layers;
+        const { layerData, layerIndex, selectedColorId, gradientString } =  this.props.layers;
 
         return (
             <ItemContainer>
@@ -88,6 +90,9 @@ class Layer extends Component {
                 </ColorContainer>
             <AngleSlider />
             <ColorDistSlider />
+            <Highlight language="css">
+                    {`background: ${gradientString}`}
+            </Highlight>
             </ItemContainer>
         );
     }

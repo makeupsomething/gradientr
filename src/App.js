@@ -10,14 +10,12 @@ import {
 
 import './App.css';
 import Layer from './components/Layer';
-import Highlight from 'react-highlight';
 import CustomPicker from './components/CustomPicker';
-
-import HideContainerButton, { Header, Title } from './styledComponents/Header';
-import Background from './styledComponents/Background';
-import CodeEditor from './styledComponents/CodeEditor';
-import Container from './styledComponents/Container';
+import HideContainerButton, { Header, Title } from './components/Header';
 import Tab from './components/Tab';
+
+import Background from './styledComponents/Background';
+import Container from './styledComponents/Container';
 import TabContent from './styledComponents/TabContent';
 import LayerItem from './styledComponents/LayerItem';
 
@@ -55,36 +53,16 @@ handleColorChange = (color) => {
 	this.props.dispatch(setLayers(layerData))
 }
 
-getString = () => {
-	if(Object.keys(this.props.layers).length === 0)
-		return
-	let str = '';
-	let strColors = this.props.layers.layerData.filter(({hidden}) => !hidden)
-
-	strColors.forEach((layer, index) => {
-		str+= `\nlinear-gradient(${layer.degree}deg, `;
-        layer.colors.forEach((color, index) => {
-        	str+= `\nhsla(${color.h}, ${color.s}%, ${color.l}%,  ${color.a}) ${color.amount}%`
-        	str+= index === layer.colors.length-1 ? `)` : ',';
-		});
-	
-	str+= index === strColors.length-1 ? '' : ',';
-	});
-
-	return str;
-}
-
 finishEditing = () => {
 	this.props.dispatch(setEdting(false))
 }
 
 render() {
-	let str = this.getString();
-	const { layerData, selectedColor, layerIndex, editing, hidden } =  this.props.layers;
+	const { layerData, selectedColor, editing, hidden, gradientString } =  this.props.layers;
 	let {h, s, l, a} = selectedColor || {h:1, s:1, l:1, a:1}
 
     return (
-	<Background className="gradientr" background={str}>
+	<Background className="gradientr" background={gradientString}>
 		<Header>
 			<Title>Gradientr</Title>
 			<HideContainerButton />
@@ -93,28 +71,17 @@ render() {
 		<Container hide={hidden}>
 			<Tab index={0} />
 			<Tab index={1} />
-			<Tab index={2} />
-			{layerIndex !== 2 ? 
-				(<TabContent editing={editing}>
-					<LayerItem>
-						<Layer/>
-						<CustomPicker 
-							opacity={editing && editing !== 'color' ? "0" : "1"} 
-							onChange={ this.handleColorChange } 
-							onChangeComplete={ this.finishEditing } 
-							color={ {h, s, l, a} } 
-						/>
-					</LayerItem>
-				</TabContent>) : 
-				(<TabContent>
-					<CodeEditor>
-						<Highlight language="css">
-							<span style={{wordBreak: "break-all", wordWrap: "break-word"}}>
-								{`background: ${str}`}
-							</span>
-						</Highlight>
-					</CodeEditor>
-				</TabContent>)}
+			<TabContent editing={editing}>
+				<LayerItem>
+					<Layer/>
+					<CustomPicker 
+						opacity={editing && editing !== 'color' ? "0" : "1"} 
+						onChange={ this.handleColorChange } 
+						onChangeComplete={ this.finishEditing } 
+						color={ {h, s, l, a} } 
+					/>
+				</LayerItem>
+			</TabContent>
 		</Container>) : null}
 	</Background>
     );
