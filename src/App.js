@@ -42,9 +42,9 @@ handleColorChange = (color) => {
     layerData.forEach(layer => {
 		layer.colors.forEach(c => {
 			if(selectedColorId === c.id) {
-				c.h = color.hsl.h;
-				c.s = color.hsl.s * 100;
-				c.l = color.hsl.l * 100;
+				c.h = Number(color.hsl.h.toFixed(2));
+				c.s = Number((color.hsl.s * 100).toFixed(2));
+				c.l = Number((color.hsl.l * 100).toFixed(2));
 				c.a = color.hsl.a;
 			}
 		});
