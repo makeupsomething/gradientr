@@ -37,6 +37,10 @@ export const Button = styled.button`
     ${Button}:hover {
         border: solid 3px hotpink;
     }
+
+    ${Button}:active {
+        border: solid 3px lightblue;
+    }
 `
 
 function HideContainerButton(props) {

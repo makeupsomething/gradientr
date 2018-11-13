@@ -16,8 +16,7 @@ import Tab from './components/Tab';
 
 import Background from './styledComponents/Background';
 import Container from './styledComponents/Container';
-import TabContent from './styledComponents/TabContent';
-import LayerItem from './styledComponents/LayerItem';
+import ControlPanel from './styledComponents/ControlPanel';
 
 class App extends Component {
 	
@@ -71,8 +70,7 @@ render() {
 		<Container hide={hidden}>
 			<Tab index={0} />
 			<Tab index={1} />
-			<TabContent editing={editing}>
-				<LayerItem>
+			<ControlPanel editing={editing}>
 					<Layer/>
 					<CustomPicker 
 						opacity={editing && editing !== 'color' ? "0" : "1"} 
@@ -80,8 +78,7 @@ render() {
 						onChangeComplete={ this.finishEditing } 
 						color={ {h, s, l, a} } 
 					/>
-				</LayerItem>
-			</TabContent>
+			</ControlPanel>
 		</Container>) : null}
 	</Background>
     );

@@ -6,8 +6,6 @@ import 'rc-tooltip/assets/bootstrap.css';
 
 import { 
 	setLayers, 
-	setSelectedColor, 
-	setCurrentLayer,
 	setEdting,
 } from '../actions/layers';
 
@@ -27,13 +25,13 @@ class ColorDistSlider extends Component {
 
     handleChange = (value) => {
         this.props.dispatch(setEdting(true))
-        const { layerData, selectedColor, layerIndex, editing } =  this.props.layers;
+        const { layerData, layerIndex } =  this.props.layers;
         layerData[layerIndex].colors.forEach((color, index) => color.amount = value[index])
         this.props.dispatch(setLayers(layerData));
     }
 
     getHandleColors = () => {
-        const { layerData, selectedColor, layerIndex, editing, selectedColorId } =  this.props.layers;
+        const { layerData, layerIndex } =  this.props.layers;
         let handleVals = []
         layerData[layerIndex].colors.forEach((color, index) => {
             handleVals.push({backgroundColor: 
@@ -44,7 +42,7 @@ class ColorDistSlider extends Component {
     }
 
     getTrackStyle = () => {
-        const { layerData, selectedColor, layerIndex, editing, selectedColorId } =  this.props.layers;
+        const { layerData, layerIndex } =  this.props.layers;
         let trackVals = []
         layerData[layerIndex].colors.forEach(color => {
             trackVals.push({backgroundColor: `#abe2fb00`})
@@ -53,7 +51,7 @@ class ColorDistSlider extends Component {
     }
 
     getRailStyle = () => {
-        const { layerData, selectedColor, layerIndex, editing, selectedColorId } =  this.props.layers;
+        const { layerData, layerIndex } =  this.props.layers;
         let str = '';
         str+= `linear-gradient(90deg, `;
         layerData[layerIndex].colors.forEach((color, index) => {
@@ -68,7 +66,7 @@ class ColorDistSlider extends Component {
     }
 
     render() {
-        const { layerData, selectedColor, layerIndex, editing, selectedColorId } =  this.props.layers;
+        const { layerData, layerIndex } =  this.props.layers;
 
         return (
             <Range 

@@ -1,72 +1,21 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import styled, { keyframes } from 'styled-components';
 import ColorPicker from './ColorPicker';
 import AngleSlider from './AngleSlider';
 import ColorDistSlider from './ColorDistSlider';
 import { CodeEditor, CodeContainer } from '../styledComponents/CodeEditor';
 import Highlight from 'react-highlight';
 
+import {  
+    AddButton, 
+    ItemContainer, 
+    ColorContainer, 
+    CopyButton
+} from '../styledComponents/ControlPanel';
+
 import { 
 	setLayers, 
 } from '../actions/layers';
-
-const fadeIn = keyframes`
-from {
-    opacity: 0;
-}
-
-to {
-	opacity: 1;
-}
-`;
-
-const AddButton = styled.button`
-	width:  50px;
-    height:  50px;
-    margin: 5px;
-    background-color: #1010100a;
-    border-radius: 50%;
-    cursor: pointer;
-    box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 2px;
-    transition: all .3s;
-    animation: ${fadeIn} .3s linear;
-
-    ${AddButton}:hover {
-        box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 10px;
-    }
-`
-
-const CopyButton = styled.button`
-    border: none;
-    outline: none;
-    cursor: pointer;
-    font-size: 17px;
-    background-color: inherit;
-    color: white;
-    border: solid 3px lightblue;
-
-    ${CopyButton}:hover {
-        border: solid 3px hotpink;
-    }
-`
-
-const ItemContainer = styled.span`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 50%;
-`
-
-const ColorContainer = styled.span`
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    transition: all .3s;
-`
 
 class Layer extends Component {
 
