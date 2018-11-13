@@ -1,37 +1,71 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import ColorPicker from './ColorPicker';
+import AngleSlider from './AngleSlider';
+import ColorDistSlider from './ColorDistSlider';
+import { CodeEditor, CodeContainer } from '../styledComponents/CodeEditor';
+import Highlight from 'react-highlight';
 
 import { 
 	setLayers, 
-	setSelectedColor, 
-	setCurrentLayer,
-	setEdting,
 } from '../actions/layers';
 
-const AddButton = styled.button`
-	text-align: center;
-    font-size: 1.5em;
-	width:  20%;
-    height:  20%;
-    margin-left: 10%;
-    background: #1010100a;
-    border: solid 2px gray;
-    padding: 5%;
-    cursor: pointer;
+const fadeIn = keyframes`
+from {
+    opacity: 0;
+}
 
-    ${AddButton}:hover{
-        box-shadow: 1px 1px 10px 0px black;
+to {
+	opacity: 1;
+}
+`;
+
+const AddButton = styled.button`
+	width:  50px;
+    height:  50px;
+    margin: 5px;
+    background-color: #1010100a;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 2px;
+    transition: all .3s;
+    animation: ${fadeIn} .3s linear;
+
+    ${AddButton}:hover {
+        box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 10px;
     }
 `
 
-const LayerItem = styled.li.attrs({
-    border: props => props.selected || '',
-})`
-    display: block;
-    margin: auto;
-    border: ${props => props.selected};
+const CopyButton = styled.button`
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 17px;
+    background-color: inherit;
+    color: white;
+    border: solid 3px lightblue;
+
+    ${CopyButton}:hover {
+        border: solid 3px hotpink;
+    }
+`
+
+const ItemContainer = styled.span`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+`
+
+const ColorContainer = styled.span`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    transition: all .3s;
 `
 
 class Layer extends Component {
@@ -42,43 +76,45 @@ class Layer extends Component {
         )
     }
 
-    addColor = (layer) => {
-        const { layerData, selectedColor, layerIndex, editing, selectedColorId } =  this.props.layers;
-        if(layer === undefined) {
-            return
-        }
+    addColor = () => {
+        const { layerData, layerIndex } =  this.props.layers;
         let uuid = this.uuidv4()
-        layerData[layer].colors.push({h: '0', s: '50', l: '50', a: '0.5', amount: 50, id: uuid})
+        layerData[layerIndex].colors.push({h: '185', s: '100', l: '50', a: '0.75', amount: 50, id: uuid})
         this.props.dispatch(setLayers(layerData));
     }
 
     render() {
-        const { layerData, selectedColor, layerIndex, editing, selectedColorId } =  this.props.layers;
+        const { layerData, layerIndex, selectedColorId, gradientString } =  this.props.layers;
 
         return (
-            <div style={{bottom: "0"}}>
+            <ItemContainer>
+                <ColorContainer>
                 {layerData[layerIndex].colors.map(color => {
-                    return <LayerItem>
-                                <ColorPicker
-                                    h={color.h}
-                                    s={color.s}
-                                    l={color.l}
-                                    a={color.a}
-                                    name={color.id}
-                                    disabled={color.id === selectedColorId} >
-                                </ColorPicker>
-                            </LayerItem>
-                            })}
-                <LayerItem>
-                    {layerData[layerIndex].colors.length < 3 && layerIndex !== undefined 
-                        ? (
-                        <AddButton onClick={() => this.addColor(layerIndex)}>
-                            <i class="fas fa-plus" />
-                        </AddButton>) 
-                        : null
-                    }
-                </LayerItem>
-            </div>
+                    return (
+                    <ColorPicker
+                        color={color}
+                        name={color.id}
+                        selected={color.id === selectedColorId} >
+                    </ColorPicker>)
+                    })}
+                    {layerData[layerIndex].colors.length < 5 ? (
+                    <AddButton onClick={() => this.addColor()}>
+                        <i class="fas fa-plus" />
+                    </AddButton>) : null}
+                </ColorContainer>
+            <AngleSlider />
+            <ColorDistSlider />
+            <CodeContainer>
+                <CodeEditor>
+                    <Highlight language="css">
+                            {`background: ${gradientString}`}
+                    </Highlight>
+                </CodeEditor>
+                <CopyButton>
+                    <i class="fas fa-copy" />
+                </CopyButton>
+            </CodeContainer>
+        </ItemContainer>
         );
     }
 }

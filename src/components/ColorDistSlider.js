@@ -25,23 +25,8 @@ class ColorDistSlider extends Component {
         amounts: [],
     };
 
-    componentDidMount = () => {
-        const { layerData, selectedColor, layerIndex, editing, selectedColorId } =  this.props.layers;
-        this.setState({colors: layerData[layerIndex].colors});
-    }
-
-    componentDidUpdate = (prevProps, prevState, snapshot) => {
-        const { layerData, selectedColor, layerIndex, editing, selectedColorId } =  this.props.layers;
-        if(layerData[layerIndex].colors.length !== this.state.colors.length) {
-            this.setState({colors: layerData[layerIndex].colors});
-        } else {
-            if(!layerData[layerIndex].colors.every((v,i)=> v === this.state.colors[i])) {
-                this.setState({colors: layerData[layerIndex].colors});
-            }
-        }
-    }
-
     handleChange = (value) => {
+        this.props.dispatch(setEdting(true))
         const { layerData, selectedColor, layerIndex, editing } =  this.props.layers;
         layerData[layerIndex].colors.forEach((color, index) => color.amount = value[index])
         this.props.dispatch(setLayers(layerData));
@@ -53,7 +38,7 @@ class ColorDistSlider extends Component {
         layerData[layerIndex].colors.forEach((color, index) => {
             handleVals.push({backgroundColor: 
                 `hsla(${layerData[layerIndex].colors[index].h}, ${layerData[layerIndex].colors[index].s}%, ${layerData[layerIndex].colors[index].l}%, ${layerData[layerIndex].colors[index].a})`
-            , height: "30px", borderRadius: "20%"});
+            , height: "20px", borderRadius: "0"});
         });
         return handleVals;
     }
@@ -86,22 +71,20 @@ class ColorDistSlider extends Component {
         const { layerData, selectedColor, layerIndex, editing, selectedColorId } =  this.props.layers;
 
         return (
-            <div>
-                {layerData[layerIndex].colors.length > 0 ? <Range 
+            <Range 
                 min={0} 
                 max={100}  
                 pushable={5} 
                 marks={marks}
                 dotStyle={{top: "16px"}}
-                style={{height: "20px", width: "90%", margin: "30px auto"}}
+                style={{height: "10px", width: "90%", margin: "30px auto"}}
                 value={layerData[layerIndex].colors.map(color => color.amount)} 
                 handleStyle={this.getHandleColors()} 
                 trackStyle={this.getTrackStyle()}
-                railStyle={{background: this.getRailStyle(), height: "20px"}} 
+                railStyle={{background: this.getRailStyle(), height: "10px", borderRadius: "0"}} 
                 onChange={this.handleChange} 
                 onAfterChange={this.finishEditing}
-                allowCross={false}/> : null}
-            </div>
+                allowCross={false}/> 
         );
     }
 }

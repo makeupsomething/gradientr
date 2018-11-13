@@ -1,16 +1,17 @@
 import styled from 'styled-components';
 
 const TabContent = styled.ul.attrs({
-	background: props => props.background || '#ffffff42'
+	backgroundColor: props => props.editing ?  '#7b7b7b1f' : '#272727',
+	transition: props => props.editing ? 'background-color .1s linear' : 'background-color 5s linear'
 })`
     color: white;
-	background: ${props => props.background};
+	background-color: ${props => props.backgroundColor};
 	width: 100%;
-	height: 85%;
 	list-style-type: none;
     margin: 0;
     padding: 0;
 	overflow: scroll;
+	transition: ${props => props.transition};
 `
 
 export default TabContent;

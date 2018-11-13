@@ -8,7 +8,7 @@ import ChromeFields from 'react-color/lib/components/chrome/ChromeFields'
 import ChromePointer from 'react-color/lib/components/chrome/ChromePointer'
 import ChromePointerCircle from 'react-color/lib/components/chrome/ChromePointerCircle'
 
-export const Chrome = ({ onChange, disableAlpha, rgb, hsl, hsv, hex, renderers,
+export const Chrome = ({ onChange, disableAlpha, rgb, hsl, hsv, hex, renderers, opacity,
   className = '' }) => {
   const styles = reactCSS({
     'default': {
@@ -17,8 +17,12 @@ export const Chrome = ({ onChange, disableAlpha, rgb, hsl, hsv, hex, renderers,
         borderRadius: '2px',
         boxShadow: '0 0 2px rgba(0,0,0,.3), 0 4px 8px rgba(0,0,0,.3)',
         boxSizing: 'initial',
-        width: '65%',
         margin: 'auto',
+        marginTop: '15px',
+        width: '45%',
+        margin: "10px",
+        opacity: opacity,
+        transition: 'opacity .3s linear',
       },
       saturation: {
         width: '100%',

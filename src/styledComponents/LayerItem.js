@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 
-const LayerItem = styled.li`
-	display: inline-block;
-	vertical-align: center;
+const LayerItem = styled.div`
+	display: flex;
+	justify-content: center;
+    align-items: center;
 	width: 100%;
 `
 
