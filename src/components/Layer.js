@@ -83,6 +83,18 @@ class Layer extends Component {
         this.props.dispatch(setLayers(layerData));
     }
 
+    copyToClipboard = (str) => {
+        const el = document.createElement('textarea');
+        el.value = str;
+        el.setAttribute('readonly', '');
+        el.style.position = 'absolute';
+        el.style.left = '-9999px';
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+    };
+
     render() {
         const { layerData, layerIndex, selectedColorId, gradientString } =  this.props.layers;
 
@@ -110,7 +122,7 @@ class Layer extends Component {
                             {`background: ${gradientString}`}
                     </Highlight>
                 </CodeEditor>
-                <CopyButton>
+                <CopyButton onClick={() => this.copyToClipboard(gradientString)}>
                     <i class="fas fa-copy" />
                 </CopyButton>
             </CodeContainer>
