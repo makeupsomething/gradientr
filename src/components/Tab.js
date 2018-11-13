@@ -8,7 +8,7 @@ import {
 } from '../actions/layers';
 
 const Tablink = styled.button.attrs({
-	backgroundColor: props => props.editing ?  '#7b7b7b1f' : '#4c4c4c',
+	backgroundColor: props => props.editing ?  '#7b7b7b1f' : '#272727',
     transition: props => props.editing ? 'background-color .1s linear' : 'background-color 5s linear',
     borderBottom: props => props.selected ? 'lightblue' : 'gray',
 })`
@@ -24,7 +24,7 @@ const Tablink = styled.button.attrs({
     transition: ${props => props.transition};
 	
 	${Tablink}:hover {
-    	border-bottom: solid 3px lightblue;
+    	border-bottom: solid 3px hotpink;
 	}
 `
 

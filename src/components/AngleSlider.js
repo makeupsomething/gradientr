@@ -5,8 +5,6 @@ import 'rc-slider/assets/index.css';
 
 import { 
 	setLayers, 
-	setSelectedColor, 
-	setCurrentLayer,
 	setEdting,
 } from '../actions/layers';
 
@@ -37,7 +35,7 @@ class AngleSlider extends Component {
 
 	handleChange = (value) => {
 		this.props.dispatch(setEdting(true))
-        const { layerData, selectedColor, layerIndex, editing, selectedColorId } =  this.props.layers;
+        const { layerData, layerIndex } =  this.props.layers;
         layerData[layerIndex].degree = value
         this.props.dispatch(setLayers(layerData));
 	}
@@ -55,9 +53,9 @@ class AngleSlider extends Component {
                 min={0} 
                 max={360} 
                 marks={marks} 
-                style={{height: "20px", width: "90%", margin: "30px auto"}}
-                railStyle={{height: "20px"}} 
-                handleStyle={{height: "30px", borderRadius: "20%"}} 
+                style={{ width: "90%", margin: "30px auto" }}
+                railStyle={{backgroundColor: "lightblue", height: "10px",  borderRadius: "0"}} 
+                handleStyle={{height: "20px", borderRadius: "0"}} 
                 trackStyle={{backgroundColor: `#abe2fb00`}}
                 dotStyle={{top: "16px"}}
                 onChange={this.handleChange}

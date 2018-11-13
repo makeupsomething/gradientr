@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styled, { keyframes } from 'styled-components';
 import ColorPicker from './ColorPicker';
@@ -34,6 +34,20 @@ const AddButton = styled.button`
 
     ${AddButton}:hover {
         box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 10px;
+    }
+`
+
+const CopyButton = styled.button`
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 17px;
+    background-color: inherit;
+    color: white;
+    border: solid 3px lightblue;
+
+    ${CopyButton}:hover {
+        border: solid 3px hotpink;
     }
 `
 
@@ -96,7 +110,9 @@ class Layer extends Component {
                             {`background: ${gradientString}`}
                     </Highlight>
                 </CodeEditor>
-                <button>👍</button>
+                <CopyButton>
+                    <i class="fas fa-copy" />
+                </CopyButton>
             </CodeContainer>
         </ItemContainer>
         );

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const TabContent = styled.ul.attrs({
-	backgroundColor: props => props.editing ?  '#7b7b7b1f' : '#4c4c4c',
+	backgroundColor: props => props.editing ?  '#7b7b7b1f' : '#272727',
 	transition: props => props.editing ? 'background-color .1s linear' : 'background-color 5s linear'
 })`
     color: white;

@@ -8,7 +8,7 @@ import {
 
 export const Header = styled.header`
     width: 100vw;
-    background-color: #4c4c4c;
+    background-color: #272727;
     font-size: 2em;
     color: white;
     margin-bottom: 20px;
@@ -31,7 +31,12 @@ export const Button = styled.button`
     font-size: 17px;
     background-color: inherit;
     color: white;
-    border-bottom: solid 3px lightblue;
+    border: solid 3px lightblue;
+
+
+    ${Button}:hover {
+        border: solid 3px hotpink;
+    }
 `
 
 function HideContainerButton(props) {
