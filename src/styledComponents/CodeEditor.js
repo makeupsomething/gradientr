@@ -1,9 +1,13 @@
 import styled from 'styled-components';
 
-const CodeEditor = styled.div`
-	margin: auto;
-	width: 100%;
-	word-wrap: break-word;
+export const CodeEditor = styled.span`
+	width: 85%;
 `
 
-export default CodeEditor;
+export const CodeContainer = styled.span`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+	width: 100%;
+`

@@ -4,7 +4,7 @@ import styled, { keyframes } from 'styled-components';
 import ColorPicker from './ColorPicker';
 import AngleSlider from './AngleSlider';
 import ColorDistSlider from './ColorDistSlider';
-import CodeEditor from '../styledComponents/CodeEditor';
+import { CodeEditor, CodeContainer } from '../styledComponents/CodeEditor';
 import Highlight from 'react-highlight';
 
 import { 
@@ -90,10 +90,15 @@ class Layer extends Component {
                 </ColorContainer>
             <AngleSlider />
             <ColorDistSlider />
-            <Highlight language="css">
-                    {`background: ${gradientString}`}
-            </Highlight>
-            </ItemContainer>
+            <CodeContainer>
+                <CodeEditor>
+                    <Highlight language="css">
+                            {`background: ${gradientString}`}
+                    </Highlight>
+                </CodeEditor>
+                <button>👍</button>
+            </CodeContainer>
+        </ItemContainer>
         );
     }
 }
