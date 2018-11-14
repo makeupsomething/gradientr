@@ -63,19 +63,19 @@ class Layer extends Component {
                         <i class="fas fa-plus" />
                     </AddButton>) : null}
                 </ColorContainer>
-            <AngleSlider />
-            <ColorDistSlider />
-            <CodeContainer>
-                <CodeEditor>
-                    <Highlight language="css">
-                            {`background: ${gradientString}`}
-                    </Highlight>
-                </CodeEditor>
-                <CopyButton onClick={() => this.copyToClipboard(gradientString)}>
-                    <i class="fas fa-copy" />
-                </CopyButton>
-            </CodeContainer>
-        </ItemContainer>
+                <ColorDistSlider />
+                <AngleSlider />
+                <CodeContainer>
+                    <CodeEditor>
+                        <Highlight language="css">
+                                {`background: ${gradientString}`}
+                        </Highlight>
+                    </CodeEditor>
+                    <CopyButton onClick={() => this.copyToClipboard(gradientString)}>
+                        <i class="fas fa-copy" />
+                    </CopyButton>
+                </CodeContainer>
+            </ItemContainer>
         );
     }
 }
