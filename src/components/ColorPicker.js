@@ -1,49 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import styled, { keyframes } from 'styled-components';
+
+import {  
+    ColorBlock,
+} from '../styledComponents/ControlPanel';
 
 import { 
     setSelectedColor,
     setLayers, 
 } from '../actions/layers';
-
-const fadeIn = keyframes`
-from {
-    opacity: 0;
-}
-
-to {
-	opacity: 1;
-}
-`;
-
-const ColorBlock = styled.div.attrs({
-    background: props => props.background || 'green',
-    height: props => props.selected ? '75px' : '50px',
-    width: props => props.selected ? '75px' : '50px',
-})`
-    height: ${props => props.height};
-    width: ${props => props.width};
-    margin: 5px;
-    background-color: ${props => props.background};
-    border-radius: 50%;
-    float: left;
-    cursor: pointer;
-    box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 2px;
-    transition: all .5s;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    animation: ${fadeIn} .3s linear;
-
-    ${ColorBlock}:hover {
-        box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 10px;
-    }
-
-    ${ColorBlock}:active {
-        box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 2px;
-    }
-`
 
 class ColorPicker extends Component {
     state = {

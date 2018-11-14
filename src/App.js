@@ -5,7 +5,6 @@ import {
 	setSelectedColor, 
 	setCurrentLayer,
 	setEdting,
-	hideContainer,
 } from './actions/layers';
 
 import './App.css';
@@ -36,7 +35,7 @@ componentDidMount() {
 }
 
 handleColorChange = (color) => {
-	const { layerData, selectedColor, layerIndex, editing, selectedColorId } =  this.props.layers;
+	const { layerData, selectedColorId } =  this.props.layers;
 	this.props.dispatch(setEdting('color'))
     layerData.forEach(layer => {
 		layer.colors.forEach(c => {
