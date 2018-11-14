@@ -37,13 +37,16 @@ export const AddButton = styled.button`
     transition: all .3s;
     animation: ${fadeIn} .3s linear;
     border: solid 2px lightblue;
+    color: lightblue;
 
     ${AddButton}:hover {
         border: solid 2px hotpink;
+        color: hotpink;
     }
 
     ${AddButton}:active {
         border: solid 2px lightblue;
+        color: hotpink;
     }
 `
 
