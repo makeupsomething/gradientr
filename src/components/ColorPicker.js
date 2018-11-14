@@ -1,73 +1,61 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
+import { connect } from 'react-redux';
 
-const PickerObj = styled.span`
-    display: inline;
-    width: 100px;
-    height: 100px;
-`
+import {  
+    ColorBlock,
+} from '../styledComponents/ControlPanel';
 
-const ColorBlock = styled.div.attrs({
-    background: props => props.background || 'green',
-})`
-    display: inline-block;
-    width: 40px;
-    height: 40px;
-    margin-right: 10px;
-    background: ${props => props.background};
-`
+import { 
+    setSelectedColor,
+    setLayers, 
+} from '../actions/layers';
 
 class ColorPicker extends Component {
     state = {
-        picker: false,
-        background: {h: 1, s: 50, l: 50, a: 1},
+        hover: false
     };
 
-    componentDidMount = () => {
-        const { h, s, l, a } = this.props;
-        let tmp = this.state.background;
-        tmp = {h: parseInt(h), s: parseInt(s) / 100, l: parseInt(l) / 100, a: parseFloat(a)};
-        this.setState({background: tmp});
+    toggleColor = () => {
+        const { color } = this.props;
+        this.props.dispatch(setSelectedColor(color.id))
     }
 
-    componentDidUpdate = (prevProps, prevState, snapshot) => {
-        const { h, s, l, a, name } = this.props;
-        
-        if(name !== prevProps.name) {
-            let tmp = this.state.background;
-            tmp = {h: parseInt(h), s: parseInt(s) / 100, l: parseInt(l) / 100, a: parseFloat(a)};
-            this.setState({background: tmp});
-        } else {
-            if (parseInt(h) !== this.state.background.h || parseInt(s) / 100 !== this.state.background.s || parseInt(l) / 100 !== this.state.background.l || parseFloat(a) !== this.state.background.a ) {
-                let tmp = this.state.background;
-                tmp = {h: parseInt(h), s: parseInt(s) / 100, l: parseInt(l) / 100, a: parseFloat(a)};
-                this.setState({background: tmp});
-            }
-        }
+    mouseEnter = () => {
+        this.setState({ hover: true });
     }
 
-    toggleColor = (event) => {
-        const { setColor, name } = this.props;
-        setColor(name)
+    mouseExit = () => {
+        this.setState({ hover: false });
     }
 
-    // Move picker up tp App.js, it will be the top element in the sidebar and always showing
-    // Clicking on a color block will focus the picker for that color
-    // The color + options will also be highlighted
-    // Probably move the block up to layer component and get rid of this file later
+    removeColor = () => {
+        const { layerData, layerIndex, selectedColor } =  this.props.layers;
+        layerData[layerIndex].colors = layerData[layerIndex].colors.filter(color => color.id !== selectedColor.id)
+        this.props.dispatch(setLayers(layerData));
+        this.props.dispatch(setSelectedColor(layerData[layerIndex].colors[0].id))
+    }
+
     render() {
-        return (
-            <span>
-                <ColorBlock 
-                    onClick={this.toggleColor} 
-                    background={`hsla(${this.state.background.h}, ${this.state.background.s * 100}%, ${this.state.background.l * 100}%, ${this.state.background.a})`}
-                >
-                <p>edit</p>
-                </ColorBlock>
+        const { selected, color } = this.props;
 
-            </span>
+        return (
+            <ColorBlock  
+                onMouseEnter={this.mouseEnter}
+                onMouseLeave={this.mouseExit}
+                onClick={selected ? this.removeColor : this.toggleColor}
+                background={`hsla(${color.h}, ${color.s}%, ${color.l}%, ${color.a})`}
+                selected={selected}
+            >
+            {this.state.hover && selected ? <div><i class="fas fa-trash"/></div>: <div>{color.amount}%</div>}
+            </ColorBlock>
         );
     }
 }
 
-export default ColorPicker;
+function mapStateToProps({ layers }) {
+	return {
+		layers,
+	}
+}
+
+export default connect(mapStateToProps)(ColorPicker);
