@@ -6,38 +6,25 @@ import {
     SET_HIDDEN,
 } from '../actions/layers';
 
+import { 
+    generateString, 
+    getSelectedColor 
+} from '../utils/utils'
+
 
 export default function layers(state = {}, action) {
     switch(action.type) {
         case SET_LAYERS:
-            let str = '';
-            console.log(action.layers)
-	        let strColors = action.layers.filter(({hidden}) => !hidden)
+            let str = generateString(action.layers)
 
-            strColors.forEach((layer, index) => {
-                str+= `\nlinear-gradient(${layer.degree}deg, `;
-                layer.colors.forEach((color, index) => {
-                    str+= `\nhsla(${color.h}, ${color.s}%, ${color.l}%,  ${color.a}) ${color.amount}%`
-                    str+= index === layer.colors.length-1 ? `)` : ',';
-                });
-	
-                str+= index === strColors.length-1 ? '' : ',';
-            });
-    
             return {
                 ...state,
                 layerData: action.layers,
                 gradientString: str,
             };
         case SET_SELECTED_COLOR:
-            let selectedColor = null;
-            state.layerData.forEach(layer => {
-                layer.colors.forEach(color => {
-                    if(color.id === action.colorId) {
-                        selectedColor = color;
-                    }
-                });
-            });
+            let selectedColor = getSelectedColor(state.layerData, action.colorId)
+            
             return {
                 ...state,
                 selectedColorId: action.colorId,
